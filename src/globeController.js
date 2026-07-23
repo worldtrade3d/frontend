@@ -31,7 +31,7 @@ export function initGlobe() {
           updateTradePanel(name, null, { loading: true });
 
           try {
-            const partners = await fetchTradePartners(iso, state.mode);
+            const partners = await fetchTradePartners(iso, state.mode, state.year);
 
             // Build a new map first
             const partnerMap = new Map();

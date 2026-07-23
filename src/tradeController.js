@@ -19,6 +19,7 @@ export function initTrade() {
       if (!state.selectedISO) return;
 
       const iso = state.selectedISO;
+      const year = state.year; // ✅ Get the current year from state
 
       const name =
         document.getElementById("country-name").textContent.split(" • ")[0];
@@ -26,7 +27,8 @@ export function initTrade() {
       updateTradePanel(null, null, { loading: true });
 
       try {
-        const partners = await fetchTradePartners(iso, mode);
+        // ✅ Pass the year as the third parameter
+        const partners = await fetchTradePartners(iso, mode, year);
 
         state.partners.clear();
         partners.forEach(p => {

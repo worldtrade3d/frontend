@@ -1,4 +1,5 @@
-const BASE_URL = window.location.hostname === "127.0.0.1" ? "http://127.0.0.1:3000" : "https://backend-mqlt.onrender.com";
+
+const BASE_URL = window.location.hostname === "127.0.0.1" ? "http://127.0.0.1:3000" : "https://backend-m5wv.onrender.com";
 
 export async function checkApiStatus() {
   try {
@@ -9,24 +10,18 @@ export async function checkApiStatus() {
   }
 }
 
-export async function fetchTradePartners(iso, mode, signal) {
-  const res = await fetch(
-    `${BASE_URL}/trade-partners?country=${iso}&type=${mode}`,
-    { signal }
-  );
-
-  if (!res.ok) throw new Error("API request failed");
-
+export async function fetchTradePartners(country, type, year) {
+  const url = `${BASE_URL}/trade-partners?country=${country}&type=${type}&year=${year}`;
+  
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Failed to fetch partners');
   return res.json();
 }
 
-export async function fetchTradeSectors(iso, mode, signal) {
-  const res = await fetch(
-    `${BASE_URL}/trade-sectors?country=${iso}&type=${mode}`,
-    { signal }
-  );
-
-  if (!res.ok) throw new Error("API request failed");
-
+export async function fetchTradeSectors(country, type, year) {
+  const url = `${BASE_URL}/trade-sectors?country=${country}&type=${type}&year=${year}`;
+  
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Failed to fetch sectors');
   return res.json();
 }

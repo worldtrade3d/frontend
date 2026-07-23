@@ -5,5 +5,6 @@ export const state = {
   pendingISO: null,
   partners: new Map(),
   mode: "export",
-  theme: themes.dark
+  theme: themes.dark,
+  year: new Date().getFullYear()
 };
