@@ -36,7 +36,7 @@ export function createGlobe(canvas, features, { onClick, onHover }) {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.scale(dpr, dpr);
 
-    scale = height / 2.2;
+    scale = height / 3;
 
     projection
       .translate([width / 2, height / 2])

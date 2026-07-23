@@ -18,17 +18,40 @@ export function createControls({
   let last = null;
   let moved = false;
 
-  // ✅ NEW: animation lock
+  // Animation lock (used for country focus only)
   let isAnimating = false;
 
-  // ✅ GET TOOLTIP ELEMENT
+  // =========================
+  // SMOOTH ZOOM VARIABLES
+  // =========================
+  let targetScale = projection.scale();
+  let zoomAnimating = false;
+
+  // Tooltip
   const tooltip = document.getElementById("tooltip");
+
+  // =========================
+  // SMOOTH ZOOM ANIMATION
+  // =========================
+  function smoothZoom() {
+    const current = projection.scale();
+    const next = current + (targetScale - current) * 0.12;
+
+    projection.scale(next);
+
+    if (Math.abs(next - targetScale) > 0.1) {
+      requestAnimationFrame(smoothZoom);
+    } else {
+      projection.scale(targetScale);
+      zoomAnimating = false;
+    }
+  }
 
   // =========================
   // MOUSE DOWN
   // =========================
   canvas.addEventListener("mousedown", e => {
-    if (isAnimating) return; // 🚫 block during animation
+    if (isAnimating) return;
 
     isDragging = true;
     last = [e.clientX, e.clientY];
@@ -54,9 +77,7 @@ export function createControls({
       const dx = x - last[0];
       const dy = y - last[1];
 
-      if (dx !== 0 || dy !== 0) {
-        moved = true;
-      }
+      if (dx !== 0 || dy !== 0) moved = true;
 
       velocity[0] = dx * 0.05;
       velocity[1] = -dy * 0.05;
@@ -67,7 +88,19 @@ export function createControls({
       rotation[1] = Math.max(-90, Math.min(90, rotation[1]));
 
       projection.rotate(rotation);
+
       last = [x, y];
+
+      // Don't allow hover while dragging
+      if (hovered) {
+        hovered = null;
+        onHover?.(null, e);
+      }
+
+      tooltip.style.opacity = 0;
+      canvas.style.cursor = "grabbing";
+
+      return;
     }
 
     // ===== HOVER DETECTION =====
@@ -79,7 +112,7 @@ export function createControls({
 
     hovered = null;
 
-    for (let f of features) {
+    for (const f of features) {
       path.context().beginPath();
       path(f);
 
@@ -89,17 +122,16 @@ export function createControls({
       }
     }
 
-    // ===== TOOLTIP + CURSOR =====
-    if (hovered && !isDragging && !isAnimating) {
+    // ===== TOOLTIP =====
+    if (hovered && !isAnimating) {
       const name =
         hovered.properties.name ||
         hovered.properties.ADMIN ||
         hovered.id ||
         "Unknown";
 
-      tooltip.style.left = x - 4 + "px";
-      tooltip.style.top = y + 4 + "px";
-
+      tooltip.style.left = `${x - 4}px`;
+      tooltip.style.top = `${y + 4}px`;
       tooltip.textContent = name;
       tooltip.style.opacity = 1;
 
@@ -113,23 +145,33 @@ export function createControls({
   });
 
   // =========================
-  // ZOOM (SCROLL)
+  // SMOOTH SCROLL ZOOM
   // =========================
-  canvas.addEventListener("wheel", e => {
-    if (isAnimating) return; // 🚫 ignore scroll during animation
+  canvas.addEventListener(
+    "wheel",
+    e => {
+      if (isAnimating) return;
 
-    e.preventDefault();
+      e.preventDefault();
 
-    let scale = projection.scale();
+      // Sync target with actual current scale
+      if (!zoomAnimating) {
+        targetScale = projection.scale();
+      }
 
-    scale += e.deltaY * -0.3;
-    scale = Math.max(300, Math.min(600, scale));
+      targetScale += e.deltaY * -0.3;
+      targetScale = Math.max(200, Math.min(600, targetScale));
 
-    projection.scale(scale);
-  });
+      if (!zoomAnimating) {
+        zoomAnimating = true;
+        requestAnimationFrame(smoothZoom);
+      }
+    },
+    { passive: false }
+  );
 
   // =========================
-  // CLICK (STRICT CLICK ONLY)
+  // CLICK
   // =========================
   canvas.addEventListener("click", () => {
     if (!hovered) return;
@@ -145,10 +187,11 @@ export function createControls({
   });
 
   // =========================
-  // FOCUS ANIMATION
+  // FOCUS COUNTRY ANIMATION
   // =========================
   function focusCountry(feature) {
-    if (isAnimating) return; // prevent stacking
+    if (isAnimating) return;
+
     isAnimating = true;
 
     const [lon, lat] = d3.geoCentroid(feature);
@@ -156,32 +199,39 @@ export function createControls({
 
     const start = [...rotation];
     const startScale = projection.scale();
-    
-    const targetScale = 600; 
+    const focusScale = 600;
 
-    const duration = 800;
+    targetScale = focusScale;
+
+    const duration = 900;
     const startTime = performance.now();
 
     function animate(now) {
       const t = Math.min(1, (now - startTime) / duration);
-      const ease = t * (2 - t);
+      const ease = 1 - Math.pow(1 - t, 3);
 
       rotation[0] = start[0] + (target[0] - start[0]) * ease;
       rotation[1] = start[1] + (target[1] - start[1]) * ease;
 
-      const scale = startScale + (targetScale - startScale) * ease;
+      const scale =
+        startScale + (focusScale - startScale) * ease;
 
-      projection.rotate(rotation).scale(scale);
+      projection
+        .rotate(rotation)
+        .scale(scale);
 
       if (t < 1) {
         requestAnimationFrame(animate);
       } else {
-        // 🆕 Best practice: Force exact final values to prevent tiny floating-point math drift
         rotation[0] = target[0];
         rotation[1] = target[1];
-        projection.rotate(rotation).scale(targetScale);
-        
-        isAnimating = false; // ✅ unlock controls
+
+        projection
+          .rotate(rotation)
+          .scale(focusScale);
+
+        targetScale = focusScale;
+        isAnimating = false;
       }
     }
 
