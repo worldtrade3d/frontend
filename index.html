@@ -78,7 +78,7 @@
 
   <section id="status-panel" class="glass">
     <span id="status-dot" class="status-dot"></span>
-    <span id="status-text">Checking...</span>
+    <span id="status-text">API Online</span>
   </section>
 
 
@@ -95,6 +95,21 @@
 
   <canvas id="globe"></canvas>
 
+  <div id="mode-container">
+      <button id="mode-btn" class="mode-btn">
+          <img
+              id="mode-icon"
+              src="assets/heatmap.png"
+              alt="Default View"
+          >
+      </button>
+  </div>
+
+  <!-- Bottom Right Zoom -->
+  <div id="zoom-controls">
+    <button id="zoom-in" class="floating-btn">+</button>
+    <button id="zoom-out" class="floating-btn">−</button>
+  </div>
 
   <div id="tooltip"></div>
 
@@ -102,4 +117,12 @@
   <script type="module" src="script.js"></script>
 
 </body>
+<!-- Loading Screen -->
+<div id="loading-screen">
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <h2 id="loading-title">Connecting to API...</h2>
+    <p id="loading-message">Please wait while trade data is loading.</p>
+  </div>
+</div>
 </html>

@@ -23,34 +23,75 @@ export function createRenderer({ context, projection, path, features, getISO }) 
 
   function getColor(iso) {
     const t = theme();
+
     const feature = features.find(f => getISO(f) === iso);
     const continent = feature?.properties?.CONTINENT;
-    const defaultColor = t.continents?.[continent] ?? t.countryDefault;
+    const defaultColor =
+      t.continents?.[continent] ?? t.countryDefault;
 
-    // Nothing selected yet: keep continent colors
+    // ==================================================
+    // HEATMAP MODE
+    // ==================================================
+    if (state.mapMode === "heatmap") {
+
+      // If a country is selected, show its trade heatmap
+      if (state.selectedISO || state.pendingISO) {
+
+        if (iso === state.pendingISO || iso === state.selectedISO) {
+          return t.countrySelected;
+        }
+
+        const p = state.partners.get(iso);
+
+        if (p == null) {
+          return t.countryDefault;
+        }
+
+        const intensity = Math.max(
+          0.08,
+          Math.min(1, Math.sqrt(p / 20))
+        );
+
+        const gb = Math.floor(255 * (1 - intensity));
+
+        return `rgb(255, ${gb}, ${gb})`;
+      }
+
+      // No country selected -> global totals heatmap
+      const value = state.totalTrade.get(iso);
+
+      if (value == null) {
+        return t.countryDefault;
+      }
+
+      const maxValue = Math.max(...state.totalTrade.values(), 1);
+
+      const intensity = Math.max(
+        0.08,
+        Math.min(1, Math.sqrt(value / maxValue))
+      );
+
+      const gb = Math.floor(255 * (1 - intensity));
+
+      return `rgb(255, ${gb}, ${gb})`;
+    }
+
+    // ==================================================
+    // DEFAULT MODE
+    // ==================================================
+
+    // No country selected -> continent colors
     if (!state.selectedISO && !state.pendingISO) {
       return defaultColor;
     }
 
-    // Loading or selected country
+    // Selected country stays orange
     if (iso === state.pendingISO || iso === state.selectedISO) {
       return t.countrySelected;
     }
 
-    const p = state.partners.get(iso);
-
-    // No partner data: use the theme's default country color instead of continent color
-    if (p == null) {
-      return t.countryDefault; // <-- Changed from `defaultColor` to `t.countryDefault`
-    }
-
-    // Trade intensity
-    const intensity = Math.max(
-      0.08,
-      Math.min(1, Math.sqrt(p / 20))
-    );
-    const gb = Math.floor(255 * (1 - intensity));
-    return `rgb(255, ${gb}, ${gb})`;
+    // Everything else keeps the default color
+    return defaultColor;
   }
 
   function drawStars(width, height, rotation) {

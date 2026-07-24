@@ -1,7 +1,7 @@
 import { createGlobe } from "./globe.js";
 import { state } from "./state.js";
 import { fetchTradePartners } from "./api.js";
-import { updateTradePanel } from "./ui.js";
+import { updateTradePanel } from "./uiController.js";
 
 const GEOJSON_URL =
   "https://raw.githubusercontent.com/samsol38/3dglobesearch/refs/heads/main/public/data/countries_v2.geojson";

@@ -10,6 +10,20 @@ export async function checkApiStatus() {
   }
 }
 
+export async function fetchAllCountriesTotals(type, year) {
+  const url = new URL(`${BASE_URL}/trade-totals`);
+  url.searchParams.append("type", type);
+  url.searchParams.append("year", year);
+
+  const res = await fetch(url.toString());
+
+  if (!res.ok) {
+    throw new Error("API request failed");
+  }
+
+  return res.json();
+}
+
 export async function fetchTradePartners(country, type, year) {
   const url = `${BASE_URL}/trade-partners?country=${country}&type=${type}&year=${year}`;
   
@@ -25,3 +39,4 @@ export async function fetchTradeSectors(country, type, year) {
   if (!res.ok) throw new Error('Failed to fetch sectors');
   return res.json();
 }
+

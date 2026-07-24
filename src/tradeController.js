@@ -1,6 +1,4 @@
 import { state } from "./state.js";
-import { fetchTradePartners } from "./api.js";
-import { updateTradePanel } from "./ui.js";
 
 export function initTrade() {
   const buttons = document.querySelectorAll("#mode-toggle button");
@@ -15,32 +13,6 @@ export function initTrade() {
       console.log("Mode changed:", state.mode);
       buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-
-      if (!state.selectedISO) return;
-
-      const iso = state.selectedISO;
-      const year = state.year; // ✅ Get the current year from state
-
-      const name =
-        document.getElementById("country-name").textContent.split(" • ")[0];
-
-      updateTradePanel(null, null, { loading: true });
-
-      try {
-        // ✅ Pass the year as the third parameter
-        const partners = await fetchTradePartners(iso, mode, year);
-
-        state.partners.clear();
-        partners.forEach(p => {
-          const key = p.iso || p.country;
-          if (key) state.partners.set(key, p.value);
-        });
-
-        updateTradePanel(name, partners);
-
-      } catch {
-        updateTradePanel(null, null, { error: true });
-      }
     });
   });
 }

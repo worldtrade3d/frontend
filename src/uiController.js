@@ -1,4 +1,5 @@
 import { state } from "./state.js";
+import { fetchAllCountriesTotals } from "./api.js";
 
 /* =========================
    FORMAT
@@ -7,19 +8,6 @@ function formatPercent(value) {
   if (value >= 10) return Math.round(value) + "%";
   if (value >= 1) return value.toFixed(1) + "%";
   return value.toFixed(3) + "%";
-}
-
-/* =========================
-   API STATUS
-========================= */
-export function updateApiStatus(isOnline) {
-  const dot = document.getElementById("status-dot");
-  const text = document.getElementById("status-text");
-
-  if (!dot || !text) return;
-
-  dot.style.background = isOnline ? "#22c55e" : "#ef4444";
-  text.textContent = isOnline ? "API Online" : "API Offline";
 }
 
 /* =========================
@@ -84,12 +72,7 @@ export function updateTradePanel(countryName, partners, options = {}) {
   );
 
 
-  /*
-     No TOP_N limit.
-     Shows every trade partner returned by API.
-  */
   const all = sorted;
-
 
   const maxValue = all[0]?.value || 1;
 
@@ -151,4 +134,42 @@ export function updateTradePanel(countryName, partners, options = {}) {
 
   });
 
+}
+
+export function initOptionsMenu() {
+    const button = document.getElementById("mode-btn");
+    const icon = document.getElementById("mode-icon");
+
+    if (!button || !icon) return;
+
+    state.mapMode = "default";
+
+    button.addEventListener("click", async () => {
+        if (state.mapMode === "default") {
+
+            const totals = await fetchAllCountriesTotals(
+                "export",
+                state.year
+            );
+
+            const map = new Map();
+
+            totals.forEach(country => {
+                map.set(country.country, country.total);
+            });
+
+            state.totalTrade = map;
+            state.mapMode = "heatmap";
+
+            icon.src = "assets/default.png";
+            icon.alt = "Heatmap";
+
+        } else {
+
+            state.mapMode = "default";
+
+            icon.src = "assets/heatmap.png";
+            icon.alt = "Default";
+        }
+    });
 }

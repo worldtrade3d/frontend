@@ -1,18 +1,23 @@
 import { checkApiStatus } from "./api.js";
-import { updateApiStatus } from "./ui.js";
+import { showApiConnectionError } from "./loadingController.js";
 
-export function initStatus() {
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-  async function checkAndUpdate() {
-    updateApiStatus(false);
+export async function initStatus() {
+  const maxRetries = 3;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
     const online = await checkApiStatus();
-    updateApiStatus(online);
+
+    if (online) {
+      return true;
+    }
+
+    if (attempt < maxRetries) {
+      await sleep(2000);
+    }
   }
 
-  checkAndUpdate();
-
-  document.getElementById("retry-btn")?.addEventListener(
-    "click",
-    checkAndUpdate
-  );
+  showApiConnectionError();
+  return false;
 }

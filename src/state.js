@@ -6,5 +6,7 @@ export const state = {
   partners: new Map(),
   mode: "export",
   theme: themes.dark,
-  year: new Date().getFullYear()
+  year: new Date().getFullYear(),
+  mapMode: "default",
+  totalTrade: new Map()
 };
