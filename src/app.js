@@ -4,7 +4,7 @@ import { initGlobe } from "./globeController.js";
 import { initYear } from "./yearController.js";
 import { hideLoadingScreen } from "./loadingController.js";
 
-import { initOptionsMenu } from "./uiController.js";
+import { initOptionsMenu } from "./layerController.js";
 
 export async function initApp() {
   const online = await initStatus();

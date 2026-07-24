@@ -11,16 +11,10 @@ export async function checkApiStatus() {
 }
 
 export async function fetchAllCountriesTotals(type, year) {
-  const url = new URL(`${BASE_URL}/trade-totals`);
-  url.searchParams.append("type", type);
-  url.searchParams.append("year", year);
+  const url = `${BASE_URL}/trade-totals?type=${type}&year=${year}`;
 
-  const res = await fetch(url.toString());
-
-  if (!res.ok) {
-    throw new Error("API request failed");
-  }
-
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("API request failed");
   return res.json();
 }
 

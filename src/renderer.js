@@ -1,5 +1,6 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { state } from "./state.js";
+import { theme } from "./theme.js";
 
 const starCache = new Map();
 
@@ -17,12 +18,12 @@ function getStarImage(src) {
 
 export function createRenderer({ context, projection, path, features, getISO }) {
 
-  function theme() {
-    return state.theme.globe;
+  function getTheme() {
+    return theme.globe;
   }
 
   function getColor(iso) {
-    const t = theme();
+    const t = getTheme();
 
     const feature = features.find(f => getISO(f) === iso);
     const continent = feature?.properties?.CONTINENT;
@@ -95,7 +96,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
   }
 
   function drawStars(width, height, rotation) {
-    const t = theme();
+    const t = getTheme();
     const img = getStarImage(t.stars);
 
     if (!img || !img.complete) return;
@@ -118,7 +119,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
   }
 
   function drawSphere(width, height, scale) {
-    const t = theme();
+    const t = getTheme();
 
     const gradient = context.createLinearGradient(
       0,
@@ -138,7 +139,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
   }
 
   function drawCountries(hovered) {
-    const t = theme();
+    const t = getTheme();
 
     for (let f of features) {
       if (f === hovered) continue;
@@ -160,7 +161,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
   function drawHovered(f) {
     if (!f) return;
 
-    const t = theme();
+    const t = getTheme();
 
     context.save();
 
