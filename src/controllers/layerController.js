@@ -3,8 +3,8 @@ import { state } from "../state.js";
 import { fetchAllCountriesTotals } from "../api.js";
 
 export function initLayers() {
-    const button = document.getElementById("mode-btn");
-    const icon = document.getElementById("mode-icon");
+    const button = document.getElementById("layer-btn");
+    const icon = document.getElementById("layer-icon");
 
     if (!button || !icon) return;
 
@@ -24,14 +24,14 @@ export function initLayers() {
             state.totalTrade = map;
             state.mapMode = "heatmap";
 
-            icon.src = "assets/default.png";
+            icon.src = "assets/graphics/default.png";
             icon.alt = "Heatmap";
 
         } else {
 
             state.mapMode = "default";
 
-            icon.src = "assets/heatmap.png";
+            icon.src = "assets/graphics/heatmap.png";
             icon.alt = "Default";
         }
     });

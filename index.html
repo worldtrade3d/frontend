@@ -12,7 +12,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+  <link rel="icon" type="image/png" href="/assets/icons/favicon.png">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -94,11 +94,11 @@
 
   <canvas id="globe"></canvas>
 
-  <div id="mode-container">
-      <button id="mode-btn" class="mode-btn">
+  <div id="layer-container">
+      <button id="layer-btn" class="layer-btn">
           <img
-              id="mode-icon"
-              src="assets/heatmap.png"
+              id="layer-icon"
+              src="assets/graphics/heatmap.png"
               alt="Default View"
           >
       </button>
@@ -125,21 +125,22 @@
     </div>
   </template>
 
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loader-content">
+      <div class="spinner"></div>
+      <h2 id="loading-title">Connecting to API...</h2>
+      <p id="loading-message">Please wait while trade data is loading.</p>
+    </div>
+
+    <!-- Bottom Logos -->
+    <div class="loading-logos">
+      <img src="assets/logos/uncomtrade.png" alt="Logo 1">
+      <img src="assets/logos/worldbank.png" alt="Logo 2">
+    </div>
+  </div>
+
   <script type="module" src="script.js"></script>
 
 </body>
-<!-- Loading Screen -->
-<div id="loading-screen">
-  <div class="loader-content">
-    <div class="spinner"></div>
-    <h2 id="loading-title">Connecting to API...</h2>
-    <p id="loading-message">Please wait while trade data is loading.</p>
-  </div>
-
-  <!-- Bottom Logos -->
-  <div class="loading-logos">
-    <img src="assets/uncomtrade.png" alt="Logo 1">
-    <img src="assets/worldbank.png" alt="Logo 2">
-  </div>
-</div>
 </html>

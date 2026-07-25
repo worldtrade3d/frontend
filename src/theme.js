@@ -28,7 +28,7 @@ export const theme = {
 
     // Trade arcs
     arc: {
-      color: "#253da8",
+      color: "#ffc400",
       width: 3,
       steps: 48,
       liftFactor: 0.28
