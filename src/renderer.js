@@ -3,7 +3,7 @@ import { state } from "./state.js";
 import { theme } from "./theme.js";
 
 export function createRenderer({ context, projection, path, features, getISO }) {
-  // Load the star image once when the renderer is created.
+  
   const starImage = new Image();
   starImage.src = theme.globe.stars;
 

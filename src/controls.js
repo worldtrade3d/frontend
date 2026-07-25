@@ -49,10 +49,33 @@ export function createControls({
   }
 
   // =========================
+  // CLEAR SELECTION
+  // =========================
+  function clearSelection() {
+    if (isAnimating) return;
+
+    state.selectedISO = null;
+    state.pendingISO = null;
+    state.partners = new Map();
+
+    hovered = null;
+
+    tooltip.style.opacity = 0;
+    canvas.style.cursor = "default";
+
+    onClick?.(null);
+  }
+
+  // =========================
   // COUNTRY ACTIVATION
   // =========================
   function activateCountry(feature) {
-    if (!feature || isAnimating) return;
+    if (isAnimating) return;
+
+    if (!feature) {
+      clearSelection();
+      return;
+    }
 
     focusCountry(feature);
     onClick?.(feature);
@@ -68,7 +91,7 @@ export function createControls({
   canvas.addEventListener("mousedown", e => {
     if (isAnimating) return;
     if (e.ctrlKey) return;
-    
+
     isDragging = true;
     last = [e.clientX, e.clientY];
     moved = false;
@@ -276,6 +299,7 @@ export function createControls({
   return {
     getHovered: () => hovered,
     focusCountry,
-    activateCountry
+    activateCountry,
+    clearSelection
   };
 }

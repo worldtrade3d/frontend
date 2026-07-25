@@ -17,12 +17,23 @@ export function initGlobe() {
 
         onClick: async (country) => {
 
+          // CLEAR SELECTION
+          if (!country) {
+            state.selectedISO = null;
+            state.pendingISO = null;
+            state.partners = new Map();
+
+            updateTradePanel("", null);
+            updateSectorPanel(null);
+
+            return;
+          }
+
           const iso = getISO(country);
           const name = country.properties.ADMIN;
 
           state.pendingISO = iso;
 
-          // Show loading in both panels
           updateTradePanel(name, null, {
             loading: true
           });
@@ -50,51 +61,32 @@ export function initGlobe() {
             const partnerMap = new Map();
 
             partners.forEach(partner => {
-
               const key = partner.iso || partner.country;
-
               if (key) {
                 partnerMap.set(key, partner.value);
               }
-
             });
 
             state.selectedISO = iso;
             state.pendingISO = null;
             state.partners = partnerMap;
 
-            updateTradePanel(
-              name,
-              partners
-            );
-
-            updateSectorPanel(
-              sectors
-            );
+            updateTradePanel(name, partners);
+            updateSectorPanel(sectors);
 
           } catch (error) {
 
-            console.error(
-              "Trade loading failed:",
-              error
-            );
+            console.error(error);
 
             state.pendingISO = null;
 
-            updateTradePanel(
-              name,
-              null,
-              {
-                error: true
-              }
-            );
+            updateTradePanel(name, null, {
+              error: true
+            });
 
-            updateSectorPanel(
-              null,
-              {
-                error: true
-              }
-            );
+            updateSectorPanel(null, {
+              error: true
+            });
 
           }
 

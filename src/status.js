@@ -38,8 +38,7 @@ function showApiConnectionError() {
   const spinner = document.querySelector(".spinner");
 
   title.textContent = "Cannot connect to API";
-  message.textContent =
-    "Please check that the API is running and refresh the page.";
+  message.textContent = "Please check that the API is running and refresh the page.";
 
   if (spinner) {
     spinner.style.display = "none";
@@ -48,16 +47,10 @@ function showApiConnectionError() {
 
 async function hideLoadingScreen() {
   await sleep(LOADING_FADE_DELAY);
-
+  
   const loadingScreen = document.getElementById("loading-screen");
-
   if (!loadingScreen) return;
 
   loadingScreen.classList.add("hidden");
-
-  loadingScreen.addEventListener(
-    "transitionend",
-    () => loadingScreen.remove(),
-    { once: true }
-  );
+  loadingScreen.addEventListener("transitionend", () => loadingScreen.remove(), { once: true });
 }

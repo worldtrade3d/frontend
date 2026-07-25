@@ -9,10 +9,7 @@ function formatPercent(value) {
 
 function formatLabel(text) {
   if (!text) return "";
-
-  return text
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, char => char.toUpperCase());
+  return text.replace(/_/g, " ").replace(/\b\w/g, char => char.toUpperCase());
 }
 
 /* =========================

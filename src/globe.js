@@ -5,7 +5,13 @@ import { createControls } from "./controls.js";
 import { createSearchController } from "./controllers/searchController.js";
 
 export function createGlobe(canvas, features, { onClick, onHover }) {
-  const { context, projection, path, stateRefs, start } = createGlobeEngine(canvas);
+  const {
+    context,
+    projection,
+    path,
+    stateRefs,
+    start
+  } = createGlobeEngine(canvas);
 
   const renderer = createRenderer({
     context,
@@ -22,11 +28,18 @@ export function createGlobe(canvas, features, { onClick, onHover }) {
     features,
     getISO,
     stateRefs,
-    onClick,
+
+    onClick: country => {
+      // Keep search input synchronized with globe selection
+      searchController.setSelectedCountry(country);
+
+      onClick?.(country);
+    },
+
     onHover
   });
 
-  createSearchController({
+  const searchController = createSearchController({
     features,
     controls
   });
@@ -95,5 +108,11 @@ function createGlobeEngine(canvas) {
     animate();
   }
 
-  return { context, projection, path, stateRefs, start };
+  return {
+    context,
+    projection,
+    path,
+    stateRefs,
+    start
+  };
 }

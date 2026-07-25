@@ -4,6 +4,7 @@ export function createSearchController({
 }) {
   const search = document.getElementById("country-search");
   const results = document.getElementById("country-results");
+  const clearButton = document.getElementById("search-clear");
 
   // Sort countries alphabetically
   const countries = [...features].sort((a, b) =>
@@ -11,6 +12,15 @@ export function createSearchController({
   );
 
   let selectedIndex = -1;
+
+  function updateClearButton() {
+    if (!clearButton) return;
+
+    clearButton.classList.toggle(
+      "show",
+      search.value.trim().length > 0
+    );
+  }
 
   function hideResults() {
     results.classList.remove("show");
@@ -38,8 +48,10 @@ export function createSearchController({
       });
 
       item.addEventListener("click", () => {
-        search.value = feature.properties.ADMIN;
+        setSelectedCountry(feature);
+
         controls.activateCountry(feature);
+
         hideResults();
         search.blur();
       });
@@ -57,7 +69,15 @@ export function createSearchController({
     });
   }
 
+  function setSelectedCountry(feature) {
+    search.value = feature ? feature.properties.ADMIN : "";
+    hideResults();
+    updateClearButton();
+  }
+
   search.addEventListener("input", () => {
+    updateClearButton();
+
     const query = search.value.trim().toLowerCase();
 
     if (!query) {
@@ -75,11 +95,9 @@ export function createSearchController({
   });
 
   search.addEventListener("keydown", e => {
-
     const items = [...results.children];
 
     switch (e.key) {
-
       case "ArrowDown":
         e.preventDefault();
 
@@ -121,9 +139,25 @@ export function createSearchController({
     }
   });
 
+  if (clearButton) {
+    clearButton.addEventListener("click", () => {
+      setSelectedCountry(null);
+
+      controls.activateCountry(null);
+
+      search.focus();
+    });
+  }
+
   document.addEventListener("click", e => {
     if (!e.target.closest("#search-container")) {
       hideResults();
     }
   });
+
+  updateClearButton();
+
+  return {
+    setSelectedCountry
+  };
 }
