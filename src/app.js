@@ -1,10 +1,9 @@
-import { initStatus } from "./statusController.js";
-import { initTrade } from "./tradeController.js";
-import { initGlobe } from "./globeController.js";
-import { initYear } from "./yearController.js";
-import { hideLoadingScreen } from "./loadingController.js";
-
-import { initOptionsMenu } from "./layerController.js";
+import { initStatus } from "./controllers/statusController.js";
+import { initTrade } from "./controllers/modeController.js";
+import { initGlobe } from "./controllers/globeController.js";
+import { initYear } from "./controllers/yearController.js";
+import { hideLoadingScreen } from "./controllers/loadingController.js";
+import { initOptionsMenu } from "./controllers/layerController.js";
 
 export async function initApp() {
   const online = await initStatus();

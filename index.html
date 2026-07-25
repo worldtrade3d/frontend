@@ -24,10 +24,13 @@
     <div id="search-container" class="glass">
       <input
         id="country-search"
-        type="text"
-        placeholder="Search countries..."
+        type="search"
+        placeholder="Search for a country..."
         autocomplete="off"
+        spellcheck="false"
       >
+
+      <div id="country-results"></div>
     </div>
 
     <section id="trade-panel" class="glass">
@@ -104,7 +107,7 @@
           >
       </button>
   </div>
-
+  
   <!-- Bottom Right Zoom -->
   <div id="zoom-controls">
     <button id="zoom-in" class="floating-btn">+</button>
@@ -113,6 +116,18 @@
 
   <div id="tooltip"></div>
 
+  <template id="trade-row-template">
+    <div class="trade-row">
+      <div class="trade-label">
+        <span class="trade-country"></span>
+        <span class="trade-value"></span>
+      </div>
+
+      <div class="trade-bar">
+        <div class="trade-fill"></div>
+      </div>
+    </div>
+  </template>
 
   <script type="module" src="script.js"></script>
 
@@ -123,6 +138,12 @@
     <div class="spinner"></div>
     <h2 id="loading-title">Connecting to API...</h2>
     <p id="loading-message">Please wait while trade data is loading.</p>
+  </div>
+
+  <!-- Bottom Logos -->
+  <div class="loading-logos">
+    <img src="assets/uncomtrade.png" alt="Logo 1">
+    <img src="assets/worldbank.png" alt="Logo 2">
   </div>
 </div>
 </html>

@@ -48,6 +48,20 @@ export function createControls({
   }
 
   // =========================
+  // COUNTRY ACTIVATION
+  // =========================
+  function activateCountry(feature) {
+    if (!feature || isAnimating) return;
+
+    focusCountry(feature);
+    onClick?.(feature);
+
+    hovered = null;
+    tooltip.style.opacity = 0;
+    canvas.style.cursor = "default";
+  }
+
+  // =========================
   // MOUSE DOWN
   // =========================
   canvas.addEventListener("mousedown", e => {
@@ -91,7 +105,6 @@ export function createControls({
 
       last = [x, y];
 
-      // Don't allow hover while dragging
       if (hovered) {
         hovered = null;
         onHover?.(null, e);
@@ -154,7 +167,6 @@ export function createControls({
 
       e.preventDefault();
 
-      // Sync target with actual current scale
       if (!zoomAnimating) {
         targetScale = projection.scale();
       }
@@ -176,14 +188,8 @@ export function createControls({
   canvas.addEventListener("click", () => {
     if (!hovered) return;
     if (moved) return;
-    if (isAnimating) return;
 
-    focusCountry(hovered);
-    onClick?.(hovered);
-
-    hovered = null;
-    tooltip.style.opacity = 0;
-    canvas.style.cursor = "default";
+    activateCountry(hovered);
   });
 
   // =========================
@@ -239,6 +245,8 @@ export function createControls({
   }
 
   return {
-    getHovered: () => hovered
+    getHovered: () => hovered,
+    focusCountry,
+    activateCountry
   };
 }

@@ -1,10 +1,10 @@
-import { checkApiStatus } from "./api.js";
+import { checkApiStatus } from "../api.js";
 import { showApiConnectionError } from "./loadingController.js";
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function initStatus() {
-  const maxRetries = 3;
+  const maxRetries = 7;
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     const online = await checkApiStatus();

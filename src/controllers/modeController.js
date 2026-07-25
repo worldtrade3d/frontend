@@ -1,4 +1,4 @@
-import { state } from "./state.js";
+import { state } from "../state.js";
 
 export function initTrade() {
   const buttons = document.querySelectorAll("#mode-toggle button");

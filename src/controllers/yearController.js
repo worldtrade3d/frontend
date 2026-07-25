@@ -1,4 +1,4 @@
-import { state } from "./state.js";
+import { state } from "../state.js";
 
 const MIN_YEAR = 1962;
 const MAX_YEAR = new Date().getFullYear() - 1;

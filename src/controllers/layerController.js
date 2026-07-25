@@ -1,6 +1,6 @@
-import { state } from "./state.js";
+import { state } from "../state.js";
 
-import { fetchAllCountriesTotals } from "./api.js";
+import { fetchAllCountriesTotals } from "../api.js";
 
 export function initOptionsMenu() {
     const button = document.getElementById("mode-btn");

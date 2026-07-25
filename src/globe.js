@@ -1,6 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { createRenderer } from "./renderer.js";
 import { createControls } from "./controls.js";
+import { createSearchController } from "./controllers/searchController.js";
 
 function getISO(f) {
   return f.properties.ISO_A3 !== "-99"
@@ -61,6 +62,11 @@ export function createGlobe(canvas, features, { onClick, onHover }) {
     stateRefs: { rotation, velocity },
     onClick,
     onHover
+  });
+
+  createSearchController({
+  features,
+  controls
   });
 
   function animate() {
