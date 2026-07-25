@@ -17,27 +17,16 @@ function getStarImage(src) {
 }
 
 export function createRenderer({ context, projection, path, features, getISO }) {
-
-  function getTheme() {
-    return theme.globe;
-  }
-
   function getColor(iso) {
-    const t = getTheme();
+    const t = theme.globe;
 
     const feature = features.find(f => getISO(f) === iso);
     const continent = feature?.properties?.CONTINENT;
-    const defaultColor =
-      t.continents?.[continent] ?? t.countryDefault;
+    const defaultColor = t.continents?.[continent] ?? t.countryDefault;
 
-    // ==================================================
-    // HEATMAP MODE
-    // ==================================================
+    // Heatmap mode
     if (state.mapMode === "heatmap") {
-
-      // If a country is selected, show its trade heatmap
       if (state.selectedISO || state.pendingISO) {
-
         if (iso === state.pendingISO || iso === state.selectedISO) {
           return t.countrySelected;
         }
@@ -48,17 +37,12 @@ export function createRenderer({ context, projection, path, features, getISO }) 
           return t.countryDefault;
         }
 
-        const intensity = Math.max(
-          0.08,
-          Math.min(1, Math.sqrt(p / 20))
-        );
-
+        const intensity = Math.max(0.08, Math.min(1, Math.sqrt(p / 20)));
         const gb = Math.floor(255 * (1 - intensity));
-
         return `rgb(255, ${gb}, ${gb})`;
       }
 
-      // No country selected -> global totals heatmap
+      // Global totals heatmap
       const value = state.totalTrade.get(iso);
 
       if (value == null) {
@@ -66,43 +50,30 @@ export function createRenderer({ context, projection, path, features, getISO }) 
       }
 
       const maxValue = Math.max(...state.totalTrade.values(), 1);
-
-      const intensity = Math.max(
-        0.08,
-        Math.min(1, Math.sqrt(value / maxValue))
-      );
-
+      const intensity = Math.max(0.08, Math.min(1, Math.sqrt(value / maxValue)));
       const gb = Math.floor(255 * (1 - intensity));
-
       return `rgb(255, ${gb}, ${gb})`;
     }
 
-    // ==================================================
-    // DEFAULT MODE
-    // ==================================================
-
-    // No country selected -> continent colors
+    // Default mode
     if (!state.selectedISO && !state.pendingISO) {
       return defaultColor;
     }
 
-    // Selected country stays orange
     if (iso === state.pendingISO || iso === state.selectedISO) {
       return t.countrySelected;
     }
 
-    // Everything else keeps the default color
     return defaultColor;
   }
 
   function drawStars(width, height, rotation) {
-    const t = getTheme();
+    const t = theme.globe;
     const img = getStarImage(t.stars);
 
     if (!img || !img.complete) return;
 
     const imgW = img.width;
-    const imgH = img.height;
 
     context.save();
 
@@ -119,7 +90,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
   }
 
   function drawSphere(width, height, scale) {
-    const t = getTheme();
+    const t = theme.globe;
 
     const gradient = context.createLinearGradient(
       0,
@@ -139,16 +110,15 @@ export function createRenderer({ context, projection, path, features, getISO }) 
   }
 
   function drawCountries(hovered) {
-    const t = getTheme();
+    const t = theme.globe;
 
-    for (let f of features) {
+    for (const f of features) {
       if (f === hovered) continue;
 
       context.beginPath();
       path(f);
 
       const iso = getISO(f);
-
       context.fillStyle = getColor(iso);
       context.fill();
 
@@ -161,7 +131,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
   function drawHovered(f) {
     if (!f) return;
 
-    const t = getTheme();
+    const t = theme.globe;
 
     context.save();
 
@@ -177,15 +147,18 @@ export function createRenderer({ context, projection, path, features, getISO }) 
 
     context.restore();
   }
-  
-  function drawTradeArcs(context, projection, links, features, getISO) {
+
+  function drawTradeArcs() {
+    const t = theme.globe;
     const center = projection.translate();
+    const { color, width, steps, liftFactor } = t.arc;
+    const { radius, borderColor, borderWidth, startColor, endColor } = t.arcDot;
 
     context.save();
     context.lineCap = "round";
     context.lineJoin = "round";
 
-    for (const link of links) {
+    for (const link of state.links) {
       const fromFeature = features.find(f => getISO(f) === link.from);
       const toFeature = features.find(f => getISO(f) === link.to);
       if (!fromFeature || !toFeature) continue;
@@ -198,9 +171,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
 
       const interpolate = d3.geoInterpolate(from, to);
       const dist = d3.geoDistance(from, to);
-      const height = 1 + 0.28 * (dist / Math.PI);
-
-      const steps = 48;
+      const height = 1 + liftFactor * (dist / Math.PI);
 
       let started = false;
       let startPoint = null;
@@ -211,7 +182,6 @@ export function createRenderer({ context, projection, path, features, getISO }) 
       for (let i = 0; i <= steps; i++) {
         const u = i / steps;
         const p = interpolate(u);
-
         const projected = projection(p);
 
         if (projected === null) {
@@ -240,29 +210,24 @@ export function createRenderer({ context, projection, path, features, getISO }) 
       }
 
       // Draw arc
-      context.strokeStyle = "#253da8";
-      context.lineWidth = 3;
+      context.strokeStyle = color;
+      context.lineWidth = width;
       context.stroke();
 
-      // Draw endpoint dots with border
-      const radius = 4;
-
-      // Start = exporter
-      context.fillStyle = "#ffd54a";   // deep ocean blue
-      context.strokeStyle = "#000000";
-      context.lineWidth = 2;
+      // Draw endpoint dots
+      context.strokeStyle = borderColor;
+      context.lineWidth = borderWidth;
 
       if (startPoint) {
+        context.fillStyle = startColor;
         context.beginPath();
         context.arc(startPoint[0], startPoint[1], radius, 0, Math.PI * 2);
         context.fill();
         context.stroke();
       }
 
-      // End = importer
-      context.fillStyle = "#66ff00";   // trade orange
-
       if (endPoint) {
+        context.fillStyle = endColor;
         context.beginPath();
         context.arc(endPoint[0], endPoint[1], radius, 0, Math.PI * 2);
         context.fill();
@@ -280,7 +245,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
     drawSphere(width, height, scale);
     drawCountries(hovered);
     drawHovered(hovered);
-    drawTradeArcs(context, projection, state.links, features, getISO);
+    drawTradeArcs();
   }
 
   return { render };

@@ -4,17 +4,19 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 function createTradeLink(fromISO, toISO) {
   if (fromISO === toISO) return;
 
-  // Avoid duplicates
-  if (
-    state.links.some(
-      l =>
-        (l.from === fromISO && l.to === toISO) ||
-        (l.from === toISO && l.to === fromISO)
-    )
-  ) {
+  const index = state.links.findIndex(
+    l =>
+      (l.from === fromISO && l.to === toISO) ||
+      (l.from === toISO && l.to === fromISO)
+  );
+
+  // If link exists, remove it
+  if (index !== -1) {
+    state.links.splice(index, 1);
     return;
   }
 
+  // Otherwise create it
   state.links.push({
     from: fromISO,
     to: toISO
@@ -87,7 +89,8 @@ export function createControls({
   // =========================
   canvas.addEventListener("mousedown", e => {
     if (isAnimating) return;
-
+    if (e.ctrlKey) return;
+    
     isDragging = true;
     last = [e.clientX, e.clientY];
     moved = false;

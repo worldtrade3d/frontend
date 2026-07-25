@@ -1,14 +1,17 @@
 export const state = {
+  // Currently selected country
   selectedISO: null,
-  pendingISO: null,
+  pendingISO: null,        // temporary while data is loading
 
-  
-  mode: "export",
+  // Filters
+  mode: "export",          // "export" | "import"
   year: new Date().getFullYear(),
 
-  partners: new Map(),
-  totalTrade: new Map(),
-  mapMode: "default",
+  // Data
+  partners: new Map(),     // iso → value (for selected country)
+  totalTrade: new Map(),   // iso → total (for heatmap)
+  links: [],               // manual trade arcs { from, to }
 
-  links: []
+  // View
+  mapMode: "default"       // "default" | "heatmap"
 };

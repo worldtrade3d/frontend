@@ -1,6 +1,4 @@
 
-const BG = "https://unpkg.com/three-globe/example/img/night-sky.png";
-
 export const theme = {
   globe: {
     sphere: [
@@ -12,9 +10,11 @@ export const theme = {
     countryDefault: "#e6e6e6",
     countryHovered: "#00cc66",
     countrySelected: "#ffd54a",
+
     strokecolor: "#555555",
-    strokethickness: "1.2",
-    stars: BG,
+    strokethickness: 1.2,
+
+    stars: "https://unpkg.com/three-globe/example/img/night-sky.png",
 
     continents: {
       Africa: "#f4d28c",
@@ -24,6 +24,23 @@ export const theme = {
       "South America": "#dfe79d",
       Oceania: "#d8c7ef",
       Antarctica: "#f7f7f7"
+    },
+
+    // Trade arcs
+    arc: {
+      color: "#253da8",
+      width: 3,
+      steps: 48,
+      liftFactor: 0.28
+    },
+
+    // Arc endpoint dots
+    arcDot: {
+      radius: 4,
+      borderColor: "#000000",
+      borderWidth: 2,
+      startColor: "#ffd54a",   // exporter
+      endColor: "#66ff00"     // importer
     }
   }
 };
