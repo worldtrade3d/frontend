@@ -1,4 +1,25 @@
+import { state } from "./state.js";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+function createTradeLink(fromISO, toISO) {
+  if (fromISO === toISO) return;
+
+  // Avoid duplicates
+  if (
+    state.links.some(
+      l =>
+        (l.from === fromISO && l.to === toISO) ||
+        (l.from === toISO && l.to === fromISO)
+    )
+  ) {
+    return;
+  }
+
+  state.links.push({
+    from: fromISO,
+    to: toISO
+  });
+}
 
 export function createControls({
   canvas,
@@ -185,9 +206,15 @@ export function createControls({
   // =========================
   // CLICK
   // =========================
-  canvas.addEventListener("click", () => {
+  canvas.addEventListener("click", e => {
     if (!hovered) return;
     if (moved) return;
+
+    // Ctrl + click when a country is already selected
+    if (e.ctrlKey && state.selectedISO) {
+      createTradeLink(state.selectedISO, getISO(hovered));
+      return;
+    }
 
     activateCountry(hovered);
   });

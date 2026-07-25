@@ -8,5 +8,7 @@ export const state = {
 
   partners: new Map(),
   totalTrade: new Map(),
-  mapMode: "default"
+  mapMode: "default",
+
+  links: []
 };

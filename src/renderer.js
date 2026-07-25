@@ -177,6 +177,101 @@ export function createRenderer({ context, projection, path, features, getISO }) 
 
     context.restore();
   }
+  
+  function drawTradeArcs(context, projection, links, features, getISO) {
+    const center = projection.translate();
+
+    context.save();
+    context.lineCap = "round";
+    context.lineJoin = "round";
+
+    for (const link of links) {
+      const fromFeature = features.find(f => getISO(f) === link.from);
+      const toFeature = features.find(f => getISO(f) === link.to);
+      if (!fromFeature || !toFeature) continue;
+
+      const from = d3.geoCentroid(fromFeature);
+      const to = d3.geoCentroid(toFeature);
+
+      // Skip if both endpoints are on the back side
+      if (projection(from) === null && projection(to) === null) continue;
+
+      const interpolate = d3.geoInterpolate(from, to);
+      const dist = d3.geoDistance(from, to);
+      const height = 1 + 0.28 * (dist / Math.PI);
+
+      const steps = 48;
+
+      let started = false;
+      let startPoint = null;
+      let endPoint = null;
+
+      context.beginPath();
+
+      for (let i = 0; i <= steps; i++) {
+        const u = i / steps;
+        const p = interpolate(u);
+
+        const projected = projection(p);
+
+        if (projected === null) {
+          started = false;
+          continue;
+        }
+
+        let [x, y] = projected;
+
+        // Lift the middle of the arc
+        if (i > 0 && i < steps) {
+          const lift = Math.sin(u * Math.PI);
+          x = center[0] + (x - center[0]) * (1 + (height - 1) * lift);
+          y = center[1] + (y - center[1]) * (1 + (height - 1) * lift);
+        }
+
+        if (!started) {
+          context.moveTo(x, y);
+          started = true;
+          startPoint = [x, y];
+        } else {
+          context.lineTo(x, y);
+        }
+
+        endPoint = [x, y];
+      }
+
+      // Draw arc
+      context.strokeStyle = "#253da8";
+      context.lineWidth = 3;
+      context.stroke();
+
+      // Draw endpoint dots with border
+      const radius = 4;
+
+      // Start = exporter
+      context.fillStyle = "#ffd54a";   // deep ocean blue
+      context.strokeStyle = "#000000";
+      context.lineWidth = 2;
+
+      if (startPoint) {
+        context.beginPath();
+        context.arc(startPoint[0], startPoint[1], radius, 0, Math.PI * 2);
+        context.fill();
+        context.stroke();
+      }
+
+      // End = importer
+      context.fillStyle = "#66ff00";   // trade orange
+
+      if (endPoint) {
+        context.beginPath();
+        context.arc(endPoint[0], endPoint[1], radius, 0, Math.PI * 2);
+        context.fill();
+        context.stroke();
+      }
+    }
+
+    context.restore();
+  }
 
   function render({ hovered, rotation, scale, width, height }) {
     context.clearRect(0, 0, width, height);
@@ -185,6 +280,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
     drawSphere(width, height, scale);
     drawCountries(hovered);
     drawHovered(hovered);
+    drawTradeArcs(context, projection, state.links, features, getISO);
   }
 
   return { render };
