@@ -2,21 +2,11 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { state } from "./state.js";
 import { theme } from "./theme.js";
 
-const starCache = new Map();
-
-function getStarImage(src) {
-  if (!src) return null;
-
-  if (!starCache.has(src)) {
-    const img = new Image();
-    img.src = src;
-    starCache.set(src, img);
-  }
-
-  return starCache.get(src);
-}
-
 export function createRenderer({ context, projection, path, features, getISO }) {
+  // Load the star image once when the renderer is created.
+  const starImage = new Image();
+  starImage.src = theme.globe.stars;
+
   function getColor(iso) {
     const t = theme.globe;
 
@@ -68,12 +58,9 @@ export function createRenderer({ context, projection, path, features, getISO }) 
   }
 
   function drawStars(width, height, rotation) {
-    const t = theme.globe;
-    const img = getStarImage(t.stars);
+    if (!starImage.complete) return;
 
-    if (!img || !img.complete) return;
-
-    const imgW = img.width;
+    const imgW = starImage.width;
 
     context.save();
 
@@ -83,7 +70,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
     context.translate(-offsetX, 0);
 
     for (let x = -imgW; x < width + imgW; x += imgW) {
-      context.drawImage(img, x, 0, imgW, height);
+      context.drawImage(starImage, x, 0, imgW, height);
     }
 
     context.restore();

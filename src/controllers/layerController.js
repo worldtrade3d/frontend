@@ -2,7 +2,7 @@ import { state } from "../state.js";
 
 import { fetchAllCountriesTotals } from "../api.js";
 
-export function initOptionsMenu() {
+export function initLayers() {
     const button = document.getElementById("mode-btn");
     const icon = document.getElementById("mode-icon");
 
