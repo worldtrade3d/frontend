@@ -9,7 +9,7 @@ export const theme = {
 
     countryDefault: "#e6e6e6",
     countryHovered: "#00cc66",
-    countrySelected: "#ffd54a",
+    countrySelected: "#fdff96",
 
     strokecolor: "#555555",
     strokethickness: 1.2,
@@ -28,7 +28,9 @@ export const theme = {
 
     // Trade arcs
     arc: {
-      color: "#ffc400",
+      color: "#fdff96",
+      borderColor: "#000000",
+      borderWidth: 3,
       width: 3,
       steps: 48,
       liftFactor: 0.28
@@ -39,8 +41,8 @@ export const theme = {
       radius: 4,
       borderColor: "#000000",
       borderWidth: 2,
-      startColor: "#ffd54a",   // exporter
-      endColor: "#66ff00"     // importer
+      startColor: "#45bbff",   // exporter
+      endColor: "#00cc66"     // importer
     }
   }
 };

@@ -1,6 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { state } from "./state.js";
 import { theme } from "./theme.js";
+import { getMainLandmass } from "./utils.js";
 
 export function createRenderer({ context, projection, path, features, getISO }) {
   
@@ -149,26 +150,30 @@ export function createRenderer({ context, projection, path, features, getISO }) 
   function drawTradeArcs() {
     const t = theme.globe;
     const center = projection.translate();
-    const { color, width, steps, liftFactor } = t.arc;
-    const { radius, borderColor, borderWidth, startColor, endColor } = t.arcDot;
+
+    const { color, width, borderColor: arcBorderColor, borderWidth: arcBorderWidth, steps, liftFactor } = t.arc;
+    const { radius, borderColor: dotBorderColor, borderWidth: dotBorderWidth, startColor, endColor } = t.arcDot;
 
     context.save();
+
     context.lineCap = "round";
     context.lineJoin = "round";
 
     for (const link of state.links) {
       const fromFeature = features.find(f => getISO(f) === link.from);
       const toFeature = features.find(f => getISO(f) === link.to);
+
       if (!fromFeature || !toFeature) continue;
 
-      const from = d3.geoCentroid(fromFeature);
-      const to = d3.geoCentroid(toFeature);
+      const from = d3.geoCentroid(getMainLandmass(fromFeature));
+      const to = d3.geoCentroid(getMainLandmass(toFeature));
 
-      // Skip if both endpoints are on the back side
+      // Skip if both endpoints are hidden
       if (projection(from) === null && projection(to) === null) continue;
 
       const interpolate = d3.geoInterpolate(from, to);
       const dist = d3.geoDistance(from, to);
+
       const height = 1 + liftFactor * (dist / Math.PI);
 
       let started = false;
@@ -179,6 +184,7 @@ export function createRenderer({ context, projection, path, features, getISO }) 
 
       for (let i = 0; i <= steps; i++) {
         const u = i / steps;
+
         const p = interpolate(u);
         const projected = projection(p);
 
@@ -189,11 +195,15 @@ export function createRenderer({ context, projection, path, features, getISO }) 
 
         let [x, y] = projected;
 
-        // Lift the middle of the arc
+        // Arc lift effect
         if (i > 0 && i < steps) {
           const lift = Math.sin(u * Math.PI);
-          x = center[0] + (x - center[0]) * (1 + (height - 1) * lift);
-          y = center[1] + (y - center[1]) * (1 + (height - 1) * lift);
+
+          x = center[0] + 
+              (x - center[0]) * (1 + (height - 1) * lift);
+
+          y = center[1] + 
+              (y - center[1]) * (1 + (height - 1) * lift);
         }
 
         if (!started) {
@@ -207,27 +217,59 @@ export function createRenderer({ context, projection, path, features, getISO }) 
         endPoint = [x, y];
       }
 
-      // Draw arc
+
+      // ============================
+      // ARC BORDER
+      // ============================
+      context.strokeStyle = arcBorderColor;
+      context.lineWidth = width + arcBorderWidth;
+      context.stroke();
+
+
+      // ============================
+      // ARC COLOR
+      // ============================
       context.strokeStyle = color;
       context.lineWidth = width;
       context.stroke();
 
-      // Draw endpoint dots
-      context.strokeStyle = borderColor;
-      context.lineWidth = borderWidth;
+
+      // ============================
+      // ENDPOINT DOTS
+      // ============================
+      context.strokeStyle = dotBorderColor;
+      context.lineWidth = dotBorderWidth;
+
 
       if (startPoint) {
         context.fillStyle = startColor;
+
         context.beginPath();
-        context.arc(startPoint[0], startPoint[1], radius, 0, Math.PI * 2);
+        context.arc(
+          startPoint[0],
+          startPoint[1],
+          radius,
+          0,
+          Math.PI * 2
+        );
+
         context.fill();
         context.stroke();
       }
 
+
       if (endPoint) {
         context.fillStyle = endColor;
+
         context.beginPath();
-        context.arc(endPoint[0], endPoint[1], radius, 0, Math.PI * 2);
+        context.arc(
+          endPoint[0],
+          endPoint[1],
+          radius,
+          0,
+          Math.PI * 2
+        );
+
         context.fill();
         context.stroke();
       }

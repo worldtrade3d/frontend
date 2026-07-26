@@ -1,5 +1,6 @@
-import { state } from "./state.js";
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { state } from "./state.js";
+import { getMainLandmass } from "./utils.js";
 
 export function createControls({
   canvas,
@@ -252,7 +253,9 @@ export function createControls({
 
     isAnimating = true;
 
-    const [lon, lat] = d3.geoCentroid(feature);
+    const mainFeature = getMainLandmass(feature);
+    const [lon, lat] = d3.geoCentroid(mainFeature);
+
     const target = [-lon, Math.max(-60, Math.min(60, -lat))];
 
     const start = [...rotation];

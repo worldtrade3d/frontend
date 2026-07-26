@@ -53,7 +53,7 @@ function createGlobeEngine(canvas) {
   const path = d3.geoPath(projection, context);
 
   let width, height, scale;
-  let rotation = [0, -20];
+  let rotation = [-6, -24];
   let velocity = [0, 0];
 
   const stateRefs = { rotation, velocity };
@@ -83,6 +83,7 @@ function createGlobeEngine(canvas) {
 
   function start(renderer, controls) {
     function animate() {
+      console.log(rotation);
       velocity[0] *= 0.92;
       velocity[1] *= 0.92;
 

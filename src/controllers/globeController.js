@@ -4,7 +4,7 @@ import { fetchTradePartners, fetchTradeSectors } from "../api.js";
 import { updateTradePanel, updateSectorPanel } from "./barController.js";
 import { getISO } from "../utils.js";
 
-const GEOJSON_URL = "https://raw.githubusercontent.com/samsol38/3dglobesearch/refs/heads/main/public/data/countries_v2.geojson";
+const GEOJSON_URL = "../data/countries.geojson";
 
 export function initGlobe() {
   const canvas = document.getElementById("globe");

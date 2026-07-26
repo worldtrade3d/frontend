@@ -33,11 +33,8 @@ async function waitForApi() {
 }
 
 function showApiConnectionError() {
-  const title = document.getElementById("loading-title");
   const message = document.getElementById("loading-message");
   const spinner = document.querySelector(".spinner");
-
-  title.textContent = "Cannot connect to API";
 
   message.innerHTML = 'Please check that the API is running and <a href="#" id="refresh-link" style="color: #9ecbff; text-decoration: underline;">refresh</a> the page.';
 
@@ -56,11 +53,28 @@ async function hideLoadingScreen() {
 
   const loadingScreen = document.getElementById("loading-scene");
   const applicationScene = document.getElementById("application-scene");
+  const logo = document.querySelector(".center-logo");
 
   if (!loadingScreen || !applicationScene) return;
 
+  // Show app underneath first
   applicationScene.hidden = false;
+
+  // Fade logo to full opacity
+  if (logo) {
+    logo.classList.add("connected");
+
+    await new Promise(resolve => {
+      logo.addEventListener("transitionend", resolve, { once: true });
+    });
+  }
+
+  // Now fade out the loading screen
   loadingScreen.classList.add("hidden");
-  
-  loadingScreen.addEventListener("transitionend", () => loadingScreen.remove(), { once: true });
+
+  loadingScreen.addEventListener(
+    "transitionend",
+    () => loadingScreen.remove(),
+    { once: true }
+  );
 }
