@@ -4,7 +4,7 @@ import { initTrade  } from "./controllers/tradeController.js";
 import { initLayers } from "./controllers/layerController.js";
 
 export async function initApp() {
-  await initStatus();
+  if (!(await initStatus())) return;
   
   initGlobe();
   initTrade();

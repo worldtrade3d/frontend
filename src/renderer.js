@@ -61,16 +61,27 @@ export function createRenderer({ context, projection, path, features, getISO }) 
     if (!starImage.complete) return;
 
     const imgW = starImage.width;
+    const imgH = starImage.height;
 
     context.save();
 
+    // Calculate horizontal and vertical offsets based on globe rotation
+    // rotation[0] is yaw (left/right), rotation[1] is pitch (up/down)
     let offsetX = rotation[0] % imgW;
     if (offsetX < 0) offsetX += imgW;
 
-    context.translate(-offsetX, 0);
+    let offsetY = rotation[1] % imgH;
+    if (offsetY < 0) offsetY += imgH;
 
+    // Apply both horizontal and vertical translation
+    context.translate(-offsetX, -offsetY);
+
+    // Tile the image in BOTH directions to cover the entire canvas
+    // The extra buffer (-imgW/H to +width/height+imgW/H) guarantees no white stripes
     for (let x = -imgW; x < width + imgW; x += imgW) {
-      context.drawImage(starImage, x, 0, imgW, height);
+    for (let y = -imgH; y < height + imgH; y += imgH) {
+      context.drawImage(starImage, x, y, imgW, imgH);
+    }
     }
 
     context.restore();

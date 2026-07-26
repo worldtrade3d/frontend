@@ -14,7 +14,7 @@ export const theme = {
     strokecolor: "#555555",
     strokethickness: 1.2,
 
-    stars: "https://unpkg.com/three-globe/example/img/night-sky.png",
+    stars: "./assets/backgrounds/star-sky.png",
 
     continents: {
       Africa: "#f4d28c",

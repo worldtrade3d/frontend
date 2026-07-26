@@ -39,8 +39,7 @@ function showApiConnectionError() {
 
   title.textContent = "Cannot connect to API";
 
-  message.innerHTML =
-  'Please check that the API is running and <a href="#" id="refresh-link" style="color: #9ecbff; text-decoration: underline;">refresh</a> the page.';
+  message.innerHTML = 'Please check that the API is running and <a href="#" id="refresh-link" style="color: #9ecbff; text-decoration: underline;">refresh</a> the page.';
 
   document.getElementById("refresh-link").addEventListener("click", (e) => {
     e.preventDefault();
@@ -55,9 +54,13 @@ function showApiConnectionError() {
 async function hideLoadingScreen() {
   await sleep(LOADING_FADE_DELAY);
 
-  const loadingScreen = document.getElementById("loading-screen");
-  if (!loadingScreen) return;
+  const loadingScreen = document.getElementById("loading-scene");
+  const applicationScene = document.getElementById("application-scene");
 
+  if (!loadingScreen || !applicationScene) return;
+
+  applicationScene.hidden = false;
   loadingScreen.classList.add("hidden");
+  
   loadingScreen.addEventListener("transitionend", () => loadingScreen.remove(), { once: true });
 }
