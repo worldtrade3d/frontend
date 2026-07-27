@@ -33,19 +33,20 @@ async function waitForApi() {
 }
 
 function showApiConnectionError() {
-  const message = document.getElementById("loading-message");
   const spinner = document.querySelector(".spinner");
+  const message = document.getElementById("error-message");
+
+  if (spinner) {
+    spinner.style.display = "none";
+  }
 
   message.innerHTML = 'Please check that the API is running and <a href="#" id="refresh-link" style="color: #9ecbff; text-decoration: underline;">refresh</a> the page.';
+  message.style.display = "block";
 
   document.getElementById("refresh-link").addEventListener("click", (e) => {
     e.preventDefault();
     location.reload();
   });
-
-  if (spinner) {
-    spinner.style.display = "none";
-  }
 }
 
 async function hideLoadingScreen() {
@@ -53,21 +54,11 @@ async function hideLoadingScreen() {
 
   const loadingScreen = document.getElementById("loading-scene");
   const applicationScene = document.getElementById("application-scene");
-  const logo = document.querySelector(".center-logo");
 
   if (!loadingScreen || !applicationScene) return;
 
   // Show app underneath first
   applicationScene.hidden = false;
-
-  // Fade logo to full opacity
-  if (logo) {
-    logo.classList.add("connected");
-
-    await new Promise(resolve => {
-      logo.addEventListener("transitionend", resolve, { once: true });
-    });
-  }
 
   // Now fade out the loading screen
   loadingScreen.classList.add("hidden");

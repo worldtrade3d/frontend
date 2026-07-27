@@ -414,15 +414,11 @@ h2 {
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-lg);
-  background: rgba(30, 30, 40, 0.9);
-  border: 1px solid var(--border-glass);
+  background: var(--accent-white);
+  border: 3px solid var(--border-glass);
   cursor: pointer;
-  transition: transform var(--transition-normal);
 }
 
-.layer-btn:hover {
-  transform: scale(1.08);
-}
 
 .layer-btn img {
   width: 100%;
@@ -504,11 +500,13 @@ h2 {
   justify-content: center;
   align-items: center;
   z-index: 99999;
+
+  opacity: 1;
+  transition: opacity 0.2s ease;
 }
 
 #loading-scene.hidden {
   opacity: 0;
-  visibility: hidden;
   pointer-events: none;
 }
 
@@ -530,13 +528,8 @@ h2 {
 .center-logo {
   position: relative;
   height: auto;
-  opacity: 0.5; /* 50% opacity */
-  transition: opacity 0.3s ease;
+  opacity: 0.25; /* 50% opacity */
   z-index: 1;
-}
-
-.center-logo.connected {
-  opacity: 1;
 }
 
 .loader-content {
@@ -566,6 +559,8 @@ h2 {
   display: flex;
   align-items: center;
   gap: 20px;
+
+  z-index: 100001;
 }
 
 .loading-logos img {
@@ -573,6 +568,11 @@ h2 {
   width: auto;
   object-fit: contain;
   filter: brightness(0) invert(1);
+}
+
+.loading-title {
+  position: absolute;
+  left: 50%;
 }
 
 .spinner {
