@@ -184,6 +184,27 @@ export function createControls({
   });
 
   // =========================
+  // ZOOM FUNCTION
+  // =========================
+  function zoomBy(amount) {
+    if (isAnimating) return;
+
+    if (!zoomAnimating) {
+      targetScale = projection.scale();
+    }
+
+    targetScale += amount;
+
+    targetScale = Math.max(200, Math.min(600, targetScale));
+
+    if (!zoomAnimating) {
+      zoomAnimating = true;
+      requestAnimationFrame(smoothZoom);
+    }
+  }
+
+
+  // =========================
   // SMOOTH SCROLL ZOOM
   // =========================
   canvas.addEventListener(
@@ -193,20 +214,25 @@ export function createControls({
 
       e.preventDefault();
 
-      if (!zoomAnimating) {
-        targetScale = projection.scale();
-      }
-
-      targetScale += e.deltaY * -0.3;
-      targetScale = Math.max(200, Math.min(600, targetScale));
-
-      if (!zoomAnimating) {
-        zoomAnimating = true;
-        requestAnimationFrame(smoothZoom);
-      }
+      zoomBy(e.deltaY * -0.3);
     },
     { passive: false }
   );
+
+
+  // =========================
+  // BUTTON ZOOM CONTROLS
+  // =========================
+  const zoomInBtn = document.getElementById("zoom-in");
+  const zoomOutBtn = document.getElementById("zoom-out");
+
+  zoomInBtn?.addEventListener("click", () => {
+    zoomBy(40);
+  });
+
+  zoomOutBtn?.addEventListener("click", () => {
+    zoomBy(-40);
+  });
 
   // =========================
   // CLICK

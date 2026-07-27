@@ -406,19 +406,41 @@ h2 {
 }
 
 .layer-btn {
-  width: 64px;
-  height: 64px;
-  padding: 0;
-  overflow: hidden;
+  width: 72px;
+  height: 72px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-lg);
-  background: var(--accent-white);
-  border: 3px solid var(--border-glass);
+
+  padding: 0;
+  overflow: hidden;
+
+  border: 2px solid var(--border-glass);
+  border-radius: 10%;
+
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+
   cursor: pointer;
+
+  transition:
+    transform var(--transition-normal),
+    background var(--transition-normal),
+    border-color var(--transition-normal);
 }
 
+.layer-btn:hover {
+  background: rgba(25, 25, 30, 0.95);
+  border-color: rgb(255, 255, 255, 1.0);
+}
+
+.layer-btn:active {
+  transform: scale(0.95);
+}
 
 .layer-btn img {
   width: 100%;
