@@ -83,7 +83,6 @@ function createGlobeEngine(canvas) {
 
   function start(renderer, controls) {
     function animate() {
-      console.log(rotation);
       velocity[0] *= 0.92;
       velocity[1] *= 0.92;
 

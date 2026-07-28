@@ -2,9 +2,9 @@
 export const theme = {
   globe: {
     sphere: [
-      "#e8f7ff",
-      "#9ed8f3",
-      "#4ea5d9"
+      "#74c9f4",
+      "#2b7dbc",
+      "#12385f"
     ],
 
     countryDefault: "#e6e6e6",
