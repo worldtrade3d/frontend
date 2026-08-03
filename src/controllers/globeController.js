@@ -1,4 +1,4 @@
-import { createGlobe } from "../services/globe.js";
+import { createGlobe } from "../compositors/globeCompositor.js";
 import { state } from "../state/state.js";
 import { fetchTradePartners, fetchTradeSectors } from "../services/api.js";
 import { updateTradePanel, updateSectorPanel } from "../render/panelRenderer.js";
@@ -18,12 +18,6 @@ export function initGlobe() {
 
     .then(data => {
 
-
-      // Build ISO_A3 -> country name lookup
-      // Example:
-      // DEU -> Germany
-      // SWE -> Sweden
-      // USA -> United States
       buildCountryLookup(
         data.features
       );

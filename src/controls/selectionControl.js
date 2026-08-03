@@ -1,5 +1,5 @@
 import { state } from "../state/state.js";
-import { focusCountry } from "./focus.js";
+import { focusCountry } from "./focusControl.js";
 
 export function clearSelection(ctx) {
   if (ctx.isAnimating) return;

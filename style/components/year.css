@@ -1,4 +1,7 @@
-/* Center Year Selector */
+/* ==========================================================================
+   Year selector
+   ========================================================================== */
+
 #year-selector {
   position: absolute;
   top: 28px;
@@ -11,7 +14,6 @@
   background: var(--bg-glass);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   z-index: 20;
 }

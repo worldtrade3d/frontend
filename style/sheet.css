@@ -1,8 +1,13 @@
-@import "./components/root.css";
-@import "./components/globe.css";
+@import "./base/variables.css";
+
+@import "./base/global.css";
+@import "./base/reset.css";
+@import "./base/utils.css";
+
 @import "./components/panels.css";
 @import "./components/search.css";
 @import "./components/layer.css";
-@import "./components/utils.css";
 @import "./components/year.css";
 @import "./components/loader.css";
+@import "./components/mode.css";
+@import "./components/globe.css";

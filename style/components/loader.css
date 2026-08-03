@@ -1,11 +1,11 @@
 /* ==========================================================================
-   8. Loading Scene Overlay
+   Loading Scene Overlay
    ========================================================================== */
 
 #loading-scene {
   position: fixed;
   inset: 0;
-  background-image: url("assets/backgrounds/star-sky.png");
+  background-image: url("/assets/backgrounds/star-sky.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
