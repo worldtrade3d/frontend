@@ -6,7 +6,7 @@
   /* Colors */
   --bg-dark: #0f1115;
   --bg-glass: rgba(12, 12, 16, 0.25);
-  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass: rgba(255, 255, 255, 1);
   --text-primary: #f5f5f4;
   --text-secondary: rgba(255, 255, 255, 0.45);
   --text-muted: rgba(255, 255, 255, 0.35);
@@ -368,7 +368,6 @@ h2 {
   background: var(--bg-glass);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   z-index: 20;
@@ -532,6 +531,7 @@ h2 {
   pointer-events: none;
 }
 
+/* Logo */
 .logo-wrapper {
   position: relative;
 
@@ -543,22 +543,48 @@ h2 {
 .logo-bg {
   position: absolute;
   inset: 0;
+  background: #000;
   border-radius: 50%;
-  background: black; /* Circle color */
 }
 
 .center-logo {
   position: relative;
-  height: auto;
-  opacity: 0.25; /* 50% opacity */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.25;
   z-index: 1;
+}
+
+/* Spinner overlays logo */
+.spinner {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+  margin: 0;
+
+  border: 4px solid rgba(255,255,255,0.15);
+  border-top-color: var(--accent-white);
+  border-radius: 50%;
+
+  animation: spin 1s linear infinite;
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+.spinner.stopped {
+  animation: none;
+  border-top-color: rgba(255, 255, 255, 0.15); /* Same as the rest of the ring */
 }
 
 .loader-content {
   position: absolute;
   text-align: center;
   color: #fff;
-  z-index: 2;
+  z-index: 3;
 }
 
 .loader-content h2 {
@@ -568,7 +594,7 @@ h2 {
 }
 
 .loader-content p {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255,255,255,0.7);
   font-size: 15px;
 }
 
@@ -595,18 +621,6 @@ h2 {
 .loading-title {
   position: absolute;
   left: 50%;
-}
-
-.spinner {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto;
-
-  border: 4px solid rgba(255, 255, 255, 0.15);
-  border-top: 4px solid var(--accent-white);
-  border-radius: 50%;
-
-  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {

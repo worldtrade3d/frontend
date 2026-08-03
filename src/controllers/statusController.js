@@ -1,10 +1,10 @@
 import { checkApiStatus } from "../services/api.js";
 
-const MAX_RETRIES = 7;
+const MAX_RETRIES = 5;
 const RETRY_DELAY = 2000;
 const LOADING_FADE_DELAY = 300;
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function initStatus() {
   const online = await waitForApi();
@@ -14,8 +14,19 @@ export async function initStatus() {
     return false;
   }
 
+  // Simulated loading steps after connection
+  await playLoadingSequence();
+
   await hideLoadingScreen();
   return true;
+}
+
+function setLoadingStatus(text) {
+  const message = document.getElementById("loader-message");
+  if (!message) return;
+
+  message.textContent = text;
+  message.style.display = "block";
 }
 
 async function waitForApi() {
@@ -32,15 +43,31 @@ async function waitForApi() {
   return false;
 }
 
+async function playLoadingSequence() {
+  const steps = [
+    { text: "Initializing globe", delay: 500 },
+    { text: "Loading countries", delay: 450 },
+    { text: "Loading trade routes", delay: 500 },
+    { text: "Loading interface", delay: 400 },
+    { text: "Starting application", delay: 350 }
+  ];
+
+  for (const step of steps) {
+    setLoadingStatus(step.text);
+    await sleep(step.delay);
+  }
+}
+
 function showApiConnectionError() {
   const spinner = document.querySelector(".spinner");
-  const message = document.getElementById("error-message");
+  const message = document.getElementById("loader-message");
 
   if (spinner) {
-    spinner.style.display = "none";
+    spinner.classList.add("stopped");
   }
 
-  message.innerHTML = 'Please check that the API is running and <a href="#" id="refresh-link" style="color: #9ecbff; text-decoration: underline;">refresh</a> the page.';
+  message.innerHTML =
+    'Please check that the API is running and <a href="#" id="refresh-link" style="color:#9ecbff;text-decoration:underline;">refresh</a> the page';
   message.style.display = "block";
 
   document.getElementById("refresh-link").addEventListener("click", (e) => {
@@ -57,10 +84,7 @@ async function hideLoadingScreen() {
 
   if (!loadingScreen || !applicationScene) return;
 
-  // Show app underneath first
   applicationScene.hidden = false;
-
-  // Now fade out the loading screen
   loadingScreen.classList.add("hidden");
 
   loadingScreen.addEventListener(
