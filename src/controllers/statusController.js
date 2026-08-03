@@ -59,7 +59,7 @@ async function playLoadingSequence() {
 }
 
 function showApiConnectionError() {
-  const spinner = document.querySelector(".spinner");
+  const spinner = document.querySelector(".loader-spinner");
   const message = document.getElementById("loader-message");
 
   if (spinner) {

@@ -2,157 +2,115 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>World Trade 3D</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
   <link rel="icon" type="image/png" href="/assets/icons/logo.png">
-
   <link rel="stylesheet" href="style/sheet.css">
 </head>
 
 <body>
+
   <!-- Loader -->
   <div id="loading-scene">
-
-    <div class="logo-wrapper">
-      <div class="logo-bg"></div>
-
-      <img src="assets/icons/logo.png" class="center-logo">
-
-      <div class="spinner"></div>
+    <div class="loader-logo">
+      <div class="loader-logo-background"></div>
+      <img src="assets/icons/logo.png" class="loader-logo-image">
+      <div class="loader-spinner"></div>
     </div>
 
     <div class="loader-content">
-      <h3 id="loader-message">Connecting to server</p>
+      <h3 id="loader-message">Connecting to server</h3>
     </div>
 
-    <div class="loading-logos">
+    <div class="loader-title">
       <h2>World Trade 3D</h2>
     </div>
-
   </div>
 
   <!-- Application -->
   <div id="application-scene" hidden>
 
     <aside id="sidebar">
-
       <div id="search-container" class="glass">
         <input id="country-search" type="search" placeholder="Search for a country" autocomplete="off" spellcheck="false">
-
         <button id="search-clear" type="button" aria-label="Clear search">×</button>
-
-        <div id="country-results"></div>
+        <div id="search-results"></div>
       </div>
 
       <section id="trade-panel" class="glass">
-
         <header id="trade-header">
           <div class="header-row">
-
-            <h2 id="country-name">Explore</h2>
-
-            <div id="mode-toggle">
-              <button data-mode="export" class="active">
-                Exports
-              </button>
-
-              <button data-mode="import">
-                Imports
-              </button>
+            <h2 id="selected-country">Explore</h2>
+            <div id="trade-mode-toggle">
+              <button data-trade-mode="export" class="active">Exports</button>
+              <button data-trade-mode="import">Imports</button>
             </div>
-
           </div>
         </header>
 
         <div id="trade-content">
-          <p class="placeholder">
-            Click a country to view trade data.
-          </p>
+          <p class="placeholder">Click a country to view trade data.</p>
         </div>
-
       </section>
-
     </aside>
 
     <section id="categories-panel" class="glass">
-
       <header id="categories-header">
         <h2>Top Categories</h2>
       </header>
-
       <div id="categories-content">
-
-        <p class="placeholder">
-          Select a country to view trade categories.
-        </p>
-
+        <p class="placeholder">Select a country to view trade categories.</p>
       </div>
-
     </section>
 
     <section id="status-panel" class="glass">
-
       <span id="status-dot" class="status-dot"></span>
       <span id="status-text">API Online</span>
-
     </section>
 
-
     <nav id="year-selector">
-
-      <button id="prev-year" class="year-side"></button>
-      <button id="current-year" class="year-current"></button>
-      <button id="next-year" class="year-side"></button>
-
+      <button id="prev-year" class="year-button year-prev"></button>
+      <button id="current-year" class="year-button year-active"></button>
+      <button id="next-year" class="year-button year-next"></button>
     </nav>
-
 
     <canvas id="globe"></canvas>
 
-    <div id="layer-container">
-
-        <button id="layer-btn" class="layer-btn">
-            <img id="layer-icon" src="assets/graphics/heatmap.png" alt="Default View">
-        </button>
-
+    <div id="layer-controls">
+      <button id="layer-toggle" class="layer-toggle">
+        <img id="layer-icon" src="assets/graphics/heatmap.png" alt="Toggle map layer">
+      </button>
     </div>
-    
-    <!-- Bottom Right Zoom -->
+
     <div id="zoom-controls">
-
-      <button id="zoom-in" class="floating-btn">+</button>
-      <button id="zoom-out" class="floating-btn">−</button>
-
+      <button id="zoom-in" class="zoom-button">+</button>
+      <button id="zoom-out" class="zoom-button">−</button>
     </div>
 
     <div id="tooltip"></div>
 
     <template id="trade-row-template">
-
       <div class="trade-row">
-        <div class="trade-label">
+        <div class="trade-info">
           <span class="trade-country"></span>
           <span class="trade-value"></span>
         </div>
-
         <div class="trade-bar">
           <div class="trade-fill"></div>
         </div>
       </div>
-
     </template>
 
-    <div class="loading-logos">
-      <img src="assets/logos/uncomtrade.png" alt="Logo 1">
-      <img src="assets/logos/worldbank.png" alt="Logo 2">
+    <div class="partner-logos">
+      <img src="assets/logos/uncomtrade.png" alt="UN Comtrade">
+      <img src="assets/logos/worldbank.png" alt="World Bank">
     </div>
 
   </div>

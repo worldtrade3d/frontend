@@ -42,7 +42,7 @@ function createTradeRow(partner, maxValue) {
 
 export function updateTradePanel(countryName, partners, options = {}) {
   const container = document.getElementById("trade-content");
-  const title = document.getElementById("country-name");
+  const title = document.getElementById("selected-country");
 
   if (!container || !title) return;
 

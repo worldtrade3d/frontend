@@ -4,94 +4,138 @@
 
 #year-selector {
   position: absolute;
+
   top: 28px;
   left: 50%;
+
   transform: translateX(-50%);
+
   display: flex;
   align-items: center;
+
   gap: 24px;
+
   padding: 10px 18px;
+
   background: var(--bg-glass);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
+
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+
   z-index: 20;
 }
 
 #year-selector button {
   border: none;
   background: none;
+
   color: #fff;
+
   cursor: pointer;
+
   font-family: inherit;
+
   transition: color var(--transition-fast);
 }
 
-.year-side {
+.year-button.year-prev,
+.year-button.year-next {
   color: var(--text-muted);
   font-size: 15px;
 }
 
-.year-side:hover {
+.year-button.year-prev:hover,
+.year-button.year-next:hover {
   color: #fff;
 }
 
-.year-current {
+.year-button.year-active {
   font-size: 16px;
   font-weight: 600;
 }
 
+
 /* Bottom Right Zoom Controls */
+
 #zoom-controls {
   position: fixed;
+
   bottom: 24px;
   right: 24px;
+
   display: flex;
   flex-direction: column;
+
   gap: 12px;
+
   z-index: 1000;
 }
 
-#zoom-controls .floating-btn {
+#zoom-controls .zoom-button {
   width: 56px;
   height: 56px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border: 1px solid var(--border-glass);
   border-radius: 50%;
+
   background: var(--bg-glass);
+
   color: #fff;
+
   font-size: 24px;
   font-weight: 500;
   line-height: 1;
+
   cursor: pointer;
+
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  transition: transform var(--transition-normal), background var(--transition-normal), border-color var(--transition-normal);
+
+  transition:
+    transform var(--transition-normal),
+    background var(--transition-normal),
+    border-color var(--transition-normal);
 }
 
-#zoom-controls .floating-btn:hover {
+#zoom-controls .zoom-button:hover {
   transform: scale(1.08);
+
   background: rgba(25, 25, 30, 0.95);
+
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-#zoom-controls .floating-btn:active {
+#zoom-controls .zoom-button:active {
   transform: scale(0.95);
 }
 
+
 /* Tooltip */
+
 #tooltip {
   position: absolute;
+
   pointer-events: none;
+
   padding: 6px 12px;
+
   background: rgba(20, 20, 20, 0.85);
+
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-sm);
+
   font-size: 12px;
+
   opacity: 0;
+
   z-index: 2000;
+
   transition: opacity var(--transition-fast);
 }

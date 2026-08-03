@@ -3,7 +3,7 @@ export function createSearchController({
   controls
 }) {
   const search = document.getElementById("country-search");
-  const results = document.getElementById("country-results");
+  const results = document.getElementById("search-results");
   const clearButton = document.getElementById("search-clear");
 
   // Sort countries alphabetically
