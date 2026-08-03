@@ -1,8 +1,8 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { getISO } from "./utils.js";
-import { createRenderer } from "./renderer.js";
-import { createControls } from "./controls.js";
-import { createSearchController } from "./controllers/searchController.js";
+import { getISO } from "../utils/geo.js";
+import { createRenderer } from "../render/globeRenderer.js";
+import { createControls } from "../controls/controls.js";
+import { createSearchController } from "../controllers/searchController.js";
 
 export function createGlobe(canvas, features, { onClick, onHover }) {
   const {

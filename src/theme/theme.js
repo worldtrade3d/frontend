@@ -1,4 +1,3 @@
-
 export const theme = {
   globe: {
     sphere: [

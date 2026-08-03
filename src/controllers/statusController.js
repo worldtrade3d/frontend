@@ -1,4 +1,4 @@
-import { checkApiStatus } from "./api.js";
+import { checkApiStatus } from "../services/api.js";
 
 const MAX_RETRIES = 7;
 const RETRY_DELAY = 2000;

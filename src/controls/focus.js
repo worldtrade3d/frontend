@@ -1,5 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { getMainLandmass } from "../utils.js";
+import { getMainLandmass } from "../utils/geo.js";
 
 export function focusCountry(ctx, feature) {
   if (ctx.isAnimating) return;

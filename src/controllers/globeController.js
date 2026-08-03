@@ -1,8 +1,8 @@
-import { createGlobe } from "../globe.js";
-import { state } from "../state.js";
-import { fetchTradePartners, fetchTradeSectors } from "../api.js";
-import { updateTradePanel, updateSectorPanel } from "./barController.js";
-import { getISO } from "../utils.js";
+import { createGlobe } from "../services/globe.js";
+import { state } from "../state/state.js";
+import { fetchTradePartners, fetchTradeSectors } from "../services/api.js";
+import { updateTradePanel, updateSectorPanel } from "../render/panelRenderer.js";
+import { getISO } from "../utils/geo.js";
 
 const GEOJSON_URL = "../data/countries.geojson";
 

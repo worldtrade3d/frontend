@@ -1,20 +1,4 @@
-/* =========================
-   FORMAT
-========================= */
-function formatPercent(value) {
-  if (value >= 10) return Math.round(value) + "%";
-  if (value >= 1) return value.toFixed(1) + "%";
-  return value.toFixed(3) + "%";
-}
-
-function formatLabel(text) {
-  if (!text) return "";
-  return text.replace(/_/g, " ").replace(/\b\w/g, char => char.toUpperCase());
-}
-
-/* =========================
-   TEMPLATE HELPERS
-========================= */
+import { formatPercent, formatLabel } from "../utils/format.js";
 
 const tradeRowTemplate = document.getElementById("trade-row-template");
 

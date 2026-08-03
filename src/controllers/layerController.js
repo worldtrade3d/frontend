@@ -1,6 +1,6 @@
-import { state } from "../state.js";
+import { state } from "../state/state.js";
 
-import { fetchAllCountriesTotals } from "../api.js";
+import { fetchAllCountriesTotals } from "../services/api.js";
 
 export function initLayers() {
     const button = document.getElementById("layer-btn");

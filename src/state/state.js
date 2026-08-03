@@ -1,5 +1,5 @@
 export const state = {
-  // Currently selected country
+  // Selection
   selectedISO: null,
   pendingISO: null,
 
@@ -7,7 +7,7 @@ export const state = {
   mode: "export",
   year: new Date().getFullYear(),
 
-  // Data
+  // Trade data
   partners: new Map(),
   totalTrade: new Map(),
   links: [],

@@ -1,4 +1,4 @@
-import { state } from "../state.js";
+import { state } from "../state/state.js";
 import { focusCountry } from "./focus.js";
 
 export function clearSelection(ctx) {

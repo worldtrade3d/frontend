@@ -1,7 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { state } from "./state.js";
-import { theme } from "./theme.js";
-import { getMainLandmass } from "./utils.js";
+import { state } from "../state/state.js";
+import { theme } from "../theme/theme.js";
+import { getMainLandmass } from "../utils/geo.js";
 
 export function createRenderer({ context, projection, path, features, getISO }) {
   
