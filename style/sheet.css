@@ -1,0 +1,8 @@
+@import "./components/root.css";
+@import "./components/globe.css";
+@import "./components/panels.css";
+@import "./components/search.css";
+@import "./components/layer.css";
+@import "./components/utils.css";
+@import "./components/year.css";
+@import "./components/loader.css";

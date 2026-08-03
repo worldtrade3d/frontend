@@ -1,0 +1,61 @@
+/* ==========================================================================
+   4. Panels Setup
+   ========================================================================== */
+
+#sidebar {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 10;
+}
+
+#categories-panel {
+  position: absolute;
+  top: 96px;
+  right: 28px;
+  width: 360px;
+  z-index: 10;
+}
+
+#status-panel {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 20;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--status-online);
+}
+
+/* Panel Typography & Headers */
+h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+#categories-header h2 {
+  text-align: right;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
