@@ -14,10 +14,9 @@ export async function initStatus() {
     return false;
   }
 
-  // Simulated loading steps after connection
   await playLoadingSequence();
-
   await hideLoadingScreen();
+
   return true;
 }
 
@@ -67,7 +66,7 @@ function showApiConnectionError() {
   }
 
   message.innerHTML =
-    'Please check that the API is running and <a href="#" id="refresh-link" style="color:#9ecbff;text-decoration:underline;">refresh</a> the page';
+    'Connection to the server failed';
   message.style.display = "block";
 
   document.getElementById("refresh-link").addEventListener("click", (e) => {

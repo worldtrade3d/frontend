@@ -16,7 +16,7 @@
   --accent-export: linear-gradient(90deg, #dc2626 0%, #f15656 100%);
   --accent-import: linear-gradient(90deg, #16a34a 0%, #4ade80 100%);
   --accent-white: #ffffff;
-  --status-online: #22c55e;
+  --status-color: #22c55e;
 
   /* Geometry */
   --radius-sm: 6px;

@@ -34,7 +34,7 @@ export function getMainLandmass(feature) {
       }
     };
 
-    const area = d3.geoArea(testFeature);
+    const area = geoArea(testFeature);
 
     if (area > largestArea) {
       largestArea = area;

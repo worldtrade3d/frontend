@@ -1,4 +1,4 @@
-import { initStatus } from "./controllers/statusController.js";
+import { initStatus } from "./controllers/loaderController.js";
 import { initGlobe  } from "./controllers/globeController.js";
 import { initTrade  } from "./controllers/tradeController.js";
 import { initLayers } from "./controllers/layerController.js";

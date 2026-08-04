@@ -3,6 +3,8 @@ export function setupDrag(ctx) {
   const { rotation, velocity } = ctx.stateRefs;
 
   canvas.addEventListener("mousedown", e => {
+    ctx.ignoreNextClick = ctx.isAnimating;
+
     if (ctx.isAnimating) return;
     if (e.ctrlKey) return;
 

@@ -18,11 +18,11 @@
 
   opacity: 1;
   transition: opacity 0.2s ease;
+  pointer-events: none;
 }
 
 #loading-scene.hidden {
   opacity: 0;
-  pointer-events: none;
 }
 
 /* Logo */

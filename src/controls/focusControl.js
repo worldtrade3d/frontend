@@ -1,20 +1,38 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { getMainLandmass } from "../utils/geo.js";
 
+function shortestAngle(from, to) {
+  let diff = to - from;
+
+  while (diff > 180) diff -= 360;
+  while (diff < -180) diff += 360;
+
+  return from + diff;
+}
+
 export function focusCountry(ctx, feature) {
   if (ctx.isAnimating) return;
 
   ctx.isAnimating = true;
 
+  ctx.hovered = null;
+  ctx.tooltip.style.opacity = 0;
+  ctx.canvas.style.cursor = "default";
+  ctx.onHover?.(null);
+  
   const { projection } = ctx;
   const { rotation } = ctx.stateRefs;
 
   const mainFeature = getMainLandmass(feature);
   const [lon, lat] = d3.geoCentroid(mainFeature);
 
-  const target = [-lon, Math.max(-60, Math.min(60, -lat))];
-
   const start = [...rotation];
+
+  const target = [
+    shortestAngle(start[0], -lon),
+    Math.max(-60, Math.min(60, -lat))
+  ];
+
   const startScale = projection.scale();
   const focusScale = 600;
 

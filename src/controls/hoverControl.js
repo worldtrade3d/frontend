@@ -3,7 +3,7 @@ export function setupHover(ctx) {
 
   window.addEventListener("mousemove", e => {
     // Ignore hover while dragging
-    if (ctx.isDragging) return;
+    if (ctx.isDragging || ctx.isAnimating) return;
 
     const [x, y] = [e.clientX, e.clientY];
 

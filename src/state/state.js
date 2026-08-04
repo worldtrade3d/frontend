@@ -2,6 +2,7 @@ export const state = {
   // Selection
   selectedISO: null,
   pendingISO: null,
+  pendingCountryName: null,
 
   // Filters
   mode: "export",

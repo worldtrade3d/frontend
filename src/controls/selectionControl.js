@@ -35,6 +35,10 @@ export function activateCountry(ctx, feature) {
 
 export function setupSelection(ctx) {
   ctx.canvas.addEventListener("click", e => {
+    if (ctx.ignoreNextClick) {
+      ctx.ignoreNextClick = false;
+      return;
+    }
     if (!ctx.hovered) return;
     if (ctx.moved) return;
 
