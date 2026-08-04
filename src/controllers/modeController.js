@@ -1,16 +1,17 @@
 import { state } from "../state/state.js";
 
 export function initMode() {
-  const buttons = document.querySelectorAll("#mode-toggle button");
+  const buttons = document.querySelectorAll("#trade-mode-toggle button");
 
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
-      const mode = btn.dataset.mode;
+      const mode = btn.dataset.tradeMode;
 
       if (mode === state.mode) return;
 
       state.mode = mode;
-      console.log("Mode changed:", state.mode);
+
+      console.log("Trade mode changed:", state.mode);
 
       buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
