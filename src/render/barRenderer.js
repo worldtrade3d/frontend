@@ -1,5 +1,6 @@
 import { formatPercent, formatLabel } from "../utils/format.js";
 import { getCountryName } from "../utils/country.js";
+import { state } from "../state/state.js";
 
 const tradeRowTemplate = document.getElementById("trade-row-template");
 
@@ -36,19 +37,13 @@ function createTradeRow(partner, maxValue) {
   return clone;
 }
 
-/* =========================
-   TRADE PANEL
-========================= */
-
 export function updateTradePanel(countryName, partners, options = {}) {
   const container = document.getElementById("trade-content");
   const title = document.getElementById("selected-country");
 
   if (!container || !title) return;
 
-  title.textContent = countryName
-    ? countryName
-    : "Explore";
+  title.textContent = countryName || "Explore";
 
   /* =========================
      LOADING
@@ -72,6 +67,34 @@ export function updateTradePanel(countryName, partners, options = {}) {
       <p class="placeholder">
         Failed to load data
       </p>
+    `;
+    return;
+  }
+
+  /* =========================
+     COUNTRY TOTAL
+  ========================= */
+
+  if (options.total !== undefined) {
+    const formatted = new Intl.NumberFormat("en", {
+      style: "currency",
+      currency: "USD",
+      notation: "compact",
+      maximumFractionDigits: 2
+    }).format(options.total);
+
+    container.innerHTML = `
+      <div class="trade-summary">
+        <h3>Total ${state.mode === "import" ? "Imports" : "Exports"}</h3>
+
+        <div class="trade-total-value">
+          ${formatted}
+        </div>
+
+        <p class="placeholder">
+          Click <strong>Apply</strong> to load trade partners.
+        </p>
+      </div>
     `;
     return;
   }

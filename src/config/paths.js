@@ -1,3 +1,2 @@
 export const GEOJSON_URL = "../data/countries.geojson";
-
-export const DEBUG = true;
+export const EXPORTS_URL = "../data/exports.json";

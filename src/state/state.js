@@ -6,7 +6,7 @@ export const state = {
 
   // Filters
   mode: "export",
-  year: new Date().getFullYear(),
+  year: 2025,
 
   // Trade data
   partners: new Map(),

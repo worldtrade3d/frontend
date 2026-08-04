@@ -1,6 +1,6 @@
 import { createGlobe } from "../compositors/globeCompositor.js";
 import { state } from "../state/state.js";
-import { fetchTradePartners, fetchTradeSectors } from "../services/api.js";
+import { fetchCountryTotal, fetchTradePartners, fetchTradeSectors } from "../services/api.js";
 import { updateTradePanel, updateSectorPanel } from "../render/barRenderer.js";
 import { getISO } from "../utils/geo.js";
 import { GEOJSON_URL } from "../config/paths.js";
@@ -21,12 +21,9 @@ export function initGlobe() {
         canvas,
         data.features,
         {
-          // Only remember the selected country.
-          onClick: (country) => {
+          onClick: async (country) => {
 
-            // Clear selection
             if (!country) {
-
               state.selectedISO = null;
               state.pendingISO = null;
               state.partners = new Map();
@@ -40,13 +37,24 @@ export function initGlobe() {
             const iso = getISO(country);
             const name = country.properties.ADMIN;
 
-            // Store selection only
             state.pendingISO = iso;
             state.pendingCountryName = name;
 
-            // Update the heading only
-            updateTradePanel(name, null);
+            try {
+              const total = await fetchCountryTotal(
+                iso,
+                state.mode,
+                state.year
+              );
 
+              updateTradePanel(name, null, {
+                total: total.total
+              });
+
+            } catch (err) {
+              console.error(err);
+              updateTradePanel(name, null);
+            }
           }
         }
       );

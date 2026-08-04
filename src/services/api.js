@@ -13,6 +13,12 @@ export async function fetchAllCountriesTotals(type, year) {
   return fetchJson(`${BASE_URL}/trade-totals?type=${type}&year=${year}`);
 }
 
+export async function fetchCountryTotal(country, type, year) {
+  return fetchJson(
+    `${BASE_URL}/trade-country-total?country=${country}&type=${type}&year=${year}`
+  );
+}
+
 export async function fetchTradePartners(country, type, year) {
   return fetchJson(`${BASE_URL}/trade-partners?country=${country}&type=${type}&year=${year}`);
 }
