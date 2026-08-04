@@ -76,14 +76,21 @@
       <span id="status-dot" class="status-dot"></span>
       <span id="status-text">API Offline</span>
     </section>
-
+      
     <nav id="year-selector">
-      <button id="prev-year" class="year-button year-prev"></button>
-      <button id="current-year" class="year-button year-active"></button>
-      <button id="next-year" class="year-button year-next"></button>
-    </nav>
+      <button id="prev-year" aria-label="Previous year">‹</button>
 
-    <canvas id="globe"></canvas>
+      <input
+        id="current-year"
+        type="number"
+        inputmode="numeric"
+        min="1962"
+        max="2025"
+        aria-label="Current year"
+      >
+
+      <button id="next-year" aria-label="Next year">›</button>
+    </nav>
 
     <div id="layer-controls">
       <button id="layer-toggle" class="layer-toggle">
@@ -117,6 +124,8 @@
 
   </div>
 
+  <canvas id="globe"></canvas>
+  
   <script type="module" src="src/app.js"></script>
 
 </body>

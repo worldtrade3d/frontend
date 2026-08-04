@@ -1,7 +1,7 @@
 import { createGlobe } from "../compositors/globeCompositor.js";
 import { state } from "../state/state.js";
 import { fetchTradePartners, fetchTradeSectors } from "../services/api.js";
-import { updateTradePanel, updateSectorPanel } from "../render/panelRenderer.js";
+import { updateTradePanel, updateSectorPanel } from "../render/barRenderer.js";
 import { getISO } from "../utils/geo.js";
 import { GEOJSON_URL } from "../config/paths.js";
 import { buildCountryLookup } from "../utils/country.js";

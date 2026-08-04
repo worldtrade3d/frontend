@@ -59,3 +59,49 @@
   align-items: center;
   gap: 15px;
 }
+
+.apply-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 78px;
+  height: 36px;
+  padding: 0 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.apply-button:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.apply-button:active {
+  transform: scale(0.96);
+}
+
+.apply-button:focus-visible {
+  outline: none;
+  border-color: #4ea3ff;
+  box-shadow: 0 0 0 3px rgba(78, 163, 255, 0.3);
+}

@@ -48,7 +48,7 @@ export function updateTradePanel(countryName, partners, options = {}) {
 
   title.textContent = countryName
     ? countryName
-    : "Select a country";
+    : "Explore";
 
   /* =========================
      LOADING
