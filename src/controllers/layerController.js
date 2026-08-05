@@ -44,3 +44,14 @@ export function initLayers() {
         }
     });
 }
+
+const panel = document.getElementById("settings-panel");
+const toggle = document.getElementById("settings-toggle");
+
+toggle.addEventListener("click", () => {
+    panel.classList.toggle("collapsed");
+
+    toggle.textContent = panel.classList.contains("collapsed")
+        ? "▶"
+        : "◀";
+});

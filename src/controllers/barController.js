@@ -5,7 +5,6 @@ import { state } from "../state/state.js";
 
 
 async function getTotals() {
-
     if (state.year === 2025) {
         const res = await fetch(EXPORTS_URL);
         return res.json();

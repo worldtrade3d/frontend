@@ -29,8 +29,8 @@
 
 #trade-content,
 #categories-content {
-  margin-top: 18px;
-  max-height: calc(100vh - 250px);
+  margin-top: 12px;
+  max-height: calc(100vh - 285px);
   overflow-y: auto;
   overflow-x: hidden;
 

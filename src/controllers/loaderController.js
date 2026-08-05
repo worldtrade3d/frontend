@@ -1,23 +1,21 @@
 import { checkApiStatus } from "../services/api.js";
 
-const MAX_RETRIES = 5;
-const RETRY_DELAY = 2000;
 const LOADING_FADE_DELAY = 300;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function initStatus() {
-  const online = await waitForApi();
+  // Check API only once
+  const online = await checkApiStatus();
 
-  if (!online) {
-    showApiConnectionError();
-    return false;
-  }
+  // Update status panel
+  updateApiStatus(online);
 
+  // Continue loading regardless of API status
   await playLoadingSequence();
   await hideLoadingScreen();
 
-  return true;
+  return online;
 }
 
 function setLoadingStatus(text) {
@@ -28,22 +26,35 @@ function setLoadingStatus(text) {
   message.style.display = "block";
 }
 
-async function waitForApi() {
-  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-    if (await checkApiStatus()) {
-      return true;
-    }
+function updateApiStatus(online) {
+  const dot = document.getElementById("status-dot");
+  const text = document.getElementById("status-text");
+  const applyButton = document.getElementById("apply-selection");
 
-    if (attempt < MAX_RETRIES) {
-      await sleep(RETRY_DELAY);
+  if (!dot || !text) return;
+
+  if (online) {
+    dot.style.background = "#2ecc71";
+    text.textContent = "API Online";
+
+    if (applyButton) {
+      applyButton.disabled = false;
+      applyButton.classList.remove("disabled");
+    }
+  } else {
+    dot.style.background = "#e74c3c";
+    text.textContent = "API Offline";
+
+    if (applyButton) {
+      applyButton.disabled = true;
+      applyButton.classList.add("disabled");
     }
   }
-
-  return false;
 }
 
 async function playLoadingSequence() {
   const steps = [
+    { text: "Connecting to server", delay: 300 },
     { text: "Initializing globe", delay: 500 },
     { text: "Loading countries", delay: 450 },
     { text: "Loading trade routes", delay: 500 },
@@ -55,24 +66,6 @@ async function playLoadingSequence() {
     setLoadingStatus(step.text);
     await sleep(step.delay);
   }
-}
-
-function showApiConnectionError() {
-  const spinner = document.querySelector(".loader-spinner");
-  const message = document.getElementById("loader-message");
-
-  if (spinner) {
-    spinner.classList.add("stopped");
-  }
-
-  message.innerHTML =
-    'Connection to the server failed';
-  message.style.display = "block";
-
-  document.getElementById("refresh-link").addEventListener("click", (e) => {
-    e.preventDefault();
-    location.reload();
-  });
 }
 
 async function hideLoadingScreen() {

@@ -1,10 +1,10 @@
-import { formatPercent, formatLabel } from "../utils/format.js";
+import { formatPercent, formatLabel, formatCurrency } from "../utils/format.js";
 import { getCountryName } from "../utils/country.js";
 import { state } from "../state/state.js";
 
 const tradeRowTemplate = document.getElementById("trade-row-template");
 
-function createTradeRow(partner, maxValue) {
+function createTradeRow(partner, maxValue, totalValue) {
 
   const clone = tradeRowTemplate.content.cloneNode(true);
 
@@ -13,26 +13,21 @@ function createTradeRow(partner, maxValue) {
   const value = clone.querySelector(".trade-value");
   const fill = clone.querySelector(".trade-fill");
 
-
   const iso = partner.iso || partner.country;
-
 
   row.dataset.iso = iso;
 
-
-  // Convert ISO_A3 -> real country name
   country.textContent = getCountryName(iso);
 
+  const percent = totalValue
+    ? (partner.value / totalValue) * 100
+    : 0;
 
-  value.textContent = formatPercent(
-    partner.value
-  );
-
+  value.textContent =
+    `${formatCurrency(partner.value)} (${formatPercent(percent)})`;
 
   const width = (partner.value / maxValue) * 100;
-
   fill.dataset.width = `${width}%`;
-
 
   return clone;
 }

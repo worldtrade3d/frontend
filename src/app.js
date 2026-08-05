@@ -6,9 +6,10 @@ import { initLayers } from "./controllers/layerController.js";
 import { initBars   } from "./controllers/barController.js";
 
 async function initApp() {
-  if (!(await initStatus())) return;
+  initStatus();
   
-  initGlobe();
+  await initGlobe();
+  
   initMode();
   initYear();
   initBars();

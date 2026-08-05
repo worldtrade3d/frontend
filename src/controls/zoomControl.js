@@ -23,7 +23,7 @@ export function setupZoom(ctx) {
     }
 
     ctx.targetScale += amount;
-    ctx.targetScale = Math.max(200, Math.min(600, ctx.targetScale));
+    ctx.targetScale = Math.max(200, Math.min(2000, ctx.targetScale));
 
     if (!ctx.zoomAnimating) {
       ctx.zoomAnimating = true;

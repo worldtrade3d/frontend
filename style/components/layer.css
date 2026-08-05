@@ -1,56 +1,93 @@
 /* ==========================================================================
-   Layer selector
+   Side settings drawer
    ========================================================================== */
 
-#layer-controls {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 1000;
+#settings-panel {
+    position: fixed;
+    left: 0;
+    bottom: 16px;
+
+    display: flex;
+    align-items: center;
+
+    z-index: 1000;
 }
+
+/* Thin side tab */
+#settings-toggle {
+    width: 16px;
+    height: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    border-radius: 0 8px 8px 0;
+
+    background: var(--bg-glass);
+    color: white;
+    font-size: 12px;
+
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+#settings-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px;
+
+    background: var(--bg-glass);
+    border-radius: 0 12px 12px 0;
+
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+}
+
+/* Hide everything except the tab */
+#settings-panel.collapsed #settings-content {
+    transform: translateX(calc(-100% - 16px));
+}
+
+/* ==========================================================================
+   Layer button
+   ========================================================================== */
 
 .layer-toggle {
-  width: 72px;
-  height: 72px;
+    width: 64px;
+    aspect-ratio: 1 / 1;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  padding: 0;
-  overflow: hidden;
+    padding: 0;
+    margin: 0;
 
-  border: none;
-  border-radius: 10%;
+    border: none;
+    border-radius: 10px;
 
-  background: var(--bg-glass);
+    overflow: hidden;
+    background: transparent;
 
-  box-shadow: none;
+    cursor: pointer;
 
-  cursor: pointer;
-
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-
-  transition: transform var(--transition-normal);
-}
-
-.layer-toggle:hover {
-  transform: translateZ(0) scale(1.08);
-}
-
-.layer-toggle:active {
-  transform: translateZ(0) scale(0.95);
+    box-sizing: border-box;
+    flex-shrink: 0;
+    z-index: 99999;
 }
 
 .layer-toggle img {
-  width: 100%;
-  height: 100%;
+    display: block;
 
-  object-fit: cover;
-  display: block;
+    width: 100%;
+    height: 100%;
 
-  pointer-events: none;
-  user-select: none;
+    object-fit: cover;
 }

@@ -31,9 +31,8 @@ export function setupHover(ctx) {
         ctx.hovered.properties.ADMIN ||
         ctx.hovered.id ||
         "Unknown";
-
-      ctx.tooltip.style.left = `${x - 4}px`;
-      ctx.tooltip.style.top = `${y + 4}px`;
+      ctx.tooltip.style.left = `${x}px`;
+      ctx.tooltip.style.top = `${y}px`;
       ctx.tooltip.textContent = name;
       ctx.tooltip.style.opacity = 1;
 

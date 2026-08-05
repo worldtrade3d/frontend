@@ -101,31 +101,6 @@
   font-size: 15px;
 }
 
-.partner-logos {
-  position: absolute;
-
-  bottom: 32px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  display: flex;
-  align-items: center;
-
-  gap: 20px;
-
-  z-index: 100001;
-}
-
-.partner-logos img {
-  height: 32px;
-  width: auto;
-
-  object-fit: contain;
-
-  filter: brightness(0) invert(1);
-}
-
 .loader-title {
   position: absolute;
 

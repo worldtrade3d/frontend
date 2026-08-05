@@ -8,3 +8,10 @@ export function formatLabel(text) {
   if (!text) return "";
   return text.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
 }
+
+export function formatCurrency(value) {
+  return new Intl.NumberFormat("en", {
+    notation: "compact",
+    maximumFractionDigits: 1
+  }).format(value);
+}
