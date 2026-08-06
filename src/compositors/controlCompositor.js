@@ -1,8 +1,10 @@
-import { setupDrag } from "../controls/dragControl.js";
-import { setupHover } from "../controls/hoverControl.js";
-import { setupZoom } from "../controls/zoomControl.js";
-import { setupSelection, activateCountry, clearSelection } from "../controls/selectionControl.js";
-import { focusCountry } from "../controls/focusControl.js";
+import { setupDrag      } from "../controls/dragControl.js";
+import { setupHover     } from "../controls/hoverControl.js";
+import { setupZoom      } from "../controls/zoomControl.js";
+import { focusCountry   } from "../controls/focusControl.js";
+import { setupSelection,
+         activateCountry,
+         clearSelection } from "../controls/selectionControl.js";
 
 export function createControls({
   canvas,

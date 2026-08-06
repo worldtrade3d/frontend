@@ -4,8 +4,7 @@ import { state } from "../state/state.js";
 
 const tradeRowTemplate = document.getElementById("trade-row-template");
 
-function createTradeRow(partner, maxValue, totalValue) {
-
+function createTradeRow(partner, maxValue) {
   const clone = tradeRowTemplate.content.cloneNode(true);
 
   const row = clone.querySelector(".trade-row");
@@ -16,15 +15,10 @@ function createTradeRow(partner, maxValue, totalValue) {
   const iso = partner.iso || partner.country;
 
   row.dataset.iso = iso;
-
   country.textContent = getCountryName(iso);
 
-  const percent = totalValue
-    ? (partner.value / totalValue) * 100
-    : 0;
-
-  value.textContent =
-    `${formatCurrency(partner.value)} (${formatPercent(percent)})`;
+  // Show only the trade value
+  value.textContent = formatCurrency(partner.value);
 
   const width = (partner.value / maxValue) * 100;
   fill.dataset.width = `${width}%`;

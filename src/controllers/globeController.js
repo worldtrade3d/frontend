@@ -1,16 +1,8 @@
 import { createGlobe } from "../compositors/globeCompositor.js";
 import { state } from "../state/state.js";
-import {
-  fetchCountryTotal,
-  fetchTradePartners,
-  fetchTradeSectors
-} from "../services/api.js";
-import {
-  updateTradePanel,
-  updateSectorPanel
-} from "../render/barRenderer.js";
+import { fetchCountryTotal, fetchTradePartners, fetchTradeSectors, fetchGeoJson } from "../services/api.js";
+import { updateTradePanel, updateSectorPanel } from "../render/barRenderer.js";
 import { getISO } from "../utils/geo.js";
-import { GEOJSON_URL } from "../config/paths.js";
 import { buildCountryLookup } from "../utils/country.js";
 
 export async function initGlobe() {
@@ -18,8 +10,7 @@ export async function initGlobe() {
   const applyButton = document.getElementById("apply-selection");
 
   try {
-    const res = await fetch(GEOJSON_URL);
-    const data = await res.json();
+    const data = await fetchGeoJson();
 
     buildCountryLookup(data.features);
 

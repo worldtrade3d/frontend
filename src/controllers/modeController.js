@@ -11,8 +11,6 @@ export function initMode() {
 
       state.mode = mode;
 
-      console.log("Trade mode changed:", state.mode);
-
       buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
     });

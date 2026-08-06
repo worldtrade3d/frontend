@@ -2,14 +2,6 @@ import { state } from "../state/state.js";
 import { fetchAllCountriesTotals } from "../services/api.js";
 import { EXPORTS_URL } from "../config/paths.js";
 
-async function getTotals() {
-    if (state.year === 2025) {
-        return fetch(EXPORTS_URL).then(res => res.json());
-    }
-
-    return fetchAllCountriesTotals(state.mode, state.year);
-}
-
 export function initLayers() {
     const button = document.getElementById("layer-toggle");
     const icon = document.getElementById("layer-icon");
@@ -21,7 +13,7 @@ export function initLayers() {
     button.addEventListener("click", async () => {
         if (state.mapMode === "default") {
 
-            const totals = await getTotals();
+            const totals = await fetchAllCountriesTotals(state.mode, state.year);
 
             const map = new Map();
 

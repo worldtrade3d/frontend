@@ -1,21 +1,23 @@
 import { checkApiStatus } from "../services/api.js";
 
+const MAX_RETRIES = 5;
+const RETRY_DELAY = 2000;
 const LOADING_FADE_DELAY = 300;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function initStatus() {
-  // Check API only once
-  const online = await checkApiStatus();
+  const online = await waitForApi();
 
-  // Update status panel
-  updateApiStatus(online);
+  if (!online) {
+    showApiConnectionError();
+    return false;
+  }
 
-  // Continue loading regardless of API status
   await playLoadingSequence();
   await hideLoadingScreen();
 
-  return online;
+  return true;
 }
 
 function setLoadingStatus(text) {
@@ -26,30 +28,18 @@ function setLoadingStatus(text) {
   message.style.display = "block";
 }
 
-function updateApiStatus(online) {
-  const dot = document.getElementById("status-dot");
-  const text = document.getElementById("status-text");
-  const applyButton = document.getElementById("apply-selection");
-
-  if (!dot || !text) return;
-
-  if (online) {
-    dot.style.background = "#2ecc71";
-    text.textContent = "API Online";
-
-    if (applyButton) {
-      applyButton.disabled = false;
-      applyButton.classList.remove("disabled");
+async function waitForApi() {
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    if (await checkApiStatus()) {
+      return true;
     }
-  } else {
-    dot.style.background = "#e74c3c";
-    text.textContent = "API Offline";
 
-    if (applyButton) {
-      applyButton.disabled = true;
-      applyButton.classList.add("disabled");
+    if (attempt < MAX_RETRIES) {
+      await sleep(RETRY_DELAY);
     }
   }
+
+  return false;
 }
 
 async function playLoadingSequence() {
@@ -66,6 +56,24 @@ async function playLoadingSequence() {
     setLoadingStatus(step.text);
     await sleep(step.delay);
   }
+}
+
+function showApiConnectionError() {
+  const spinner = document.querySelector(".loader-spinner");
+  const message = document.getElementById("loader-message");
+
+  if (spinner) {
+    spinner.classList.add("stopped");
+  }
+
+  message.innerHTML =
+    'Connection to the server failed';
+  message.style.display = "block";
+
+  document.getElementById("refresh-link").addEventListener("click", (e) => {
+    e.preventDefault();
+    location.reload();
+  });
 }
 
 async function hideLoadingScreen() {
