@@ -181,7 +181,7 @@
   --settings-content-padding: 8px;
   --settings-content-radius: 0 12px 12px 0;
   --settings-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --settings-layer-size: 38px;
+  --settings-layer-size: 64px;
 
 
   /* ==========================================================================
@@ -259,7 +259,7 @@
   --timeline-badge-border: rgba(255, 255, 255, 0.1);
 
   --zoom-control-gap: 8px;
-  --zoom-button-size: 40px;
+  --zoom-button-size: 48px;
 
   /* ==========================================================================
      Border Radius additions

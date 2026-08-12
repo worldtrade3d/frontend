@@ -1,6 +1,6 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { getISO } from "../utils/geo.js";
-import { createRenderer } from "../render/globeRenderer.js";
+import { createRenderer } from "../renderers/globeRenderer.js";
 import { createControls } from "./controlCompositor.js";
 import { createSearchController } from "../controllers/searchController.js";
 

@@ -8,39 +8,72 @@
   <title>World Trade 3D</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+    rel="stylesheet"
+  >
 
   <link rel="icon" type="image/png" href="/assets/icons/logo.png">
   <link rel="stylesheet" href="style/sheet.css">
 </head>
 
 <body>
+
   <!-- Loader -->
   <div id="loading-scene">
+
     <div class="loader-logo">
+
       <div class="loader-logo-background"></div>
-      <img src="assets/icons/logo.png" class="loader-logo-image" alt="World Trade 3D Logo">
+
+      <img
+        src="assets/icons/logo.png"
+        class="loader-logo-image"
+        alt="World Trade 3D Logo"
+      >
+
       <div class="loader-spinner"></div>
+
     </div>
 
     <div class="loader-content">
-      <h3 id="loader-message">Connecting to server</h3>
+
+      <h3 id="loader-message">
+        Connecting to server
+      </h3>
+
     </div>
 
     <div class="loader-title">
-      <h2>World Trade 3D</h2>
+
+      <h2>
+        World Trade 3D
+      </h2>
+
     </div>
+
   </div>
-  
+
+
   <!-- Application -->
   <div id="application-scene" hidden>
 
-    <!-- Top Navigation -->
+
+    <!-- ================================================================
+         Top Navigation
+         ================================================================ -->
+
     <header id="top-bar" class="glass">
+
 
       <!-- Brand -->
       <div id="brand">
+
         <img
           src="assets/icons/logo.png"
           alt="World Trade 3D"
@@ -48,14 +81,26 @@
         >
 
         <div id="brand-name">
-          <strong>World Trade</strong>
-          <span>3D</span>
+
+          <strong>
+            World Trade
+          </strong>
+
+          <span>
+            3D
+          </span>
+
         </div>
+
       </div>
+
 
       <!-- Country Search -->
       <div id="search-container" class="glass">
-        <span class="search-icon">⌕</span>
+
+        <span class="search-icon">
+          ⌕
+        </span>
 
         <input
           id="country-search"
@@ -69,19 +114,38 @@
           id="search-clear"
           type="button"
           aria-label="Clear search"
-        >×</button>
+        >
+          ×
+        </button>
 
         <div id="search-results"></div>
+
       </div>
+
 
       <!-- Right Side Actions -->
       <div id="top-actions">
 
-        <div id="status-indicator" class="status-badge">
-          <span id="status-dot" class="status-dot"></span>
-          <span id="status-text">API Online</span>
+
+        <!-- API Status -->
+        <div
+          id="status-indicator"
+          class="status-badge"
+        >
+
+          <span
+            id="status-dot"
+            class="status-dot"
+          ></span>
+
+          <span id="status-text">
+            API Online
+          </span>
+
         </div>
 
+
+        <!-- Data Sources -->
         <div id="info-container">
 
           <button
@@ -93,7 +157,11 @@
             i
           </button>
 
-          <div id="info-logos" hidden>
+          <div
+            id="info-logos"
+            hidden
+          >
+
             <img
               src="assets/logos/uncomtrade.png"
               alt="UN Comtrade"
@@ -103,108 +171,254 @@
               src="assets/logos/worldbank.png"
               alt="World Bank"
             >
+
           </div>
 
         </div>
 
-      </div>
-
-      <!-- Completely independent info panel -->
-      <div id="info-panel" hidden>
-        <div class="info-panel-header">
-          <strong>Information</strong>
-
-          <button id="info-panel-close" type="button" aria-label="Close">
-            ×
-          </button>
-        </div>
-
-        <div class="info-panel-content">
-          <p>Put whatever information you want here.</p>
-          <p>This panel has nothing to do with the API status.</p>
-        </div>
       </div>
 
     </header>
 
-    <!-- Left Sidebar: Filters & Controls -->
-    <aside id="left-sidebar" class="glass">
+
+    <!-- ================================================================
+         Left Sidebar — Filters & Controls
+         ================================================================ -->
+
+    <aside
+      id="left-sidebar"
+      class="glass"
+    >
+
+
+      <!-- Filter Header -->
       <div class="filter-header">
-        <h2>Filters</h2>
+
+        <h2>
+          Filters
+        </h2>
+
       </div>
 
+
+      <!-- Filter Content -->
       <div class="filter-content">
+
         <div class="filter-group">
-          <label>Trade Type</label>
+
+          <label>
+            Trade Type
+          </label>
+
           <div id="trade-mode-toggle">
-            <button data-trade-mode="export" class="active">Exports</button>
-            <button data-trade-mode="import">Imports</button>
+
+            <button
+              data-trade-mode="export"
+              class="active"
+              type="button"
+            >
+              Exports
+            </button>
+
+            <button
+              data-trade-mode="import"
+              type="button"
+            >
+              Imports
+            </button>
+
           </div>
+
         </div>
+
         <!-- Additional filter controls can go here -->
+
       </div>
 
+
+      <!-- Filter Footer -->
       <div class="filter-footer">
-        <button id="apply-selection" class="apply-button">Apply</button>
+
+        <button
+          id="apply-selection"
+          class="apply-button"
+          type="button"
+        >
+          Apply
+        </button>
+
       </div>
+
     </aside>
 
-    <!-- Right Sidebar: Overview Card + Top Partners & Categories -->
+
+    <!-- ================================================================
+         Right Sidebar — Overview / Countries / Sectors
+         ================================================================ -->
+
     <aside id="right-sidebar">
-      
-      <!-- Country Overview Card (Exports & Imports) -->
-      <section id="country-overview" class="glass country-overview-card">
-        <h2 id="selected-country">World</h2>
+
+
+      <!-- ============================================================
+           Country Overview
+           ============================================================ -->
+
+      <section
+        id="country-overview"
+        class="glass country-overview-card"
+      >
+
+        <h2 id="selected-country">
+          World
+        </h2>
+
+
         <div class="stats-grid">
+
+
+          <!-- Total Exports -->
           <div class="stat-item">
-            <span class="stat-label">Total Exports</span>
-            <span id="country-exports" class="stat-value">$0.00</span>
+
+            <span class="stat-label">
+              Total Exports
+            </span>
+
+            <span
+              id="country-exports"
+              class="stat-value"
+            >
+              $0.00
+            </span>
+
           </div>
+
+
+          <!-- Total Imports -->
           <div class="stat-item">
-            <span class="stat-label">Total Imports</span>
-            <span id="country-imports" class="stat-value">$0.00</span>
+
+            <span class="stat-label">
+              Total Imports
+            </span>
+
+            <span
+              id="country-imports"
+              class="stat-value"
+            >
+              $0.00
+            </span>
+
           </div>
+
+
         </div>
+
       </section>
 
-      <!-- Top Partners Panel -->
-      <section id="trade-panel" class="glass">
-        <header id="trade-header">
-          <h2>Top Countries</h2>
+
+      <!-- ============================================================
+           Country Panel
+           ============================================================ -->
+
+      <section
+        id="country-panel"
+        class="glass"
+      >
+
+        <header id="country-header">
+
+          <h2>
+            Top Countries
+          </h2>
+
         </header>
 
-        <div id="trade-content">
-          <p class="placeholder">Click apply to view trade partners.</p>
+
+        <div id="country-content">
+
+          <p class="placeholder">
+            Click apply to view trade partners.
+          </p>
+
         </div>
+
       </section>
 
-      <!-- Top Categories Panel -->
-      <section id="categories-panel" class="glass">
-        <header id="categories-header">
-          <h2>Top Categories</h2>
+
+      <!-- ============================================================
+           Sector Panel
+           ============================================================ -->
+
+      <section
+        id="sector-panel"
+        class="glass"
+      >
+
+        <header id="sector-header">
+
+          <h2>
+            Top Sectors
+          </h2>
+
         </header>
 
-        <div id="categories-content">
-          <p class="placeholder">Select a country to view trade categories.</p>
+
+        <div id="sector-content">
+
+          <p class="placeholder">
+            Select a country to view trade sectors.
+          </p>
+
         </div>
+
       </section>
+
 
     </aside>
-    
-    <!-- Timeline Bar -->
-    <nav id="year-selector" class="timeline-bar">
-      <!-- Stepper Left -->
-      <button id="prev-year" aria-label="Previous year">‹</button>
 
-      <!-- Timeline Track Container -->
+
+    <!-- ================================================================
+         Timeline Bar
+         ================================================================ -->
+
+    <nav
+      id="year-selector"
+      class="timeline-bar"
+    >
+
+
+      <!-- Previous Year -->
+      <button
+        id="prev-year"
+        type="button"
+        aria-label="Previous year"
+      >
+        ‹
+      </button>
+
+
+      <!-- Timeline Track -->
       <div class="timeline-container">
-        <span class="timeline-label min-label" id="min-year-label">1962</span>
+
+
+        <span
+          class="timeline-label min-label"
+          id="min-year-label"
+        >
+          1962
+        </span>
+
 
         <div class="timeline-track">
-          <!-- Active Progress Bar -->
-          <div class="timeline-progress" id="timeline-progress"></div>
 
-          <!-- Range Slider Input -->
+
+          <!-- Active Progress -->
+          <div
+            class="timeline-progress"
+            id="timeline-progress"
+          ></div>
+
+
+          <!-- Range Slider -->
           <input
             id="year-slider"
             type="range"
@@ -212,14 +426,26 @@
             max="2025"
             step="1"
             aria-label="Year timeline"
-          />
+          >
+
+
         </div>
 
-        <span class="timeline-label max-label" id="max-year-label">2025</span>
+
+        <span
+          class="timeline-label max-label"
+          id="max-year-label"
+        >
+          2025
+        </span>
+
+
       </div>
 
-      <!-- Year Display & Input -->
+
+      <!-- Current Year -->
       <div class="year-display">
+
         <input
           id="current-year"
           type="number"
@@ -227,61 +453,137 @@
           min="1962"
           max="2025"
           aria-label="Current year"
-        />
+        >
+
       </div>
 
-      <!-- Stepper Right -->
-      <button id="next-year" aria-label="Next year">›</button>
+
+      <!-- Next Year -->
+      <button
+        id="next-year"
+        type="button"
+        aria-label="Next year"
+      >
+        ›
+      </button>
+
+
     </nav>
 
 
-    <!-- Settings -->
+    <!-- ================================================================
+         Settings
+         ================================================================ -->
+
     <div id="settings-panel">
 
-      <button id="settings-toggle" aria-label="Toggle settings">◀</button>
+
+      <button
+        id="settings-toggle"
+        type="button"
+        aria-label="Toggle settings"
+      >
+        ◀
+      </button>
+
 
       <div id="settings-content">
 
-        <button id="layer-toggle" class="layer-toggle">
+
+        <button
+          id="layer-toggle"
+          class="layer-toggle"
+          type="button"
+          aria-label="Toggle map layer"
+        >
+
           <img
             id="layer-icon"
             src="assets/graphics/heatmap.png"
             alt="Toggle map layer"
           >
+
         </button>
+
 
         <!-- More buttons here -->
 
+
       </div>
 
     </div>
 
+
+    <!-- ================================================================
+         Zoom Controls
+         ================================================================ -->
 
     <div id="zoom-controls">
-      <button id="zoom-in" class="zoom-button">+</button>
-      <button id="zoom-out" class="zoom-button">−</button>
+
+      <button
+        id="zoom-in"
+        class="zoom-button"
+        type="button"
+        aria-label="Zoom in"
+      >
+        +
+      </button>
+
+      <button
+        id="zoom-out"
+        class="zoom-button"
+        type="button"
+        aria-label="Zoom out"
+      >
+        −
+      </button>
+
     </div>
 
 
+    <!-- ================================================================
+         Shared Country / Sector Row Template
+         ================================================================ -->
+
     <template id="trade-row-template">
-      <div class="trade-row">
-        <div class="trade-info">
-          <span class="trade-country"></span>
-          <span class="trade-value"></span>
+
+      <div class="country-row">
+
+        <div class="country-info">
+
+          <span class="country-name"></span>
+
+          <span class="country-value"></span>
+
         </div>
 
-        <div class="trade-bar">
-          <div class="trade-fill"></div>
+        <div class="country-bar">
+
+          <div class="country-fill"></div>
+
         </div>
+
       </div>
+
     </template>
+
 
   </div>
 
+
+  <!-- Tooltip -->
   <div id="tooltip"></div>
+
+
+  <!-- Globe -->
   <canvas id="globe"></canvas>
-  
-  <script type="module" src="src/app.js"></script>
+
+
+  <!-- Application -->
+  <script
+    type="module"
+    src="src/app.js"
+  ></script>
 
 </body>
 </html>

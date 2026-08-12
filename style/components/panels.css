@@ -21,6 +21,7 @@
 
 .panel-title {
   margin: 0;
+
   font-size: var(--text-xl);
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-tight);
@@ -33,6 +34,7 @@
 
 #left-sidebar {
   position: absolute;
+
   top: var(--panel-top);
   left: var(--panel-offset);
 
@@ -44,7 +46,6 @@
 
   z-index: var(--z-panel);
 
-  /* Match the other cards */
   background: var(--surface-1);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-none);
@@ -98,6 +99,7 @@
 
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
+
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
 
@@ -131,10 +133,9 @@
   border: 1px solid rgba(255, 255, 255, 0.30);
   border-radius: var(--radius-none);
 
-  /* High-opacity button */
   background: #ffffff;
-
   color: #000000;
+
   font-family: inherit;
   font-size: var(--text-md);
   font-weight: var(--weight-semibold);
@@ -160,11 +161,12 @@
 
 
 /* ==========================================================================
-   Right Sidebar — Overview / Trade / Categories
+   Right Sidebar — Overview / Country / Sector
    ========================================================================== */
 
 #right-sidebar {
   position: absolute;
+
   top: var(--panel-top);
   right: var(--panel-offset);
   left: auto;
@@ -186,8 +188,8 @@
    Panel Headings
    ========================================================================== */
 
-#trade-panel h2,
-#categories-panel h2,
+#country-panel h2,
+#sector-panel h2,
 .country-overview-card h2 {
   margin: 0;
 
@@ -198,7 +200,7 @@
 
 
 /* ==========================================================================
-   General Country Overview Card
+   Country Overview Card
    ========================================================================== */
 
 .country-overview-card {
@@ -241,6 +243,7 @@
 .stat-label {
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
+
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
 
@@ -280,8 +283,8 @@
   border-radius: var(--radius-none);
 
   background: var(--surface-1);
-
   color: var(--text-muted);
+
   font-family: inherit;
   font-size: var(--text-sm);
 
@@ -301,6 +304,7 @@
 
 #trade-mode-toggle button.active {
   color: var(--text-primary);
+
   font-weight: var(--weight-semibold);
 
   background: var(--surface-active);
@@ -309,12 +313,12 @@
 
 
 /* ==========================================================================
-   Scrollable Data Content
+   Scrollable Country / Sector Data
    ========================================================================== */
 
 .scroll-content,
-#trade-content,
-#categories-content {
+#country-content,
+#sector-content {
   margin-top: var(--space-3);
 
   max-height: var(--trade-content-max-height);
@@ -327,17 +331,17 @@
 }
 
 .scroll-content::-webkit-scrollbar,
-#trade-content::-webkit-scrollbar,
-#categories-content::-webkit-scrollbar {
+#country-content::-webkit-scrollbar,
+#sector-content::-webkit-scrollbar {
   display: none;
 }
 
 
 /* ==========================================================================
-   Minimalist Trade / Sector Cards
+   Country Rows
    ========================================================================== */
 
-.trade-row {
+.country-row {
   position: relative;
 
   display: flex;
@@ -348,6 +352,7 @@
   margin-bottom: var(--space-2);
 
   background: var(--surface-1);
+
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-none);
 
@@ -359,18 +364,17 @@
     border-color var(--transition-fast);
 }
 
-.trade-row:hover {
+.country-row:hover {
   background: var(--surface-2);
   border-color: var(--border-medium);
 }
 
 
 /* ==========================================================================
-   Trade / Category Row Information
+   Country Row Information
    ========================================================================== */
 
-#trade-content .trade-info,
-#categories-content .trade-label {
+.country-info {
   width: 100%;
 
   display: flex;
@@ -382,11 +386,10 @@
 
 
 /* --------------------------------------------------------------------------
-   Country / Category Name
+   Country Name
    -------------------------------------------------------------------------- */
 
-#trade-content .trade-country,
-#categories-content .trade-label span:last-child {
+.country-name {
   flex: 1;
   min-width: 0;
 
@@ -398,44 +401,43 @@
   font-weight: var(--weight-medium);
 
   color: rgba(255, 255, 255, 0.9);
+
+  text-align: left;
 }
 
 
 /* --------------------------------------------------------------------------
-   Trade / Category Value
+   Country Value
    -------------------------------------------------------------------------- */
 
-#trade-content .trade-value,
-#categories-content .trade-label span:first-child {
+.country-value {
   flex-shrink: 0;
+
+  min-width: 80px;
 
   font-size: var(--text-md);
   font-weight: var(--weight-semibold);
 
-  color: var(--text-secondary);
+  color: var(--text-primary);
 
   text-align: right;
 
   font-feature-settings: "tnum" 1, "cv05" 1;
 }
 
-#categories-content .trade-label span:first-child {
-  color: var(--text-primary);
-}
-
 
 /* ==========================================================================
-   Minimalist Progress Bars
+   Country Progress Bar
    ========================================================================== */
 
-#trade-content .trade-bar,
-#categories-content .trade-bar {
+.country-bar {
   position: relative;
 
   width: 100%;
   height: var(--progress-height);
 
   background: var(--surface-3);
+
   border-radius: var(--radius-none);
 
   overflow: hidden;
@@ -443,23 +445,14 @@
 
 
 /* --------------------------------------------------------------------------
-   Category Bar Layout
+   Country Progress Fill
    -------------------------------------------------------------------------- */
 
-#categories-content .trade-bar {
-  display: flex;
-  justify-content: flex-start;
-}
-
-
-/* --------------------------------------------------------------------------
-   Progress Fill
-   -------------------------------------------------------------------------- */
-
-#trade-content .trade-fill,
-#categories-content .trade-fill {
+.country-fill {
   width: 0;
   height: 100%;
+
+  background: var(--gradient-export);
 
   border-radius: var(--radius-none);
 
@@ -467,19 +460,124 @@
 }
 
 
-/* --------------------------------------------------------------------------
-   Export Progress
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   Sector Rows
+   ========================================================================== */
 
-#trade-content .trade-fill {
-  background: var(--gradient-export);
+.sector-row {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  padding: 10px var(--space-3);
+  margin-bottom: var(--space-2);
+
+  background: var(--surface-1);
+
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-none);
+
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.sector-row:hover {
+  background: var(--surface-2);
+  border-color: var(--border-medium);
+}
+
+
+/* ==========================================================================
+   Sector Row Information
+   ========================================================================== */
+
+.sector-info {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: var(--space-3);
 }
 
 
 /* --------------------------------------------------------------------------
-   Import Progress
+   Sector Name
    -------------------------------------------------------------------------- */
 
-#categories-content .trade-fill {
+.sector-name {
+  flex: 1;
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+
+  color: rgba(255, 255, 255, 0.9);
+
+  text-align: left;
+}
+
+
+/* --------------------------------------------------------------------------
+   Sector Percentage
+   -------------------------------------------------------------------------- */
+
+.sector-percent {
+  flex-shrink: 0;
+
+  min-width: 52px;
+
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+
+  color: var(--text-primary);
+
+  text-align: right;
+
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+
+/* ==========================================================================
+   Sector Progress Bar
+   ========================================================================== */
+
+.sector-bar {
+  position: relative;
+
+  width: 100%;
+  height: var(--progress-height);
+
+  background: var(--surface-3);
+
+  border-radius: var(--radius-none);
+
+  overflow: hidden;
+}
+
+
+/* --------------------------------------------------------------------------
+   Sector Progress Fill
+   -------------------------------------------------------------------------- */
+
+.sector-fill {
+  width: 0;
+  height: 100%;
+
   background: var(--gradient-import);
+
+  border-radius: var(--radius-none);
+
+  transition: width var(--transition-progress);
 }

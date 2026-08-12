@@ -1,17 +1,46 @@
+/* ==========================================================================
+   Percentage
+   ========================================================================== */
+
 export function formatPercent(value) {
-  if (value >= 10) return Math.round(value) + "%";
-  if (value >= 1) return value.toFixed(1) + "%";
-  return value.toFixed(3) + "%";
+  const number = Number(value) || 0;
+
+  if (number >= 10) {
+    return Math.round(number) + "%";
+  }
+
+  if (number >= 1) {
+    return number.toFixed(1) + "%";
+  }
+
+  return number.toFixed(3) + "%";
 }
+
+
+/* ==========================================================================
+   Label
+   ========================================================================== */
 
 export function formatLabel(text) {
   if (!text) return "";
-  return text.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+  return text
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
 
+
+/* ==========================================================================
+   Currency
+   ========================================================================== */
+
 export function formatCurrency(value) {
+  const number = Number(value) || 0;
+
   return new Intl.NumberFormat("en", {
+    style: "currency",
+    currency: "USD",
     notation: "compact",
-    maximumFractionDigits: 1
-  }).format(value);
+    maximumFractionDigits: 2
+  }).format(number);
 }

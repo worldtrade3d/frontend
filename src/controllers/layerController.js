@@ -1,6 +1,5 @@
 import { state } from "../state/state.js";
 import { fetchAllCountriesTotals } from "../services/api.js";
-import { EXPORTS_URL } from "../config/paths.js";
 
 export function initLayers() {
     const button = document.getElementById("layer-toggle");
