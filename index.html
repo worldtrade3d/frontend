@@ -77,12 +77,52 @@
       <!-- Right Side Actions -->
       <div id="top-actions">
 
-        <!-- Status Indicator moved into header top-actions -->
         <div id="status-indicator" class="status-badge">
           <span id="status-dot" class="status-dot"></span>
           <span id="status-text">API Online</span>
         </div>
 
+        <div id="info-container">
+
+          <button
+            id="info-button"
+            type="button"
+            aria-label="Show data sources"
+            title="Data sources"
+          >
+            i
+          </button>
+
+          <div id="info-logos" hidden>
+            <img
+              src="assets/logos/uncomtrade.png"
+              alt="UN Comtrade"
+            >
+
+            <img
+              src="assets/logos/worldbank.png"
+              alt="World Bank"
+            >
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Completely independent info panel -->
+      <div id="info-panel" hidden>
+        <div class="info-panel-header">
+          <strong>Information</strong>
+
+          <button id="info-panel-close" type="button" aria-label="Close">
+            ×
+          </button>
+        </div>
+
+        <div class="info-panel-content">
+          <p>Put whatever information you want here.</p>
+          <p>This panel has nothing to do with the API status.</p>
+        </div>
       </div>
 
     </header>
@@ -114,7 +154,7 @@
       
       <!-- Country Overview Card (Exports & Imports) -->
       <section id="country-overview" class="glass country-overview-card">
-        <h2 id="selected-country">Explore</h2>
+        <h2 id="selected-country">World</h2>
         <div class="stats-grid">
           <div class="stat-item">
             <span class="stat-label">Total Exports</span>
@@ -130,7 +170,7 @@
       <!-- Top Partners Panel -->
       <section id="trade-panel" class="glass">
         <header id="trade-header">
-          <h2>Top Partners</h2>
+          <h2>Top Countries</h2>
         </header>
 
         <div id="trade-content">
@@ -235,12 +275,6 @@
         </div>
       </div>
     </template>
-
-
-    <div class="partner-logos">
-      <img src="assets/logos/uncomtrade.png" alt="UN Comtrade">
-      <img src="assets/logos/worldbank.png" alt="World Bank">
-    </div>
 
   </div>
 

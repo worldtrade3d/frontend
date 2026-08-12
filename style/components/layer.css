@@ -1,93 +1,122 @@
 /* ==========================================================================
-   Side settings drawer
+   Side Settings Drawer
    ========================================================================== */
 
 #settings-panel {
-    position: fixed;
-    left: 0;
-    bottom: 10px;
+  position: fixed;
 
-    display: flex;
-    align-items: center;
+  left: 0;
+  bottom: 10px;
 
-    z-index: 1000;
+  display: flex;
+  align-items: center;
+
+  z-index: 1000;
 }
 
-/* Thin side tab */
-#settings-toggle {
-    width: 16px;
-    height: 80px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-    margin: 0;
-
-    border: none;
-    border-radius: 0 8px 8px 0;
-
-    background: var(--bg-glass);
-    color: white;
-    font-size: 12px;
-
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-#settings-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    padding: 12px;
-
-    background: var(--bg-glass);
-    border-radius: 0 12px 12px 0;
-
-    transition: transform 0.3s ease;
-    transform: translateX(0);
-}
-
-/* Hide everything except the tab */
-#settings-panel.collapsed #settings-content {
-    transform: translateX(calc(-100% - 16px));
-}
 
 /* ==========================================================================
-   Layer button
+   Thin Side Tab
+   ========================================================================== */
+
+#settings-toggle {
+  width: var(--settings-toggle-width);
+  height: var(--settings-toggle-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+
+  border: none;
+  border-radius: var(--settings-tab-radius);
+
+  background: var(--settings-bg);
+  color: var(--text-white);
+
+  font-size: var(--text-xs);
+
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   Settings Content
+   ========================================================================== */
+
+#settings-content {
+  display: flex;
+  align-items: center;
+
+  gap: var(--settings-gap);
+
+  padding: var(--settings-content-padding);
+
+  background: var(--settings-bg);
+
+  border-radius: var(--settings-content-radius);
+
+  transition: transform var(--settings-transition);
+
+  transform: translateX(0);
+}
+
+
+/* ==========================================================================
+   Collapsed State
+   ========================================================================== */
+
+#settings-panel.collapsed #settings-content {
+  transform: translateX(
+    calc(-100% - var(--settings-toggle-width))
+  );
+}
+
+
+/* ==========================================================================
+   Layer Button
    ========================================================================== */
 
 .layer-toggle {
-    width: 64px;
-    aspect-ratio: 1 / 1;
+  width: var(--settings-layer-size);
+  aspect-ratio: 1 / 1;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 
-    border: none;
-    border-radius: 10px;
+  border: none;
+  border-radius: 10px;
 
-    overflow: hidden;
-    background: transparent;
+  overflow: hidden;
 
-    cursor: pointer;
+  background: transparent;
 
-    box-sizing: border-box;
-    flex-shrink: 0;
-    z-index: 99999;
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  flex-shrink: 0;
+
+  z-index: 99999;
 }
 
+
+/* ==========================================================================
+   Layer Image
+   ========================================================================== */
+
 .layer-toggle img {
-    display: block;
+  display: block;
 
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    object-fit: cover;
+  object-fit: cover;
 }

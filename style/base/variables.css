@@ -3,27 +3,296 @@
    ========================================================================== */
 
 :root {
-  /* Colors */
+  /* ==========================================================================
+     Colors — Backgrounds / Surfaces
+     ========================================================================== */
+
   --bg-dark: #0f1115;
+
+  --bg-panel: rgba(15, 18, 24, 0.85);
+
+  --surface-1: rgba(255, 255, 255, 0.02);
+  --surface-2: rgba(255, 255, 255, 0.05);
+  --surface-3: rgba(255, 255, 255, 0.08);
+  --surface-active: rgba(255, 255, 255, 0.10);
+
+  /* Controls Surfaces */
+  --surface-control: rgba(17, 17, 17, 0.85);
+  --surface-control-hover: #1a1a1a;
+
+  /* Legacy / optional glass surface */
   --bg-glass: rgba(12, 12, 16, 0.25);
-  --border-glass: rgba(255, 255, 255, 1.0);
+
+
+  /* ==========================================================================
+     Borders
+     ========================================================================== */
+
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.20);
+  --border-active: rgba(255, 255, 255, 0.30);
+
+  /* Control Borders */
+  --border-control: rgba(255, 255, 255, 0.10);
+  --border-control-hover: rgba(255, 255, 255, 0.18);
+
+  /* Optional glass border */
+  --border-glass: rgba(255, 255, 255, 0.08);
+
+
+  /* ==========================================================================
+     Text
+     ========================================================================== */
 
   --text-primary: #f5f5f4;
-  --text-secondary: rgba(255, 255, 255, 0.45);
-  --text-muted: rgba(255, 255, 255, 0.35);
+  --text-secondary: rgba(255, 255, 255, 0.70);
+  --text-muted: rgba(255, 255, 255, 0.50);
+  --text-faint: rgba(255, 255, 255, 0.35);
 
-  /* Accent */
-  --accent-export: linear-gradient(90deg, #dc2626 0%, #f15656 100%);
-  --accent-import: linear-gradient(90deg, #16a34a 0%, #4ade80 100%);
+  --text-white: #ffffff;
+
+
+  /* ==========================================================================
+     Accent Colors & Shadows
+     ========================================================================== */
+
+  --accent-export: #ef4444;
+  --accent-import: #22c55e;
   --accent-white: #ffffff;
+
   --status-color: #adadad;
 
-  /* Geometry */
+  --shadow-control: 0 8px 25px rgba(0, 0, 0, 0.45);
+
+
+  /* ==========================================================================
+     Accent Gradients
+     ========================================================================== */
+
+  --gradient-export: linear-gradient(
+    90deg,
+    #dc2626 0%,
+    #f15656 100%
+  );
+
+  --gradient-import: linear-gradient(
+    90deg,
+    #16a34a 0%,
+    #4ade80 100%
+  );
+
+
+  /* ==========================================================================
+     Layout & Dimensions
+     ========================================================================== */
+
+  --panel-top: 96px;
+  --panel-offset: 28px;
+
+  --left-sidebar-width: 280px;
+  --right-sidebar-width: 360px;
+
+  --panel-max-height: calc(100vh - 120px);
+
+
+  /* ==========================================================================
+     Spacing
+     ========================================================================== */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+
+  /* ==========================================================================
+     Typography
+     ========================================================================== */
+
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-md: 13px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  --tracking-label: 0.08em;
+
+
+  /* ==========================================================================
+     Component Dimensions
+     ========================================================================== */
+
+  --button-height: 38px;
+
+  --progress-height: 3px;
+
+  --trade-content-max-height: 280px;
+
+
+  /* ==========================================================================
+     Border Radius
+     
+     The current UI intentionally uses a square / sharp visual style.
+     ========================================================================== */
+
+  --radius-none: 0;
   --radius-sm: 6px;
   --radius-md: 12px;
-  --radius-lg: 0px;
   --radius-full: 9999px;
 
-  /* Motion */
-  --transition-normal: 0.2s ease;
+
+  /* ==========================================================================
+     Motion
+     ========================================================================== */
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.20s ease;
+  --transition-progress: 450ms ease-out;
+
+
+  /* ==========================================================================
+     Z-Index
+     ========================================================================== */
+
+  --z-panel: 10;
+
+
+  /* ==========================================================================
+     Side Settings Drawer Variables
+     ========================================================================== */
+
+  --settings-toggle-width: 32px;
+  --settings-toggle-height: 38px;
+  --settings-tab-radius: 0 8px 8px 0;
+  --settings-bg: rgba(17, 17, 17, 0.90);
+  --settings-gap: 8px;
+  --settings-content-padding: 8px;
+  --settings-content-radius: 0 12px 12px 0;
+  --settings-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --settings-layer-size: 38px;
+
+
+  /* ==========================================================================
+     Loading Overlay Variables
+     ========================================================================== */
+
+  --loading-overlay-bg: rgba(15, 17, 21, 0.85);
+  --loading-logo-opacity: 0.25;
+  --loading-spinner-width: 3px;
+  --loading-spinner-border: rgba(255, 255, 255, 0.1);
+  --loading-spinner-duration: 1.2s;
+  --loading-spinner-stopped: #ef4444;
+  --loading-text: #f5f5f4;
+  --loading-text-secondary: rgba(255, 255, 255, 0.6);
+  --loading-title-bottom: 40px;
+
+
+  /* ==========================================================================
+     Search Component Variables
+     ========================================================================== */
+
+  --search-results-bg: #0d0d0d;
+  --search-results-border: rgba(255, 255, 255, 0.10);
+  --search-results-shadow: 0 15px 40px rgba(0, 0, 0, 0.55);
+  --search-option-hover: #1a1a1a;
+  --search-option-border: rgba(255, 255, 255, 0.05);
+  --search-scrollbar: rgba(255, 255, 255, 0.2);
+  --search-clear-opacity: 0.45;
+
+
+  /* ==========================================================================
+     Status Badge Variables
+     ========================================================================== */
+
+  --status-badge-gap: 6px;
+  --status-badge-padding-x: 10px;
+  --status-badge-padding-y: 4px;
+  --status-badge-bg: rgba(255, 255, 255, 0.05);
+  --status-badge-border: rgba(255, 255, 255, 0.1);
+  --status-badge-text: #f5f5f4;
+  --status-dot-color: #22c55e;
+  --status-dot-glow: rgba(34, 197, 94, 0.4);
+
+
+  /* ==========================================================================
+     Tooltip Variables
+     ========================================================================== */
+
+  --tooltip-padding-x: 10px;
+  --tooltip-padding-y: 6px;
+  --tooltip-bg: #111111;
+  --tooltip-border: rgba(255, 255, 255, 0.15);
+  --tooltip-font-size: 12px;
+
+
+  /* ==========================================================================
+     Timeline & Zoom Variables
+     ========================================================================== */
+
+  --timeline-gap: 12px;
+  --timeline-min-width: 320px;
+  --timeline-height: 48px;
+  --timeline-bg: rgba(17, 17, 17, 0.90);
+  --timeline-border: rgba(255, 255, 255, 0.10);
+  --timeline-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+  --timeline-button-size: 32px;
+  --timeline-button-bg: rgba(255, 255, 255, 0.05);
+  --timeline-button-hover: rgba(255, 255, 255, 0.15);
+  --timeline-track-height: 4px;
+  --timeline-track-bg: rgba(255, 255, 255, 0.1);
+  --timeline-accent: #3b82f6;
+  --timeline-accent-light: #60a5fa;
+  --timeline-thumb: #ffffff;
+  --timeline-badge-bg: rgba(255, 255, 255, 0.05);
+  --timeline-badge-border: rgba(255, 255, 255, 0.1);
+
+  --zoom-control-gap: 8px;
+  --zoom-button-size: 40px;
+
+  /* ==========================================================================
+     Border Radius additions
+     ========================================================================== */
+
+  --radius-lg: 16px;                     /* Needed for .glass */
+
+
+  /* ==========================================================================
+     Box Shadows additions
+     ========================================================================== */
+
+  --shadow-glass: 0 8px 24px rgba(0, 0, 0, 0.35);  /* Needed for .glass */
+
+
+  /* ==========================================================================
+     Glass Utility & Layout Padding/Gaps
+     ========================================================================== */
+
+  --glass-padding-y: 16px;                /* Needed for .glass */
+  --glass-padding-x: 20px;                /* Needed for .glass */
+
+  --partner-logos-bottom: 40px;           /* Needed for .partner-logos */
+  --partner-logos-left: 100px;            /* Needed for .partner-logos */
+  --partner-logos-gap: 20px;              /* Needed for .partner-logos */
+  --partner-logo-height: 32px;            /* Needed for .partner-logos img */
+
+
+  /* ==========================================================================
+     Globe Canvas Layering
+     ========================================================================== */
+
+  --z-globe: 1;                           /* Needed for #globe */
+  --z-partner-logos: 10;                  /* Needed for .partner-logos */
+
 }

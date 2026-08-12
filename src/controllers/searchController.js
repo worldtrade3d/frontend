@@ -1,3 +1,7 @@
+import { formatPercent, formatLabel, formatCurrency } from "../utils/format.js";
+import { getCountryName } from "../utils/country.js";
+import { state } from "../state/state.js";
+
 export function createSearchController({
   features,
   controls
@@ -143,6 +147,7 @@ export function createSearchController({
     clearButton.addEventListener("click", () => {
       setSelectedCountry(null);
 
+      // Deactivating country will handle re-fetching world totals
       controls.activateCountry(null);
 
       search.focus();

@@ -47,3 +47,27 @@ toggle.addEventListener("click", () => {
         ? "▶"
         : "◀";
 });
+
+
+
+
+
+
+const infoButton = document.getElementById("info-button");
+const infoLogos = document.getElementById("info-logos");
+
+infoButton?.addEventListener("click", (event) => {
+  event.stopPropagation();
+
+  infoLogos.hidden = !infoLogos.hidden;
+});
+
+document.addEventListener("click", (event) => {
+  if (
+    !infoLogos.hidden &&
+    !infoLogos.contains(event.target) &&
+    !infoButton.contains(event.target)
+  ) {
+    infoLogos.hidden = true;
+  }
+});

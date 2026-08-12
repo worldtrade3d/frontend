@@ -4,18 +4,26 @@
 
 #search-container {
   position: relative;
+
   padding: 10px 16px;
 }
+
+
+/* ==========================================================================
+   Search Input
+   ========================================================================== */
 
 #country-search {
   width: 100%;
   height: 24px;
 
+  padding-right: 2.5rem;
+
   background: none;
   border: none;
   outline: none;
 
-  color: #fff;
+  color: var(--text-primary);
 
   font-size: 15px;
   font-family: inherit;
@@ -24,6 +32,11 @@
 #country-search::placeholder {
   color: var(--text-secondary);
 }
+
+
+/* ==========================================================================
+   Search Results
+   ========================================================================== */
 
 #search-results {
   position: absolute;
@@ -36,13 +49,13 @@
 
   overflow-y: auto;
 
-  background: rgba(15, 17, 21, 0.96);
-  backdrop-filter: blur(20px);
+  /* Solid dark surface — no glass */
+  background: var(--search-results-bg);
 
-  border: 1px solid var(--border-glass);
+  border: 1px solid var(--search-results-border);
   border-radius: var(--radius-md);
 
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--search-results-shadow);
 
   display: none;
 
@@ -55,10 +68,15 @@
   display: block;
 }
 
+
+/* ==========================================================================
+   Country Options
+   ========================================================================== */
+
 .country-option {
   padding: 12px 16px;
 
-  color: #fff;
+  color: var(--text-primary);
 
   cursor: pointer;
 
@@ -67,30 +85,40 @@
 
 .country-option:hover,
 .country-option.selected {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--search-option-hover);
 }
 
 .country-option + .country-option {
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--search-option-border);
 }
+
+
+/* ==========================================================================
+   Search Scrollbar
+   ========================================================================== */
 
 #search-results::-webkit-scrollbar {
   width: 6px;
 }
 
 #search-results::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
+  background: var(--search-scrollbar);
   border-radius: var(--radius-full);
 }
+
+
+/* ==========================================================================
+   Search Input Wrapper
+   ========================================================================== */
 
 .search-input-wrapper {
   position: relative;
 }
 
-#country-search {
-  width: 100%;
-  padding-right: 2.5rem;
-}
+
+/* ==========================================================================
+   Clear Button
+   ========================================================================== */
 
 #search-clear {
   position: absolute;
@@ -103,14 +131,15 @@
   border: none;
   background: transparent;
 
-  color: inherit;
+  color: var(--text-primary);
 
   font-size: 1.2rem;
 
   cursor: pointer;
 
   display: none;
-  opacity: 0.7;
+
+  opacity: var(--search-clear-opacity);
 }
 
 #search-clear:hover {

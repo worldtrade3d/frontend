@@ -32,7 +32,7 @@ export function updateTradePanel(countryName, partners, options = {}) {
 
   if (!container || !title) return;
 
-  title.textContent = countryName || "Explore";
+  title.textContent = countryName || "World";
 
   /* =========================
      LOADING

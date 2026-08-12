@@ -1,16 +1,15 @@
 @import "./base/global.css";
+@import "./base/globe.css";
 @import "./base/reset.css";
 @import "./base/utils.css";
 @import "./base/variables.css";
 
-@import "./components/globe.css";
+@import "./components/header.css";
 @import "./components/layer.css";
 @import "./components/loader.css";
 @import "./components/panels.css";
 @import "./components/search.css";
+@import "./components/status.css";
 @import "./components/tooltip.css";
 @import "./components/year.css";
-
-@import "./components/header.css";
-@import "./components/status.css";
 @import "./components/zoom.css";

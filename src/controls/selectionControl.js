@@ -14,6 +14,8 @@ export function clearSelection(ctx) {
   ctx.canvas.style.cursor = "default";
 
   ctx.onClick?.(null);
+
+  // No initBars() here.
 }
 
 export function activateCountry(ctx, feature) {
@@ -39,6 +41,7 @@ export function setupSelection(ctx) {
       ctx.ignoreNextClick = false;
       return;
     }
+
     if (!ctx.hovered) return;
     if (ctx.moved) return;
 

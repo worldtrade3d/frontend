@@ -1,6 +1,8 @@
 export const state = {
   // Selection
   selectedISO: null,
+  selectedCountryName: null,
+
   pendingISO: null,
   pendingCountryName: null,
 

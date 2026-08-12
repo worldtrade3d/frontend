@@ -2,34 +2,33 @@ import { fetchAllCountriesTotals } from "../services/api.js";
 import { updateTradePanel } from "../render/barRenderer.js";
 import { state } from "../state/state.js";
 
-export async function initBars() {
+export async function loadWorldTrade() {
+  try {
+    const totals = await fetchAllCountriesTotals(
+      state.mode,
+      state.year
+    );
 
-    try {
+    const countries = totals.map(country => ({
+      iso: country.iso || country.country,
+      value: country.total
+    }));
 
-        const totals = await fetchAllCountriesTotals(state.mode, state.year);
+    updateTradePanel(
+      "World",
+      countries
+    );
 
-        const countries = totals.map(country => ({
-            iso: country.iso || country.country,
-            value: country.total
-        }));
+  } catch (error) {
 
+    console.error(error);
 
-        updateTradePanel(
-            "World",
-            countries
-        );
-
-
-    } catch(error) {
-
-        console.error(error);
-
-        updateTradePanel(
-            "World",
-            [],
-            {
-                error:true
-            }
-        );
-    }
+    updateTradePanel(
+      "World",
+      [],
+      {
+        error: true
+      }
+    );
+  }
 }
