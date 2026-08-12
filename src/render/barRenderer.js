@@ -61,7 +61,7 @@ export function updateTradePanel(countryName, partners, options = {}) {
   }
 
   /* =========================
-     COUNTRY TOTAL
+     COUNTRY TOTAL (Updated)
   ========================= */
 
   if (options.total !== undefined) {
@@ -72,18 +72,21 @@ export function updateTradePanel(countryName, partners, options = {}) {
       maximumFractionDigits: 2
     }).format(options.total);
 
+    // 1. Update the overview card element based on the current mode
+    const exportsElement = document.getElementById("country-exports");
+    const importsElement = document.getElementById("country-imports");
+
+    if (state.mode === "export" && exportsElement) {
+      exportsElement.textContent = formatted;
+    } else if (state.mode === "import" && importsElement) {
+      importsElement.textContent = formatted;
+    }
+
+    // 2. Instead of building the summary card, show the placeholder prompt in Top Partners
     container.innerHTML = `
-      <div class="trade-summary">
-        <h3>Total ${state.mode === "import" ? "Imports" : "Exports"}</h3>
-
-        <div class="trade-total-value">
-          ${formatted}
-        </div>
-
-        <p class="placeholder">
-          Click <strong>Apply</strong> to load trade partners.
-        </p>
-      </div>
+      <p class="placeholder">
+        Click <strong>Apply</strong> to load top trade partners.
+      </p>
     `;
     return;
   }

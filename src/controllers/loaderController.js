@@ -66,14 +66,8 @@ function showApiConnectionError() {
     spinner.classList.add("stopped");
   }
 
-  message.innerHTML =
-    'Connection to the server failed';
+  message.innerHTML = 'Connection to the server failed';
   message.style.display = "block";
-
-  document.getElementById("refresh-link").addEventListener("click", (e) => {
-    e.preventDefault();
-    location.reload();
-  });
 }
 
 async function hideLoadingScreen() {

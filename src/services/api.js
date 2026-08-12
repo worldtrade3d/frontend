@@ -1,4 +1,4 @@
-const BASE_URL = window.location.hostname === "127.0.0.1" ? "http://127.0.0.1:3000" : "https://backend-m5wv.onrender.com";
+const BASE_URL = "https://backend-m5wv.onrender.com";
 const TRADE_API = `${BASE_URL}/trade`;
 
 // Shared helper

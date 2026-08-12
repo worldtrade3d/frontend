@@ -1,83 +1,182 @@
 /* ==========================================================================
-   Year Selector
+   Bottom Timeline Year Selector
    ========================================================================== */
 
-#year-selector {
-  position: absolute;
-
-  top: 28px;
+#year-selector.timeline-bar {
+  position: fixed;
+  bottom: 24px;
   left: 50%;
-
   transform: translateX(-50%);
 
   display: flex;
   align-items: center;
+  gap: 16px;
 
-  gap: 12px;
+  min-width: 420px;
+  max-width: 90vw;
+  height: 52px;
 
-  padding: 8px 14px;
+  padding: 0 16px;
 
-  background: var(--bg-glass);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-lg);
+  background: rgba(15, 18, 24, 0.85);
+  border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.12));
+  border-radius: 28px;
 
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 
-  z-index: 20;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  z-index: 1000;
 }
 
+/* --- Buttons --- */
+
 #year-selector button {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
 
-  background: transparent;
+  background: rgba(255, 255, 255, 0.05);
 
-  color: var(--text-muted);
+  color: #fff;
 
-  font: inherit;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 20px;
+  line-height: 1;
 
   cursor: pointer;
 
-  transition:
-    color var(--transition-fast),
-    background var(--transition-fast),
-    transform var(--transition-fast),
-    opacity var(--transition-fast);
+  transition: all 0.2s ease;
 }
 
 #year-selector button:hover:not(:disabled) {
-  color: #fff;
-
-  background: rgba(255, 255, 255, 0.08);
-
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
   transform: scale(1.08);
 }
 
-#year-selector button:active:not(:disabled) {
-  transform: scale(0.95);
+#year-selector button:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
 }
 
-#year-selector button:disabled {
-  opacity: 0.35;
+/* --- Timeline Track & Slider --- */
 
-  cursor: default;
+.timeline-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.timeline-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted, rgba(255, 255, 255, 0.45));
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.timeline-track {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  display: flex;
+  align-items: center;
+}
+
+/* Range input styling */
+#year-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  appearance: none;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Timeline Active Fill */
+.timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 3px;
 
   pointer-events: none;
+  z-index: 1;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+}
+
+/* Custom Slider Thumb */
+#year-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid #fff;
+  border-radius: 50%;
+
+  background: #2563eb;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+  cursor: grab;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+#year-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #3b82f6;
+}
+
+#year-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid #fff;
+  border-radius: 50%;
+
+  background: #2563eb;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+  cursor: grab;
+}
+
+/* --- Current Year Input Badge --- */
+
+.year-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px 10px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
 }
 
 #current-year {
-  width: 72px;
-
-  padding: 0;
+  width: 50px;
 
   border: none;
   outline: none;
@@ -86,15 +185,14 @@
 
   color: #fff;
 
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
   text-align: center;
 
-  font: inherit;
-  font-size: 18px;
-  font-weight: 700;
-
-  appearance: textfield;          /* Standard */
-  -webkit-appearance: none;       /* Chrome, Safari, Edge */
-  -moz-appearance: textfield;     /* Firefox */
+  appearance: textfield;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
 }
 
 #current-year::-webkit-outer-spin-button,
@@ -103,65 +201,16 @@
   margin: 0;
 }
 
+/* Adjust zoom controls so they don't overlap on mobile */
+@media (max-width: 600px) {
+  #year-selector.timeline-bar {
+    min-width: calc(100vw - 32px);
+    bottom: 16px;
+    gap: 8px;
+    padding: 0 10px;
+  }
 
-/* ==========================================================================
-   Bottom Right Zoom Controls
-   ========================================================================== */
-
-#zoom-controls {
-  position: fixed;
-
-  bottom: 24px;
-  right: 24px;
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 12px;
-
-  z-index: 1000;
-}
-
-#zoom-controls .zoom-button {
-  width: 56px;
-  height: 56px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid var(--border-glass);
-  border-radius: 50%;
-
-  background: var(--bg-glass);
-
-  color: #fff;
-
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1;
-
-  cursor: pointer;
-
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-
-  transition:
-    transform var(--transition-normal),
-    background var(--transition-normal),
-    border-color var(--transition-normal);
-}
-
-#zoom-controls .zoom-button:hover {
-  transform: scale(1.08);
-
-  background: rgba(25, 25, 30, 0.95);
-
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
-#zoom-controls .zoom-button:active {
-  transform: scale(0.95);
+  .timeline-label {
+    display: none;
+  }
 }

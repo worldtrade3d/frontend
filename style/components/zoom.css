@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Bottom Right Zoom Controls
+   ========================================================================== */
+
+#zoom-controls {
+  position: fixed;
+
+  bottom: 24px;
+  right: 24px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  z-index: 1000;
+}
+
+#zoom-controls .zoom-button {
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border-glass);
+  border-radius: 50%;
+
+  background: var(--bg-glass);
+
+  color: #fff;
+
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  transition:
+    transform var(--transition-normal),
+    background var(--transition-normal),
+    border-color var(--transition-normal);
+}
+
+#zoom-controls .zoom-button:hover {
+  transform: scale(1.08);
+
+  background: rgba(25, 25, 30, 0.95);
+
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+#zoom-controls .zoom-button:active {
+  transform: scale(0.95);
+}

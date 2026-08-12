@@ -9,7 +9,8 @@
 @import "./components/panels.css";
 @import "./components/search.css";
 @import "./components/tooltip.css";
-@import "./components/trade.css";
 @import "./components/year.css";
 
-
+@import "./components/header.css";
+@import "./components/status.css";
+@import "./components/zoom.css";

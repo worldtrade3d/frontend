@@ -5,7 +5,7 @@
 #settings-panel {
     position: fixed;
     left: 0;
-    bottom: 16px;
+    bottom: 10px;
 
     display: flex;
     align-items: center;

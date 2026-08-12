@@ -20,7 +20,7 @@
   <div id="loading-scene">
     <div class="loader-logo">
       <div class="loader-logo-background"></div>
-      <img src="assets/icons/logo.png" class="loader-logo-image">
+      <img src="assets/icons/logo.png" class="loader-logo-image" alt="World Trade 3D Logo">
       <div class="loader-spinner"></div>
     </div>
 
@@ -32,85 +32,196 @@
       <h2>World Trade 3D</h2>
     </div>
   </div>
-
+  
   <!-- Application -->
   <div id="application-scene" hidden>
 
-    <aside id="sidebar">
+    <!-- Top Navigation -->
+    <header id="top-bar" class="glass">
+
+      <!-- Brand -->
+      <div id="brand">
+        <img
+          src="assets/icons/logo.png"
+          alt="World Trade 3D"
+          id="brand-logo"
+        >
+
+        <div id="brand-name">
+          <strong>World Trade</strong>
+          <span>3D</span>
+        </div>
+      </div>
+
+      <!-- Country Search -->
       <div id="search-container" class="glass">
-        <input id="country-search" type="search" placeholder="Search for a country" autocomplete="off" spellcheck="false">
-        <button id="search-clear" type="button" aria-label="Clear search">×</button>
+        <span class="search-icon">⌕</span>
+
+        <input
+          id="country-search"
+          type="search"
+          placeholder="Search for a country..."
+          autocomplete="off"
+          spellcheck="false"
+        >
+
+        <button
+          id="search-clear"
+          type="button"
+          aria-label="Clear search"
+        >×</button>
+
         <div id="search-results"></div>
       </div>
 
+      <!-- Right Side Actions -->
+      <div id="top-actions">
+
+        <!-- Status Indicator moved into header top-actions -->
+        <div id="status-indicator" class="status-badge">
+          <span id="status-dot" class="status-dot"></span>
+          <span id="status-text">API Online</span>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- Left Sidebar: Filters & Controls -->
+    <aside id="left-sidebar" class="glass">
+      <div class="filter-header">
+        <h2>Filters</h2>
+      </div>
+
+      <div class="filter-content">
+        <div class="filter-group">
+          <label>Trade Type</label>
+          <div id="trade-mode-toggle">
+            <button data-trade-mode="export" class="active">Exports</button>
+            <button data-trade-mode="import">Imports</button>
+          </div>
+        </div>
+        <!-- Additional filter controls can go here -->
+      </div>
+
+      <div class="filter-footer">
+        <button id="apply-selection" class="apply-button">Apply</button>
+      </div>
+    </aside>
+
+    <!-- Right Sidebar: Overview Card + Top Partners & Categories -->
+    <aside id="right-sidebar">
+      
+      <!-- Country Overview Card (Exports & Imports) -->
+      <section id="country-overview" class="glass country-overview-card">
+        <h2 id="selected-country">Explore</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-label">Total Exports</span>
+            <span id="country-exports" class="stat-value">$0.00</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Total Imports</span>
+            <span id="country-imports" class="stat-value">$0.00</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Top Partners Panel -->
       <section id="trade-panel" class="glass">
         <header id="trade-header">
-          <div class="header-row">
-            <h2 id="selected-country">Explore</h2>
-            <div id="trade-mode-toggle">
-              <button data-trade-mode="export" class="active">Exports</button>
-              <button data-trade-mode="import">Imports</button>
-            </div>
-            <button id="apply-selection" class="apply-button">
-              Apply
-            </button>
-          </div>
+          <h2>Top Partners</h2>
         </header>
 
         <div id="trade-content">
-          <p class="placeholder">Click a country to view trade data.</p>
+          <p class="placeholder">Click apply to view trade partners.</p>
         </div>
       </section>
+
+      <!-- Top Categories Panel -->
+      <section id="categories-panel" class="glass">
+        <header id="categories-header">
+          <h2>Top Categories</h2>
+        </header>
+
+        <div id="categories-content">
+          <p class="placeholder">Select a country to view trade categories.</p>
+        </div>
+      </section>
+
     </aside>
-
-    <section id="categories-panel" class="glass">
-      <header id="categories-header">
-        <h2>Top Categories</h2>
-      </header>
-      <div id="categories-content">
-        <p class="placeholder">Select a country to view trade categories.</p>
-      </div>
-    </section>
-
-    <section id="status-panel" class="glass">
-      <span id="status-dot" class="status-dot"></span>
-      <span id="status-text">DEBUG MODE</span>
-    </section>
-      
-    <nav id="year-selector">
+    
+    <!-- Timeline Bar -->
+    <nav id="year-selector" class="timeline-bar">
+      <!-- Stepper Left -->
       <button id="prev-year" aria-label="Previous year">‹</button>
 
-      <input
-        id="current-year"
-        type="number"
-        inputmode="numeric"
-        min="1962"
-        max="2025"
-        aria-label="Current year"
-      >
+      <!-- Timeline Track Container -->
+      <div class="timeline-container">
+        <span class="timeline-label min-label" id="min-year-label">1962</span>
 
+        <div class="timeline-track">
+          <!-- Active Progress Bar -->
+          <div class="timeline-progress" id="timeline-progress"></div>
+
+          <!-- Range Slider Input -->
+          <input
+            id="year-slider"
+            type="range"
+            min="1962"
+            max="2025"
+            step="1"
+            aria-label="Year timeline"
+          />
+        </div>
+
+        <span class="timeline-label max-label" id="max-year-label">2025</span>
+      </div>
+
+      <!-- Year Display & Input -->
+      <div class="year-display">
+        <input
+          id="current-year"
+          type="number"
+          inputmode="numeric"
+          min="1962"
+          max="2025"
+          aria-label="Current year"
+        />
+      </div>
+
+      <!-- Stepper Right -->
       <button id="next-year" aria-label="Next year">›</button>
     </nav>
 
-    <div id="settings-panel" class="collapsed">
-        <button id="settings-toggle" aria-label="Toggle settings">▶</button>
 
-        <div id="settings-content">
-            <button id="layer-toggle" class="layer-toggle">
-                <img
-                    id="layer-icon"
-                    src="assets/graphics/heatmap.png"
-                    alt="Toggle map layer">
-            </button>
+    <!-- Settings -->
+    <div id="settings-panel">
 
-            <!-- More buttons here -->
-        </div>
+      <button id="settings-toggle" aria-label="Toggle settings">◀</button>
+
+      <div id="settings-content">
+
+        <button id="layer-toggle" class="layer-toggle">
+          <img
+            id="layer-icon"
+            src="assets/graphics/heatmap.png"
+            alt="Toggle map layer"
+          >
+        </button>
+
+        <!-- More buttons here -->
+
+      </div>
+
     </div>
+
 
     <div id="zoom-controls">
       <button id="zoom-in" class="zoom-button">+</button>
       <button id="zoom-out" class="zoom-button">−</button>
     </div>
+
 
     <template id="trade-row-template">
       <div class="trade-row">
@@ -118,11 +229,13 @@
           <span class="trade-country"></span>
           <span class="trade-value"></span>
         </div>
+
         <div class="trade-bar">
           <div class="trade-fill"></div>
         </div>
       </div>
     </template>
+
 
     <div class="partner-logos">
       <img src="assets/logos/uncomtrade.png" alt="UN Comtrade">
