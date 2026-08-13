@@ -1,0 +1,42 @@
+/* Status Badge */
+#status-indicator.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 8px;
+
+  background: var(--status-badge-bg);
+  border: 1px solid var(--status-badge-border);
+  border-radius: var(--radius-full);
+
+  color: var(--status-badge-text);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Status Dot */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #666;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* States */
+.status-dot.online {
+  background: #35d36f;
+  box-shadow: 0 0 6px rgba(53, 211, 111, 0.75);
+}
+
+.status-dot.debug {
+  background: #f5a623;
+  box-shadow: 0 0 6px rgba(245, 166, 35, 0.65);
+}
+
+.status-dot.offline {
+  background: #ff4d4d;
+  box-shadow: 0 0 6px rgba(255, 77, 77, 0.65);
+}

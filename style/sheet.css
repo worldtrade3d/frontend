@@ -1,15 +1,23 @@
-@import "./base/global.css";
-@import "./base/globe.css";
-@import "./base/reset.css";
-@import "./base/utils.css";
-@import "./base/variables.css";
+/* sheet.css */
 
+@import "./base/global.css";
+@import "./base/reset.css";
+
+@import "./variables/variables.css";
+
+@import "./utils/utils.css";
+
+@import "./components/globe.css";
 @import "./components/header.css";
-@import "./components/layer.css";
-@import "./components/loader.css";
-@import "./components/panels.css";
-@import "./components/search.css";
-@import "./components/status.css";
-@import "./components/tooltip.css";
-@import "./components/year.css";
-@import "./components/zoom.css";
+
+@import "./elements/brand.css";
+@import "./elements/info.css";
+@import "./elements/layer.css";
+@import "./elements/loader.css";
+@import "./elements/panels.css";
+@import "./elements/search.css";
+@import "./elements/settings.css";
+@import "./elements/status.css";
+@import "./elements/tooltip.css";
+@import "./elements/year.css";
+@import "./elements/zoom.css";

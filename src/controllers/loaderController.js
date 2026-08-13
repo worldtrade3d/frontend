@@ -1,5 +1,4 @@
 import { checkApiStatus } from "../services/api.js";
-import { DEBUG_MODE } from "../config.js"
 
 const MAX_RETRIES = 5;
 const RETRY_DELAY = 2000;
@@ -8,15 +7,6 @@ const LOADING_FADE_DELAY = 300;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function initStatus() {
-
-  // Debug mode:
-  // Skip API check and loading animation completely,
-  // but make the application visible so initialization continues.
-  if (DEBUG_MODE) {
-    skipLoadingScreen();
-    return true;
-  }
-
   const online = await waitForApi();
 
   if (!online) {
@@ -32,7 +22,6 @@ export async function initStatus() {
 
 function setLoadingStatus(text) {
   const message = document.getElementById("loader-message");
-
   if (!message) return;
 
   message.textContent = text;
@@ -41,7 +30,6 @@ function setLoadingStatus(text) {
 
 async function waitForApi() {
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-
     if (await checkApiStatus()) {
       return true;
     }
@@ -55,8 +43,8 @@ async function waitForApi() {
 }
 
 async function playLoadingSequence() {
-
   const steps = [
+    { text: "Connecting to server", delay: 300 },
     { text: "Initializing globe", delay: 500 },
     { text: "Loading countries", delay: 450 },
     { text: "Loading trade routes", delay: 500 },
@@ -71,7 +59,6 @@ async function playLoadingSequence() {
 }
 
 function showApiConnectionError() {
-
   const spinner = document.querySelector(".loader-spinner");
   const message = document.getElementById("loader-message");
 
@@ -79,21 +66,15 @@ function showApiConnectionError() {
     spinner.classList.add("stopped");
   }
 
-  if (message) {
-    message.innerHTML = "Connection to the server failed";
-    message.style.display = "block";
-  }
+  message.innerHTML = 'Connection to the server failed';
+  message.style.display = "block";
 }
 
 async function hideLoadingScreen() {
-
   await sleep(LOADING_FADE_DELAY);
 
-  const loadingScreen =
-    document.getElementById("loading-scene");
-
-  const applicationScene =
-    document.getElementById("application-scene");
+  const loadingScreen = document.getElementById("loading-scene");
+  const applicationScene = document.getElementById("application-scene");
 
   if (!loadingScreen || !applicationScene) return;
 
@@ -105,26 +86,4 @@ async function hideLoadingScreen() {
     () => loadingScreen.remove(),
     { once: true }
   );
-}
-
-
-// ------------------------------------------------------------
-// DEBUG: instantly remove loading screen
-// ------------------------------------------------------------
-
-function skipLoadingScreen() {
-
-  const loadingScreen =
-    document.getElementById("loading-scene");
-
-  const applicationScene =
-    document.getElementById("application-scene");
-
-  if (applicationScene) {
-    applicationScene.hidden = false;
-  }
-
-  if (loadingScreen) {
-    loadingScreen.remove();
-  }
 }

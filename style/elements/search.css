@@ -1,0 +1,126 @@
+/* Country Search */
+#search-container {
+  position: relative;
+  padding: 10px 16px;
+}
+
+#top-bar #search-container {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  flex-shrink: 0;
+  margin-right: 8px;
+  font-size: 22px;
+  opacity: 0.6;
+}
+
+#country-search {
+  width: 100%;
+  height: 100%;
+  padding-right: 2.5rem;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+#country-search::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.45;
+}
+
+#search-clear {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  width: 28px;
+  height: 28px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  flex-shrink: 0;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.45;
+}
+
+#search-clear.show {
+  display: flex;
+}
+
+#search-clear:hover {
+  background: #1a1a1a;
+  opacity: 1;
+}
+
+/* Search Results */
+#search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  max-height: 320px;
+  display: none;
+  overflow-y: auto;
+  box-sizing: border-box;
+  z-index: 1001;
+
+  background: var(--search-results-bg, #0d0d0d);
+  border: 1px solid var(--search-results-border, rgba(255, 255, 255, 0.1));
+  border-radius: 12px;
+  box-shadow: var(--search-results-shadow, 0 15px 40px rgba(0, 0, 0, 0.55));
+
+  scrollbar-width: thin;
+}
+
+#search-results.show {
+  display: block;
+}
+
+.country-option {
+  padding: 12px 16px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.country-option:hover,
+.country-option.selected {
+  background: var(--search-option-hover);
+}
+
+.country-option + .country-option {
+  border-top: 1px solid var(--search-option-border);
+}
+
+/* Scrollbar */
+#search-results::-webkit-scrollbar {
+  width: 6px;
+}
+
+#search-results::-webkit-scrollbar-thumb {
+  background: var(--search-scrollbar);
+  border-radius: var(--radius-full);
+}

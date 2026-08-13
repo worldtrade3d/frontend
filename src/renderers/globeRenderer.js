@@ -28,7 +28,8 @@ export function createRenderer({ context, projection, path, features, getISO }) 
           return t.countryDefault;
         }
 
-        const intensity = Math.max(0.08, Math.min(1, Math.sqrt(p / 20)));
+        const maxValue = Math.max(...state.partners.values(), 1);
+        const intensity = Math.max(0.08, Math.min(1, Math.sqrt(p / maxValue)));
         const gb = Math.floor(255 * (1 - intensity));
         return `rgb(255, ${gb}, ${gb})`;
       }

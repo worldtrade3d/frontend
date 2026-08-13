@@ -4,5 +4,5 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: var(--z-globe);
+  z-index: 1;
 }
