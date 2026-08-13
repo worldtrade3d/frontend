@@ -77,32 +77,62 @@
       </div>
     </header>
 
-    <!-- Left Sidebar — Filters & Controls -->
-    <aside id="left-sidebar" class="glass">
+    <!-- Left Sidebar — Filters / Links -->
+    <aside id="left-sidebar">
 
-      <!-- Filter Header -->
-      <div class="filter-header">
-        <h2>Filters</h2>
-      </div>
+      <!-- Filters Panel -->
+      <section id="filter-panel" class="glass">
 
-      <!-- Filter Content -->
-      <div class="filter-content">
-        <div class="filter-group">
-          <label>Trade Type</label>
+        <!-- Filter Header -->
+        <header id="filter-header">
+          <h2>Filters</h2>
+        </header>
 
-          <div id="trade-mode-toggle">
-            <button data-trade-mode="export" class="active" type="button">Exports</button>
-            <button data-trade-mode="import" type="button">Imports</button>
+        <!-- Filter Content -->
+        <div id="filter-content">
+
+          <div class="filter-group">
+            <label>Trade Type</label>
+
+            <div id="trade-mode-toggle">
+              <button data-trade-mode="export" class="active" type="button">
+                Exports
+              </button>
+
+              <button data-trade-mode="import" type="button">
+                Imports
+              </button>
+            </div>
           </div>
+
+          <!-- Additional filter controls can go here -->
+
         </div>
 
-        <!-- Additional filter controls can go here -->
-      </div>
+        <!-- Filter Footer -->
+        <footer id="filter-footer">
+          <button id="apply-selection" class="apply-button" type="button">
+            Apply
+          </button>
+        </footer>
 
-      <!-- Filter Footer -->
-      <div class="filter-footer">
-        <button id="apply-selection" class="apply-button" type="button">Apply</button>
-      </div>
+      </section>
+
+
+      <!-- Links Panel -->
+      <section id="links-panel" class="glass">
+
+        <!-- Links Header -->
+        <header id="links-header">
+          <h2>Links</h2>
+        </header>
+
+        <!-- Links Content -->
+        <div id="links-content">
+          <p class="placeholder">No links created.</p>
+        </div>
+
+      </section>
 
     </aside>
 
