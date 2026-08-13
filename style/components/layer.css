@@ -1,6 +1,6 @@
-/* ==========================================================================
-   Side Settings Drawer
-   ========================================================================== */
+ /* ==========================================================================
+    Side Settings Drawer
+    ========================================================================== */
 
 #settings-panel {
   position: fixed;
@@ -33,7 +33,7 @@
   border: none;
   border-radius: var(--settings-tab-radius);
 
-  background: var(--settings-bg);
+  background: transparent;
   color: var(--text-white);
 
   font-size: var(--text-xs);
@@ -55,7 +55,7 @@
 
   padding: var(--settings-content-padding);
 
-  background: var(--settings-bg);
+  background: transparent;
 
   border-radius: var(--settings-content-radius);
 
@@ -105,6 +105,18 @@
   flex-shrink: 0;
 
   z-index: 99999;
+
+  transition: transform var(--transition-normal);
+}
+
+
+.layer-toggle:hover {
+  transform: scale(1.1);
+}
+
+
+.layer-toggle:active {
+  transform: scale(0.95);
 }
 
 

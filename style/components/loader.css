@@ -92,7 +92,7 @@
 .loader-spinner.stopped {
   animation: none;
 
-  border-top-color: var(--loading-spinner-stopped);
+  border-top-color: var(--loading-spinner-border);
 }
 
 
