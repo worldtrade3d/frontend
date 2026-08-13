@@ -9,6 +9,14 @@ import {
 } from "../presenters/sectorPresenter.js";
 
 import {
+  updateCountryPanel
+} from "../presenters/countryPresenter.js";
+
+import {
+  resetCountryOverview
+} from "../presenters/overviewPresenter.js";
+
+import {
   getISO
 } from "../utils/geo.js";
 
@@ -84,42 +92,40 @@ export async function initGlobe() {
         onClick: async country => {
 
           /* ================================================================
-             World / Clear Selection
-             ================================================================ */
-
+            World / Clear Selection
+            ================================================================ */
 
           if (!country) {
 
-            state.selectedISO =
-              null;
+            state.selectedISO = null;
+            state.selectedCountryName = null;
 
-            state.selectedCountryName =
-              null;
+            state.pendingISO = null;
+            state.pendingCountryName = null;
 
-            state.pendingISO =
-              null;
-
-            state.pendingCountryName =
-              null;
-
-            state.partners =
-              new Map();
-
+            state.partners = new Map();
 
             /* --------------------------------------------------------------
-               Clear Sector Panel
-               -------------------------------------------------------------- */
+              Reset Overview
+              -------------------------------------------------------------- */
 
-
-            updateSectorPanel(
-              null
-            );
-
+            resetCountryOverview();
 
             /* --------------------------------------------------------------
-               Load World Trade
-               -------------------------------------------------------------- */
+              Clear Top Countries
+              -------------------------------------------------------------- */
 
+            updateCountryPanel(null);
+
+            /* --------------------------------------------------------------
+              Clear Sectors
+              -------------------------------------------------------------- */
+
+            updateSectorPanel(null);
+
+            /* --------------------------------------------------------------
+              Load World Top Countries
+              -------------------------------------------------------------- */
 
             await loadWorldTrade();
 
@@ -128,22 +134,19 @@ export async function initGlobe() {
 
 
           /* ================================================================
-             Get Country Information
-             ================================================================ */
-
+            Get Country Information
+            ================================================================ */
 
           const iso =
             getISO(country);
-
 
           const name =
             country.properties.ADMIN;
 
 
           /* ================================================================
-             Set Pending Country
-             ================================================================ */
-
+            Set Pending Country
+            ================================================================ */
 
           state.pendingISO =
             iso;
@@ -153,15 +156,23 @@ export async function initGlobe() {
 
 
           /* ================================================================
-             Load Country Overview
-             
-             Loads BOTH:
-             - Total Exports
-             - Total Imports
-             
-             This does NOT depend on state.mode.
-             ================================================================ */
+            IMPORTANT:
+            Clear old World Top Countries immediately
+            ================================================================ */
 
+          updateCountryPanel(null);
+
+
+          /* --------------------------------------------------------------
+            Clear old sectors too
+            -------------------------------------------------------------- */
+
+          updateSectorPanel(null);
+
+
+          /* ================================================================
+            Load Country Overview
+            ================================================================ */
 
           await loadCountryTotal(
             iso,

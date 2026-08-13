@@ -29,45 +29,10 @@ export async function loadWorldTrade() {
 
 
     /* ----------------------------------------------------------------------
-       Debug API Response
-       ---------------------------------------------------------------------- */
-
-    console.log(
-      "World trade API response:",
-      response
-    );
-
-
-    /* ----------------------------------------------------------------------
        Normalize Response
        ---------------------------------------------------------------------- */
 
     let totals = response;
-
-
-    /*
-       Support either:
-
-       [
-         { iso: "DEU", total: 123456 }
-       ]
-
-       or:
-
-       {
-         countries: [
-           { iso: "DEU", total: 123456 }
-         ]
-       }
-
-       or:
-
-       {
-         data: [
-           { iso: "DEU", total: 123456 }
-         ]
-       }
-    */
 
     if (!Array.isArray(totals)) {
 
@@ -122,16 +87,6 @@ export async function loadWorldTrade() {
 
         })
         .filter(country => country.iso);
-
-
-    /* ----------------------------------------------------------------------
-       Debug Prepared Countries
-       ---------------------------------------------------------------------- */
-
-    console.log(
-      "Prepared world countries:",
-      countries
-    );
 
 
     /* ----------------------------------------------------------------------

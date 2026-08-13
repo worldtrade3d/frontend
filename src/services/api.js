@@ -1,4 +1,4 @@
-const BASE_URL = "https://backend-m5wv.onrender.com";
+import { BASE_URL } from "../config.js";
 const TRADE_API = `${BASE_URL}/trade`;
 
 // Shared helper

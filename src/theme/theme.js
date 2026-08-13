@@ -13,7 +13,7 @@ export const theme = {
     strokecolor: "#555555",
     strokethickness: 1.2,
 
-    stars: "./assets/backgrounds/star-sky.png",
+    stars: "/assets/backgrounds/star-sky.png",
 
     continents: {
       Africa: "#f4d28c",

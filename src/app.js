@@ -11,13 +11,8 @@ async function initApp() {
 
   initMode();
   initYear();
-
-  // Load the globe and country lookup first.
-  // This guarantees country names are available
-  // before trade data is rendered.
+  
   await initGlobe();
-
-  // Then load the initial world trade data.
   await loadWorldTrade();
 
   initLayers();
