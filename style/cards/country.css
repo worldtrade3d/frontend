@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Country Rows
+   ========================================================================== */
+
+.country-row {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  padding: 10px var(--space-3);
+  margin-bottom: var(--space-2);
+
+  background: var(--surface-1);
+
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.country-row:hover {
+  background: var(--surface-2);
+  border-color: var(--border-medium);
+}
+
+
+/* ==========================================================================
+   Country Row Information
+   ========================================================================== */
+
+.country-info {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: var(--space-3);
+}
+
+
+/* --------------------------------------------------------------------------
+   Country Name
+   -------------------------------------------------------------------------- */
+
+.country-name {
+  flex: 1;
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+
+  color: rgba(255, 255, 255, 0.9);
+
+  text-align: left;
+}
+
+
+/* --------------------------------------------------------------------------
+   Country Value
+   -------------------------------------------------------------------------- */
+
+.country-value {
+  flex-shrink: 0;
+
+  min-width: 80px;
+
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+
+  color: var(--text-primary);
+
+  text-align: right;
+
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+
+/* ==========================================================================
+   Country Progress Bar
+   ========================================================================== */
+
+.country-bar {
+  position: relative;
+
+  width: 100%;
+  height: var(--progress-height);
+
+  background: var(--surface-3);
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+
+/* --------------------------------------------------------------------------
+   Country Progress Fill
+   -------------------------------------------------------------------------- */
+
+.country-fill {
+  width: 0;
+  height: 100%;
+
+  background: var(--gradient-export);
+
+  border-radius: 999px;
+
+  transition: width var(--transition-progress);
+}

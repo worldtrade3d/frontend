@@ -6,6 +6,8 @@ export const state = {
   pendingISO: null,
   pendingCountryName: null,
 
+  hoveredISO: null,
+
   // Filters
   mode: "export",
   year: 2025,

@@ -4,257 +4,77 @@ import {
 } from "../utils/format.js";
 
 import { getCountryName } from "../utils/country.js";
+import { state } from "../state/state.js";
 
+const countryRowTemplate = document.getElementById("trade-row-template");
 
-/* ==========================================================================
-   Country Row Template
-   ========================================================================== */
+function createCountryRow(country, maxValue, valueType = "percentage") {
+  const clone = countryRowTemplate.content.cloneNode(true);
+  const row = clone.querySelector(".country-row");
+  const name = clone.querySelector(".country-name");
+  const valueElement = clone.querySelector(".country-value");
+  const fill = clone.querySelector(".country-fill");
 
-const countryRowTemplate =
-  document.getElementById("trade-row-template");
-
-
-/* ==========================================================================
-   Create Country Row
-   ========================================================================== */
-
-function createCountryRow(
-  country,
-  maxValue,
-  valueType = "percentage"
-) {
-
-  const clone =
-    countryRowTemplate.content.cloneNode(true);
-
-
-  const row =
-    clone.querySelector(".country-row");
-
-  const name =
-    clone.querySelector(".country-name");
-
-  const valueElement =
-    clone.querySelector(".country-value");
-
-  const fill =
-    clone.querySelector(".country-fill");
-
-
-  /* ------------------------------------------------------------------------
-     Country Data
-     ------------------------------------------------------------------------ */
-
-  const iso =
-    country.iso ||
-    country.country;
-
-  const value =
-    Number(country.value) || 0;
-
-
-  /* ------------------------------------------------------------------------
-     Country ISO
-     ------------------------------------------------------------------------ */
+  const iso = country.iso || country.country;
+  const value = Number(country.value) || 0;
 
   if (row) {
     row.dataset.iso = iso || "";
+
+    row.addEventListener("mouseenter", () => {
+      state.hoveredISO = iso || null;
+    });
+
+    row.addEventListener("mouseleave", () => {
+      if (state.hoveredISO === iso) state.hoveredISO = null;
+    });
   }
 
-
-  /* ------------------------------------------------------------------------
-     Country Name
-     ------------------------------------------------------------------------ */
-
-  if (name) {
-    name.textContent =
-      getCountryName(iso);
-  }
-
-
-  /* ------------------------------------------------------------------------
-     Display Value
-     ------------------------------------------------------------------------ */
+  if (name) name.textContent = getCountryName(iso);
 
   if (valueElement) {
-
-    if (valueType === "currency") {
-
-      valueElement.textContent =
-        formatCurrency(value);
-
-    } else {
-
-      valueElement.textContent =
-        formatPercent(value);
-
-    }
-
+    valueElement.textContent =
+      valueType === "currency" ? formatCurrency(value) : formatPercent(value);
   }
 
-
-  /* ------------------------------------------------------------------------
-     Progress Bar Width
-     ------------------------------------------------------------------------ */
-
-  const width =
-    maxValue > 0
-      ? (value / maxValue) * 100
-      : 0;
-
-
-  if (fill) {
-
-    fill.dataset.width =
-      `${width}%`;
-
-  }
-
+  const width = maxValue > 0 ? (value / maxValue) * 100 : 0;
+  if (fill) fill.dataset.width = `${width}%`;
 
   return clone;
 }
 
-
-/* ==========================================================================
-   Update Country Panel
-   ========================================================================== */
-
-export function updateCountryPanel(
-  countries,
-  options = {}
-) {
-
-  const container =
-    document.getElementById(
-      "country-content"
-    );
-
-
-  if (!container) {
-    return;
-  }
-
-
-  /* ==========================================================================
-     LOADING
-     ========================================================================== */
+export function updateCountryPanel(countries, options = {}) {
+  const container = document.getElementById("country-content");
+  if (!container) return;
 
   if (options.loading) {
-
-    container.innerHTML = `
-      <p class="placeholder">
-        Loading country data...
-      </p>
-    `;
-
+    container.innerHTML = `<p class="placeholder">Loading country data...</p>`;
     return;
   }
-
-
-  /* ==========================================================================
-     ERROR
-     ========================================================================== */
 
   if (options.error) {
-
-    container.innerHTML = `
-      <p class="placeholder">
-        Failed to load country data
-      </p>
-    `;
-
+    container.innerHTML = `<p class="placeholder">Failed to load country data</p>`;
     return;
   }
 
-
-  /* ==========================================================================
-     EMPTY
-     ========================================================================== */
-
-  if (
-    !countries ||
-    !Array.isArray(countries) ||
-    countries.length === 0
-  ) {
-
-    container.innerHTML = `
-      <p class="placeholder">
-        No country data
-      </p>
-    `;
-
+  if (!countries || !Array.isArray(countries) || countries.length === 0) {
+    container.innerHTML = `<p class="placeholder">Click apply to fetch data</p>`;
     return;
   }
 
-
-  /* ==========================================================================
-     SORT COUNTRIES
-     ========================================================================== */
-
-  const sorted =
-    [...countries].sort(
-      (a, b) =>
-        Number(b.value) -
-        Number(a.value)
-    );
-
-
-  /* ==========================================================================
-     MAXIMUM COUNTRY VALUE
-     ========================================================================== */
-
-  const maxValue =
-    Number(
-      sorted[0]?.value
-    ) || 1;
-
-
-  /* ==========================================================================
-     VALUE TYPE
-     ========================================================================== */
-
-  const valueType =
-    options.valueType ||
-    "percentage";
-
-
-  /* ==========================================================================
-     RENDER COUNTRY BARS
-     ========================================================================== */
+  const sorted = [...countries].sort((a, b) => Number(b.value) - Number(a.value));
+  const maxValue = Number(sorted[0]?.value) || 1;
+  const valueType = options.valueType || "percentage";
 
   container.replaceChildren();
 
-
   sorted.forEach(country => {
-
-    container.appendChild(
-      createCountryRow(
-        country,
-        maxValue,
-        valueType
-      )
-    );
-
+    container.appendChild(createCountryRow(country, maxValue, valueType));
   });
-
-
-  /* ==========================================================================
-     ANIMATE COUNTRY BARS
-     ========================================================================== */
 
   requestAnimationFrame(() => {
-
-    container
-      .querySelectorAll(
-        ".country-fill"
-      )
-      .forEach(fill => {
-
-        fill.style.width =
-          fill.dataset.width;
-
-      });
-
+    container.querySelectorAll(".country-fill").forEach(fill => {
+      fill.style.width = fill.dataset.width;
+    });
   });
-
 }

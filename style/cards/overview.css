@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Country Overview Card
+   ========================================================================== */
+
+.country-overview-card {
+  padding: var(--space-4);
+
+  background: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+}
+
+
+/* --------------------------------------------------------------------------
+   Statistics Grid
+   -------------------------------------------------------------------------- */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+
+  margin-top: var(--space-3);
+}
+
+
+/* --------------------------------------------------------------------------
+   Statistic Item
+   -------------------------------------------------------------------------- */
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+
+/* --------------------------------------------------------------------------
+   Statistic Label
+   -------------------------------------------------------------------------- */
+
+.stat-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+
+  color: var(--text-muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   Statistic Value
+   -------------------------------------------------------------------------- */
+
+.stat-value {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+
+  color: var(--text-primary);
+
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}

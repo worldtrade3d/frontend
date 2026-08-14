@@ -6,6 +6,8 @@ import { setupSelection,
          activateCountry,
          clearSelection } from "../controls/selectionControl.js";
 
+import { state } from "../state/state.js";
+
 export function createControls({
   canvas,
   projection,
@@ -46,7 +48,19 @@ export function createControls({
   setupSelection(ctx);
 
   return {
-    getHovered: () => ctx.hovered,
+    getHovered: () => {
+      if (ctx.hovered) return ctx.hovered;
+
+      // Bar hover → find matching feature by ISO
+      if (state.hoveredISO) {
+        return (
+          ctx.features.find(f => ctx.getISO(f) === state.hoveredISO) ||
+          null
+        );
+      }
+
+      return null;
+    },
     focusCountry: feature => focusCountry(ctx, feature),
     activateCountry: feature => activateCountry(ctx, feature),
     clearSelection: () => clearSelection(ctx)

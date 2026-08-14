@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Sector Rows
+   ========================================================================== */
+
+.sector-row {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  padding: 10px var(--space-3);
+  margin-bottom: var(--space-2);
+
+  background: var(--surface-1);
+
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.sector-row:hover {
+  background: var(--surface-2);
+  border-color: var(--border-medium);
+}
+
+
+/* ==========================================================================
+   Sector Row Information
+   ========================================================================== */
+
+.sector-info {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+
+/* ==========================================================================
+   Sector Name
+   ========================================================================== */
+
+.sector-name {
+  flex: 1;
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+
+  color: rgba(255, 255, 255, 0.9);
+
+  text-align: left;
+}
+
+
+/* ==========================================================================
+   Sector Percentage
+   ========================================================================== */
+
+.sector-percent {
+  flex-shrink: 0;
+
+  min-width: 52px;
+
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+
+  color: var(--text-primary);
+
+  text-align: right;
+
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+
+/* ==========================================================================
+   Sector Plus Button
+   ========================================================================== */
+
+.sector-expand {
+  flex-shrink: 0;
+
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: transparent;
+  border: none;
+
+  color: var(--text-primary);
+
+  font-size: 20px;
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.sector-expand:hover {
+  opacity: 0.7;
+}
+
+
+/* ==========================================================================
+   Sector Progress Bar
+   ========================================================================== */
+
+.sector-bar {
+  position: relative;
+
+  width: 100%;
+  height: var(--progress-height);
+
+  background: var(--surface-3);
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+
+/* ==========================================================================
+   Sector Progress Fill
+   ========================================================================== */
+
+.sector-fill {
+  width: 0;
+  height: 100%;
+
+  background: var(--gradient-import);
+
+  border-radius: 999px;
+
+  transition: width var(--transition-progress);
+}
+
+
+.sector-breakdown {
+  display: none;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.sector-row[data-expanded="true"] .sector-breakdown {
+  display: block;
+}
+
+.breakdown-title {
+  margin-bottom: var(--space-2);
+
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+
+  color: var(--text-secondary);
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 8px;
+
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.breakdown-bar {
+  width: 100%;
+  height: 5px;
+
+  margin-top: 4px;
+
+  background: var(--surface-3);
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.breakdown-bar div {
+  height: 100%;
+
+  background: var(--gradient-import);
+  border-radius: 999px;
+}

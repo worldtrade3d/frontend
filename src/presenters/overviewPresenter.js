@@ -67,12 +67,10 @@ export function resetCountryOverview() {
   }
 
   if (exportsElement) {
-    exportsElement.textContent =
-      formatCurrency(0);
+    exportsElement.textContent = "$26.3T";
   }
 
   if (importsElement) {
-    importsElement.textContent =
-      formatCurrency(0);
+    importsElement.textContent = "$26.3T";
   }
 }
