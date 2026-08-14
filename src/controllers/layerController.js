@@ -47,11 +47,6 @@ toggle.addEventListener("click", () => {
         : "◀";
 });
 
-
-
-
-
-
 const infoButton = document.getElementById("info-button");
 const infoLogos = document.getElementById("info-logos");
 

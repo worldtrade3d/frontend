@@ -1,22 +1,15 @@
 import { state } from "../state/state.js";
 import { focusCountry } from "./focusControl.js";
 
-
-/* ==========================================================================
-   Links Panel
-   ========================================================================== */
-
-function renderLinks(ctx) {
+function renderLinks() {
   const container = document.getElementById("links-content");
 
   if (!container) return;
 
   container.innerHTML = "";
 
-  if (!state.links || state.links.length === 0) {
-    container.innerHTML = `
-      <p class="placeholder">No links created.</p>
-    `;
+  if (!state.links?.length) {
+    container.innerHTML = `<p class="placeholder">No links created.</p>`;
     return;
   }
 
@@ -24,10 +17,8 @@ function renderLinks(ctx) {
     const row = document.createElement("div");
 
     row.className = "link-row";
-
     row.innerHTML = `
       <span class="link-number">${index + 1}</span>
-
       <span class="link-countries">
         ${link.from}
         <span class="link-arrow">↔</span>
@@ -39,11 +30,6 @@ function renderLinks(ctx) {
   });
 }
 
-
-/* ==========================================================================
-   Clear Selection
-   ========================================================================== */
-
 export function clearSelection(ctx) {
   if (ctx.isAnimating) return;
 
@@ -52,19 +38,11 @@ export function clearSelection(ctx) {
   state.partners = new Map();
 
   ctx.hovered = null;
-
   ctx.tooltip.style.opacity = 0;
   ctx.canvas.style.cursor = "default";
 
   ctx.onClick?.(null);
-
-  // No initBars() here.
 }
-
-
-/* ==========================================================================
-   Activate Country
-   ========================================================================== */
 
 export function activateCountry(ctx, feature) {
   if (ctx.isAnimating) return;
@@ -83,99 +61,41 @@ export function activateCountry(ctx, feature) {
   ctx.canvas.style.cursor = "default";
 }
 
-
-/* ==========================================================================
-   Setup Selection
-   ========================================================================== */
-
 export function setupSelection(ctx) {
-
-  // Render existing links when the application starts.
-  renderLinks(ctx);
+  renderLinks();
 
   ctx.canvas.addEventListener("click", e => {
-
-    /* ----------------------------------------------------------------------
-       Ignore click after animation / special interaction
-       ---------------------------------------------------------------------- */
-
     if (ctx.ignoreNextClick) {
       ctx.ignoreNextClick = false;
       return;
     }
 
-
-    /* ----------------------------------------------------------------------
-       Nothing hovered
-       ---------------------------------------------------------------------- */
-
     if (!ctx.hovered) return;
 
-
-    /* ----------------------------------------------------------------------
-       Create / Remove Link
-       ---------------------------------------------------------------------- */
-
     if (e.ctrlKey && state.pendingISO) {
-
       const fromISO = state.pendingISO;
       const toISO = ctx.getISO(ctx.hovered);
 
-
-      // Don't allow a country to link to itself.
       if (fromISO === toISO) return;
 
-
-      /* --------------------------------------------------------------------
-         Check whether this link already exists.
-
-         Links are treated as bidirectional:
-         FIN -> SWE
-         is the same as
-         SWE -> FIN
-         -------------------------------------------------------------------- */
-
       const index = state.links.findIndex(
-        l =>
-          (l.from === fromISO && l.to === toISO) ||
-          (l.from === toISO && l.to === fromISO)
+        link =>
+          (link.from === fromISO && link.to === toISO) ||
+          (link.from === toISO && link.to === fromISO)
       );
-
-
-      /* --------------------------------------------------------------------
-         Remove existing link
-         -------------------------------------------------------------------- */
 
       if (index !== -1) {
         state.links.splice(index, 1);
-      }
-
-
-      /* --------------------------------------------------------------------
-         Create new link
-         -------------------------------------------------------------------- */
-
-      else {
+      } else {
         state.links.push({
           from: fromISO,
           to: toISO
         });
       }
 
-
-      /* --------------------------------------------------------------------
-         Update Links Panel
-         -------------------------------------------------------------------- */
-
-      renderLinks(ctx);
-
+      renderLinks();
       return;
     }
-
-
-    /* ----------------------------------------------------------------------
-       Normal country selection
-       ---------------------------------------------------------------------- */
 
     activateCountry(ctx, ctx.hovered);
   });

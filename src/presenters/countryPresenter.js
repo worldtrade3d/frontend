@@ -1,8 +1,4 @@
-import {
-  formatPercent,
-  formatCurrency
-} from "../utils/format.js";
-
+import { formatPercent, formatCurrency } from "../utils/format.js";
 import { getCountryName } from "../utils/country.js";
 import { state } from "../state/state.js";
 
