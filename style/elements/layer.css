@@ -1,7 +1,3 @@
- /* ==========================================================================
-   Layer Button
-   ========================================================================== */
-
 .layer-toggle {
   width: var(--settings-layer-size);
   aspect-ratio: 1 / 1;
@@ -31,20 +27,13 @@
   transition: transform var(--transition-normal);
 }
 
-
 .layer-toggle:hover {
   transform: scale(1.1);
 }
 
-
 .layer-toggle:active {
   transform: scale(0.95);
 }
-
-
-/* ==========================================================================
-   Layer Image
-   ========================================================================== */
 
 .layer-toggle img {
   display: block;

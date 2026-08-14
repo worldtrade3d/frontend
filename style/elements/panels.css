@@ -1,12 +1,3 @@
-/* ==========================================================================
-   Panels Setup & Layout
-   ========================================================================== */
-
-
-/* ==========================================================================
-   Shared Panel / Card Foundations
-   ========================================================================== */
-
 .panel {
   background: var(--bg-panel);
   border: 1px solid var(--border-default);
@@ -26,11 +17,6 @@
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-tight);
 }
-
-
-/* ==========================================================================
-   Left Sidebar — Filters / Links
-   ========================================================================== */
 
 #left-sidebar {
   position: absolute;
@@ -56,10 +42,6 @@
 #left-sidebar::-webkit-scrollbar {
   display: none;
 }
-
-/* ==========================================================================
-   Right Sidebar — Overview / Country / Sector
-   ========================================================================== */
 
 #right-sidebar {
   position: absolute;
@@ -87,10 +69,6 @@
   display: none;
 }
 
-/* ==========================================================================
-   Panel Headings
-   ========================================================================== */
-
 #country-panel h2,
 #sector-panel h2,
 .country-overview-card h2 {
@@ -100,10 +78,6 @@
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-tight);
 }
-
-/* ==========================================================================
-   Scrollable Country / Sector Data
-   ========================================================================== */
 
 .scroll-content,
 #country-content,
