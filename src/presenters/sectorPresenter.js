@@ -1,117 +1,288 @@
-import { formatPercent, formatLabel } from "../utils/format.js";
+import {
+  formatPercent,
+  formatLabel
+} from "../utils/format.js";
 
-const breakdownData = {
-  manufacturing: [
-    ["Machinery", 38],
-    ["Electronics", 27],
-    ["Vehicles", 21],
-    ["Other manufacturing", 14]
-  ],
-  raw_materials: [
-    ["Metals", 42],
-    ["Minerals", 27],
-    ["Wood & forestry", 19],
-    ["Other raw materials", 12]
-  ],
-  chemicals: [
-    ["Pharmaceuticals", 36],
-    ["Industrial chemicals", 29],
-    ["Plastics", 21],
-    ["Other chemicals", 14]
-  ],
-  agriculture: [
-    ["Crops", 41],
-    ["Livestock", 27],
-    ["Food products", 20],
-    ["Other agriculture", 12]
-  ],
-  other: [
-    ["Services", 39],
-    ["Technology", 28],
-    ["Energy", 19],
-    ["Other", 14]
-  ]
-};
 
-export function updateSectorPanel(sectors, options = {}) {
-  const container = document.getElementById("sector-content");
+export function updateSectorPanel(
+  sectors,
+  options = {}
+) {
+  const container =
+    document.getElementById(
+      "sector-content"
+    );
+
   if (!container) return;
 
+
+  // ==========================================================================
+  // LOADING
+  // ==========================================================================
+
   if (options.loading) {
-    container.innerHTML = `<p class="placeholder">Loading sector data...</p>`;
+    container.innerHTML =
+      `<p class="placeholder">
+        Loading sector data...
+      </p>`;
+
     return;
   }
+
+
+  // ==========================================================================
+  // ERROR
+  // ==========================================================================
 
   if (options.error) {
-    container.innerHTML = `<p class="placeholder">Failed to load sectors</p>`;
+    container.innerHTML =
+      `<p class="placeholder">
+        Failed to load sectors
+      </p>`;
+
     return;
   }
 
-  if (!sectors || sectors.length === 0) {
-    container.innerHTML = `<p class="placeholder">Click apply to fetch data</p>`;
+
+  // ==========================================================================
+  // EMPTY
+  // ==========================================================================
+
+  if (
+    !sectors ||
+    sectors.length === 0
+  ) {
+    container.innerHTML =
+      `<p class="placeholder">
+        Click apply to fetch data
+      </p>`;
+
     return;
   }
 
-  const sorted = [...sectors].sort(
-    (a, b) => Number(b.value) - Number(a.value)
-  );
 
-  const max = Number(sorted[0]?.value) || 1;
+  // ==========================================================================
+  // SORT SECTORS
+  // ==========================================================================
 
-  container.innerHTML = sorted.map(sector => {
-    const value = Number(sector.value) || 0;
-    const width = max > 0 ? (value / max) * 100 : 0;
-    const name = formatLabel(sector.name || sector.sector);
-    const key = sector.sector || sector.name;
+  const sorted =
+    [...sectors].sort(
+      (a, b) =>
+        Number(b.value) -
+        Number(a.value)
+    );
 
-    const breakdown = breakdownData[key] || [
-      ["Category A", 40],
-      ["Category B", 30],
-      ["Category C", 20],
-      ["Other", 10]
-    ];
 
-    return `
-      <div class="sector-row" data-expanded="false">
-        <div class="sector-info">
-          <span class="sector-name">${name}</span>
-          <span class="sector-percent">${formatPercent(value)}</span>
-        </div>
+  /*
+   * The main sector bar represents
+   * the sector's percentage of total trade.
+   *
+   * We use percentage here rather than
+   * the raw trade value.
+   */
 
-        <div class="sector-bar">
-          <div class="sector-fill" data-width="${width}%"></div>
-        </div>
+  const max =
+    Math.max(
+      ...sorted.map(
+        sector =>
+          Number(
+            sector.percentage
+          ) || 0
+      ),
+      1
+    );
 
-        <div class="sector-breakdown">
-          <div class="breakdown-title">Detailed breakdown</div>
 
-          ${breakdown.map(([label, percent]) => `
-            <div class="breakdown-row">
-              <span>${label}</span>
-              <span>${percent}%</span>
+  // ==========================================================================
+  // RENDER
+  // ==========================================================================
+
+  container.innerHTML =
+    sorted
+      .map(sector => {
+
+        const percentage =
+          Number(
+            sector.percentage
+          ) || 0;
+
+
+        const width =
+          max > 0
+            ? (percentage / max) * 100
+            : 0;
+
+
+        const name =
+          formatLabel(
+            sector.name ||
+            sector.sector
+          );
+
+
+        /*
+         * These are the actual HS-2
+         * details returned by Comtrade.
+         */
+
+        const breakdown =
+          Array.isArray(
+            sector.details
+          )
+            ? sector.details
+            : [];
+
+
+        return `
+          <div
+            class="sector-row"
+            data-expanded="false"
+          >
+
+            <div class="sector-info">
+
+              <span class="sector-name">
+                ${name}
+              </span>
+
+              <span class="sector-percent">
+                ${formatPercent(
+                  percentage
+                )}
+              </span>
+
             </div>
 
-            <div class="breakdown-bar">
-              <div style="width: ${percent}%"></div>
+
+            <div class="sector-bar">
+
+              <div
+                class="sector-fill"
+                data-width="${width}%"
+              ></div>
+
             </div>
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }).join("");
+
+
+            <div class="sector-breakdown">
+
+              <div class="breakdown-title">
+                Detailed breakdown
+              </div>
+
+
+              ${
+                breakdown.length > 0
+
+                  ? breakdown
+                      .map(detail => {
+
+                        const detailPercentage =
+                          Number(
+                            detail.percentage
+                          ) || 0;
+
+
+                        return `
+                          <div
+                            class="breakdown-row"
+                          >
+
+                            <span>
+                              ${detail.name}
+                            </span>
+
+                            <span>
+                              ${formatPercent(
+                                detailPercentage
+                              )}
+                            </span>
+
+                          </div>
+
+
+                          <div
+                            class="breakdown-bar"
+                          >
+
+                            <div
+                              style="
+                                width: ${detailPercentage}%;
+                              "
+                            ></div>
+
+                          </div>
+                        `;
+
+                      })
+                      .join("")
+
+                  : `
+                    <div
+                      class="breakdown-empty"
+                    >
+                      No detailed data available
+                    </div>
+                  `
+              }
+
+            </div>
+
+          </div>
+        `;
+
+      })
+      .join("");
+
+
+  // ==========================================================================
+  // ANIMATE MAIN SECTOR BARS
+  // ==========================================================================
 
   requestAnimationFrame(() => {
-    container.querySelectorAll(".sector-fill").forEach(fill => {
-      fill.style.width = fill.dataset.width;
-    });
+
+    container
+      .querySelectorAll(
+        ".sector-fill"
+      )
+      .forEach(fill => {
+
+        fill.style.width =
+          fill.dataset.width;
+
+      });
+
   });
+
 }
 
-document.getElementById("sector-content")?.addEventListener("click", event => {
-  const row = event.target.closest(".sector-row");
-  if (!row) return;
 
-  const expanded = row.dataset.expanded === "true";
+// ============================================================================
+// EXPAND / COLLAPSE
+// ============================================================================
 
-  row.dataset.expanded = String(!expanded);
-});
+document
+  .getElementById("sector-content")
+  ?.addEventListener(
+    "click",
+    event => {
+
+      const row =
+        event.target.closest(
+          ".sector-row"
+        );
+
+
+      if (!row) return;
+
+
+      const expanded =
+        row.dataset.expanded ===
+        "true";
+
+
+      row.dataset.expanded =
+        String(!expanded);
+
+    }
+  );
