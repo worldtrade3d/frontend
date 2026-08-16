@@ -16,6 +16,7 @@
 @import "./cards/overview.css";
 @import "./cards/sector.css";
 
+@import "./elements/apply.css";
 @import "./elements/brand.css";
 @import "./elements/info.css";
 @import "./elements/layer.css";

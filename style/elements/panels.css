@@ -1,18 +1,17 @@
 .panel {
   background: var(--bg-panel);
   border: 1px solid var(--border-default);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 
 .card {
   background: var(--surface-1);
   border: 1px solid var(--border-default);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 
 .panel-title {
   margin: 0;
-
   font-size: var(--text-xl);
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-tight);
@@ -20,21 +19,15 @@
 
 #left-sidebar {
   position: absolute;
-
   top: var(--panel-top);
   left: var(--panel-offset);
-
   width: var(--left-sidebar-width);
   max-height: var(--panel-max-height);
-
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-
   z-index: var(--z-panel);
-
   overflow-y: auto;
-
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -45,22 +38,16 @@
 
 #right-sidebar {
   position: absolute;
-
   top: var(--panel-top);
   right: var(--panel-offset);
   left: auto;
-
   width: var(--right-sidebar-width);
   max-height: var(--panel-max-height);
-
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-
   z-index: var(--z-panel);
-
   overflow-y: auto;
-
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -73,7 +60,6 @@
 #sector-panel h2,
 .country-overview-card h2 {
   margin: 0;
-
   font-size: var(--text-xl);
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-tight);
@@ -83,12 +69,9 @@
 #country-content,
 #sector-content {
   margin-top: var(--space-3);
-
   max-height: var(--trade-content-max-height);
-
   overflow-y: auto;
   overflow-x: hidden;
-
   scrollbar-width: none;
   -ms-overflow-style: none;
 }

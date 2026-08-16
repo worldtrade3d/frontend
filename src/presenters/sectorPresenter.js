@@ -68,10 +68,9 @@ export function updateSectorPanel(
   const sorted =
     [...sectors].sort(
       (a, b) =>
-        Number(b.value) -
-        Number(a.value)
+        Number(b.percentage) -
+        Number(a.percentage)
     );
-
 
   /*
    * The main sector bar represents

@@ -111,34 +111,140 @@ function combineBilateralSectors(links) {
 
     if (!Number.isFinite(tradeValue) || tradeValue <= 0) return;
 
-    const sectors = Array.isArray(link.sectors) ? link.sectors : [];
+    const sectors =
+      Array.isArray(link.sectors)
+        ? link.sectors
+        : [];
 
     if (!sectors.length) return;
 
     totalTrade += tradeValue;
 
     sectors.forEach(sector => {
-      const sectorName = sector.sector || sector.name;
+      const sectorName =
+        sector.sector || sector.name;
+
       if (!sectorName) return;
 
-      const percentage = Number(sector.value);
+      const percentage =
+        Number(sector.percentage ?? sector.value);
+
       if (!Number.isFinite(percentage)) return;
 
-      const absoluteValue = tradeValue * (percentage / 100);
+      const absoluteValue =
+        tradeValue * (percentage / 100);
 
-      sectorTotals[sectorName] =
-        (sectorTotals[sectorName] || 0) + absoluteValue;
+      // ------------------------------------------------------------
+      // CREATE SECTOR
+      // ------------------------------------------------------------
+
+      if (!sectorTotals[sectorName]) {
+        sectorTotals[sectorName] = {
+          value: 0,
+          details: {}
+        };
+      }
+
+      sectorTotals[sectorName].value +=
+        absoluteValue;
+
+
+      // ------------------------------------------------------------
+      // COMBINE HS-2 DETAILS
+      // ------------------------------------------------------------
+
+      const details =
+        Array.isArray(sector.details)
+          ? sector.details
+          : [];
+
+      details.forEach(detail => {
+        const detailName =
+          detail.name ||
+          detail.label ||
+          detail.code;
+
+        if (!detailName) return;
+
+        const detailPercentage =
+          Number(
+            detail.percentage ??
+            detail.value
+          );
+
+        if (!Number.isFinite(detailPercentage)) {
+          return;
+        }
+
+        const detailAbsoluteValue =
+          absoluteValue *
+          (detailPercentage / 100);
+
+        if (
+          !sectorTotals[sectorName]
+            .details[detailName]
+        ) {
+          sectorTotals[sectorName]
+            .details[detailName] = 0;
+        }
+
+        sectorTotals[sectorName]
+          .details[detailName] +=
+            detailAbsoluteValue;
+      });
     });
   });
 
+
   if (totalTrade <= 0) return [];
 
+
+  // ------------------------------------------------------------
+  // BUILD FINAL SECTOR DATA
+  // ------------------------------------------------------------
+
   return Object.entries(sectorTotals)
-    .map(([sector, value]) => ({
-      sector,
-      value: (value / totalTrade) * 100
-    }))
-    .sort((a, b) => Number(b.value) - Number(a.value));
+    .map(([sector, data]) => {
+
+      const sectorPercentage =
+        (data.value / totalTrade) * 100;
+
+
+      const detailTotal =
+        Object.values(data.details)
+          .reduce(
+            (sum, value) => sum + value,
+            0
+          );
+
+
+      const details =
+        Object.entries(data.details)
+          .map(([name, value]) => ({
+            name,
+            percentage:
+              detailTotal > 0
+                ? (value / detailTotal) * 100
+                : 0
+          }))
+          .sort(
+            (a, b) =>
+              b.percentage -
+              a.percentage
+          );
+
+
+      return {
+        sector,
+        percentage: sectorPercentage,
+        details
+      };
+    })
+    .sort(
+      (a, b) =>
+        b.percentage -
+        a.percentage
+    );
 }
 
 export async function applyCountryTrade(iso, name) {
