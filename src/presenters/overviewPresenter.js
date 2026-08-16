@@ -4,17 +4,15 @@ const countryElement = document.getElementById("selected-country");
 const exportsElement = document.getElementById("country-exports");
 const importsElement = document.getElementById("country-imports");
 
-export function updateCountryOverview(countryName, exportsTotal, importsTotal) {
-  if (countryElement) {
-    countryElement.textContent = countryName || "World";
-  }
+export function updateCountryOverview(countryName, exportsTotal, importsTotal, options = {}) {
+  if (countryElement) countryElement.textContent = countryName || "World";
 
   if (exportsElement) {
-    exportsElement.textContent = formatCurrency(exportsTotal);
+    exportsElement.textContent = options.loading ? "Loading..." : formatCurrency(exportsTotal);
   }
 
   if (importsElement) {
-    importsElement.textContent = formatCurrency(importsTotal);
+    importsElement.textContent = options.loading ? "Loading..." : formatCurrency(importsTotal);
   }
 }
 

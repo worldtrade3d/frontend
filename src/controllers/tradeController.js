@@ -19,6 +19,8 @@ export function clearCountrySelection() {
 }
 
 export async function loadCountryTotal(iso, name) {
+  updateCountryOverview(name, 0, 0, { loading: true });
+
   try {
     const [exportResult, importResult] = await Promise.all([
       fetchCountryTotal(iso, "export", state.year),
