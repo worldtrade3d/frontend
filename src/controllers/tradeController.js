@@ -135,11 +135,7 @@ function combineBilateralSectors(links) {
 
       const absoluteValue =
         tradeValue * (percentage / 100);
-
-      // ------------------------------------------------------------
-      // CREATE SECTOR
-      // ------------------------------------------------------------
-
+        
       if (!sectorTotals[sectorName]) {
         sectorTotals[sectorName] = {
           value: 0,
@@ -149,11 +145,6 @@ function combineBilateralSectors(links) {
 
       sectorTotals[sectorName].value +=
         absoluteValue;
-
-
-      // ------------------------------------------------------------
-      // COMBINE HS-2 DETAILS
-      // ------------------------------------------------------------
 
       const details =
         Array.isArray(sector.details)
@@ -199,11 +190,6 @@ function combineBilateralSectors(links) {
 
 
   if (totalTrade <= 0) return [];
-
-
-  // ------------------------------------------------------------
-  // BUILD FINAL SECTOR DATA
-  // ------------------------------------------------------------
 
   return Object.entries(sectorTotals)
     .map(([sector, data]) => {

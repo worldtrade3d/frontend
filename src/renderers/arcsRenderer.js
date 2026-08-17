@@ -3,71 +3,31 @@ import { state } from "../config/state.js";
 import { theme } from "../config/theme.js";
 import { getMainLandmass } from "../utils/geo.js";
 
-export function createArcsRenderer({
-  context,
-  projection,
-  features,
-  getISO
-}) {
+export function createArcsRenderer({ context, projection, features, getISO }) {
   function drawArcs() {
-    const t = theme.globe;
+    const { globe } = theme;
     const center = projection.translate();
-
-    const {
-      color,
-      width,
-      borderColor: arcBorderColor,
-      borderWidth: arcBorderWidth,
-      steps,
-      liftFactor
-    } = t.arc;
-
-    const {
-      radius,
-      borderColor: dotBorderColor,
-      borderWidth: dotBorderWidth,
-      startColor,
-      endColor
-    } = t.arcDot;
+    const { color, width, borderColor: arcBorderColor, borderWidth: arcBorderWidth, steps, liftFactor } = globe.arc;
+    const { radius, borderColor: dotBorderColor, borderWidth: dotBorderWidth, startColor, endColor } = globe.arcDot;
 
     context.save();
-
     context.lineCap = "round";
     context.lineJoin = "round";
 
     for (const link of state.links) {
-      const fromFeature = features.find(
-        feature => getISO(feature) === link.from
-      );
+      const fromFeature = features.find(feature => getISO(feature) === link.from);
+      const toFeature = features.find(feature => getISO(feature) === link.to);
 
-      const toFeature = features.find(
-        feature => getISO(feature) === link.to
-      );
+      if (!fromFeature || !toFeature) continue;
 
-      if (!fromFeature || !toFeature) {
-        continue;
-      }
+      const from = d3.geoCentroid(getMainLandmass(fromFeature));
+      const to = d3.geoCentroid(getMainLandmass(toFeature));
 
-      const from = d3.geoCentroid(
-        getMainLandmass(fromFeature)
-      );
-
-      const to = d3.geoCentroid(
-        getMainLandmass(toFeature)
-      );
-
-      if (
-        projection(from) === null &&
-        projection(to) === null
-      ) {
-        continue;
-      }
+      if (!projection(from) && !projection(to)) continue;
 
       const interpolate = d3.geoInterpolate(from, to);
       const distance = d3.geoDistance(from, to);
-
-      const height =
-        1 + liftFactor * (distance / Math.PI);
+      const height = 1 + liftFactor * (distance / Math.PI);
 
       let started = false;
       let startPoint = null;
@@ -77,11 +37,9 @@ export function createArcsRenderer({
 
       for (let i = 0; i <= steps; i++) {
         const u = i / steps;
+        const projected = projection(interpolate(u));
 
-        const point = interpolate(u);
-        const projected = projection(point);
-
-        if (projected === null) {
+        if (!projected) {
           started = false;
           continue;
         }
@@ -89,22 +47,14 @@ export function createArcsRenderer({
         let [x, y] = projected;
 
         if (i > 0 && i < steps) {
-          const lift = Math.sin(u * Math.PI);
-          const multiplier =
-            1 + (height - 1) * lift;
+          const multiplier = 1 + (height - 1) * Math.sin(u * Math.PI);
 
-          x =
-            center[0] +
-            (x - center[0]) * multiplier;
-
-          y =
-            center[1] +
-            (y - center[1]) * multiplier;
+          x = center[0] + (x - center[0]) * multiplier;
+          y = center[1] + (y - center[1]) * multiplier;
         }
 
         if (!started) {
           context.moveTo(x, y);
-
           started = true;
           startPoint = [x, y];
         } else {
@@ -119,10 +69,7 @@ export function createArcsRenderer({
         lineWidth: width + arcBorderWidth
       });
 
-      drawArcStroke({
-        color,
-        lineWidth: width
-      });
+      drawArcStroke({ color, lineWidth: width });
 
       drawEndpoint({
         point: startPoint,
@@ -150,31 +97,15 @@ export function createArcsRenderer({
     context.stroke();
   }
 
-  function drawEndpoint({
-    point,
-    color,
-    radius,
-    borderColor,
-    borderWidth
-  }) {
-    if (!point) {
-      return;
-    }
+  function drawEndpoint({ point, color, radius, borderColor, borderWidth }) {
+    if (!point) return;
 
     context.fillStyle = color;
     context.strokeStyle = borderColor;
     context.lineWidth = borderWidth;
 
     context.beginPath();
-
-    context.arc(
-      point[0],
-      point[1],
-      radius,
-      0,
-      Math.PI * 2
-    );
-
+    context.arc(point[0], point[1], radius, 0, Math.PI * 2);
     context.fill();
     context.stroke();
   }

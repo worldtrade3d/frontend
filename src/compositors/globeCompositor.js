@@ -5,47 +5,21 @@ import { createControls } from "./controlCompositor.js";
 import { createSearchCompositor } from "./searchCompositor.js";
 
 export function createGlobe(canvas, features, { onClick, onHover }) {
-  const {
-    context,
-    projection,
-    path,
-    stateRefs,
-    start
-  } = createGlobeEngine(canvas);
+  const { context, projection, path, stateRefs, start } = createGlobeEngine(canvas);
 
-  const renderer = createRenderer({
-    context,
-    projection,
-    path,
-    features,
-    getISO
-  });
+  const renderer = createRenderer({ context, projection, path, features, getISO });
 
   let searchCompositor;
 
-  const controls = createControls({
-    canvas,
-    projection,
-    path,
-    features,
-    getISO,
-    stateRefs,
-
+  const controls = createControls({ canvas, projection, path, features, getISO, stateRefs,
     onClick: country => {
-      // Keep search input synchronized with globe selection
       searchCompositor.syncCountry(country);
-
       onClick?.(country);
     },
-
     onHover
   });
 
-  searchCompositor = createSearchCompositor({
-    features,
-    controls
-  });
-
+  searchCompositor = createSearchCompositor({ features, controls });
   start(renderer, controls);
 }
 
@@ -54,14 +28,13 @@ function createGlobeEngine(canvas) {
   const projection = d3.geoOrthographic().clipAngle(90);
   const path = d3.geoPath(projection, context);
 
-  let width, height, scale;
-  let rotation = [-6, -24];
-  let velocity = [0, 0];
+  let width;
+  let height;
+  let scale;
+  const rotation = [-6, -24];
+  const velocity = [0, 0];
 
-  const stateRefs = {
-    rotation,
-    velocity
-  };
+  const stateRefs = { rotation, velocity };
 
   function resize() {
     const dpr = window.devicePixelRatio || 1;
@@ -71,7 +44,6 @@ function createGlobeEngine(canvas) {
 
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
-
     canvas.width = width * dpr;
     canvas.height = height * dpr;
 
@@ -80,10 +52,7 @@ function createGlobeEngine(canvas) {
 
     scale = height / 3;
 
-    projection
-      .translate([width / 2, height / 2])
-      .scale(scale)
-      .rotate(rotation);
+    projection.translate([width / 2, height / 2]).scale(scale).rotate(rotation);
   }
 
   function start(renderer, controls) {
@@ -92,37 +61,19 @@ function createGlobeEngine(canvas) {
       velocity[1] *= 0.92;
 
       rotation[0] += velocity[0];
-      rotation[1] += velocity[1];
-
-      rotation[1] = Math.max(
-        -90,
-        Math.min(90, rotation[1])
-      );
+      rotation[1] = Math.max(-90, Math.min(90, rotation[1] + velocity[1]));
 
       projection.rotate(rotation);
 
-      renderer.render({
-        hovered: controls.getHovered(),
-        rotation,
-        scale,
-        width,
-        height
-      });
+      renderer.render({ hovered: controls.getHovered(), rotation, scale, width, height });
 
       requestAnimationFrame(animate);
     }
 
     window.addEventListener("resize", resize);
-
     resize();
     animate();
   }
 
-  return {
-    context,
-    projection,
-    path,
-    stateRefs,
-    start
-  };
+  return { context, projection, path, stateRefs, start };
 }

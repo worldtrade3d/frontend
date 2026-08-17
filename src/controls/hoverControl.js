@@ -8,8 +8,7 @@ export function setupHover(ctx) {
     const rect = canvas.getBoundingClientRect();
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
-
-    // Pointer is outside the canvas → leave external (bar) hover alone
+    
     if (mx < 0 || my < 0 || mx > rect.width || my > rect.height) {
       return;
     }

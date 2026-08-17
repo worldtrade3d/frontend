@@ -1,6 +1,6 @@
 export const theme = {
   globe: {
-    sphere: [
+    ocean: [
       "#74c9f4",
       "#2b7dbc",
       "#12385f"

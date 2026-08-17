@@ -1,148 +1,76 @@
 import { state } from "../config/state.js";
 import { theme } from "../config/theme.js";
 
-export function createCountryRenderer({
-  context,
-  path,
-  features,
-  getISO
-}) {
-  const getColor = createColorResolver({
-    features,
-    getISO
-  });
+export function createCountryRenderer({ context, path, features, getISO }) {
+  const getColor = createColorResolver({ features, getISO });
 
   function drawCountries(hovered) {
-    const t = theme.globe;
+    const { globe } = theme;
 
     for (const feature of features) {
-      if (feature === hovered) {
-        continue;
-      }
-
-      context.beginPath();
-      path(feature);
+      if (feature === hovered) continue;
 
       const iso = getISO(feature);
 
+      context.beginPath();
+      path(feature);
       context.fillStyle = getColor(iso);
       context.fill();
-
-      context.strokeStyle = t.strokecolor;
-      context.lineWidth = t.strokethickness;
+      context.strokeStyle = globe.strokecolor;
+      context.lineWidth = globe.strokethickness;
       context.stroke();
     }
   }
 
   function drawHovered(feature) {
-    if (!feature) {
-      return;
-    }
+    if (!feature) return;
 
-    const t = theme.globe;
+    const { globe } = theme;
 
     context.save();
-
     context.beginPath();
     path(feature);
-
-    context.fillStyle = t.countryHovered;
+    context.fillStyle = globe.countryHovered;
     context.fill();
-
-    context.strokeStyle = t.strokecolor;
-    context.lineWidth = t.strokethickness;
+    context.strokeStyle = globe.strokecolor;
+    context.lineWidth = globe.strokethickness;
     context.stroke();
-
     context.restore();
   }
 
-  return {
-    drawCountries,
-    drawHovered
-  };
+  return { drawCountries, drawHovered };
 }
 
 function createColorResolver({ features, getISO }) {
   function getColor(iso) {
-    const t = theme.globe;
-
-    const feature = features.find(
-      feature => getISO(feature) === iso
-    );
-
+    const { globe } = theme;
+    const feature = features.find(feature => getISO(feature) === iso);
     const continent = feature?.properties?.CONTINENT;
+    const defaultColor = globe.continents?.[continent] ?? globe.countryDefault;
 
-    const defaultColor =
-      t.continents?.[continent] ??
-      t.countryDefault;
-
-    if (state.mapMode === "heatmap") {
-      if (state.selectedISO || state.pendingISO) {
-        if (iso === state.pendingISO) {
-          return t.countrySelected;
-        }
-
-        const value = state.partners.get(iso);
-
-        if (value == null) {
-          return t.countryDefault;
-        }
-
-        const maxValue = Math.max(
-          ...state.partners.values(),
-          1
-        );
-
-        const intensity = Math.max(
-          0.08,
-          Math.min(
-            1,
-            Math.sqrt(value / maxValue)
-          )
-        );
-
-        const gb = Math.floor(
-          255 * (1 - intensity)
-        );
-
-        return `rgb(255, ${gb}, ${gb})`;
-      }
-
-      const value = state.totalTrade.get(iso);
-
-      if (value == null) {
-        return t.countryDefault;
-      }
-
-      const maxValue = Math.max(
-        ...state.totalTrade.values(),
-        1
-      );
-
-      const intensity = Math.max(
-        0.08,
-        Math.min(
-          1,
-          Math.sqrt(value / maxValue)
-        )
-      );
-
-      const gb = Math.floor(
-        255 * (1 - intensity)
-      );
-
-      return `rgb(255, ${gb}, ${gb})`;
+    if (state.mapMode !== "heatmap") {
+      return state.pendingISO === iso ? globe.countrySelected : defaultColor;
     }
 
-    if (!state.pendingISO) {
-      return defaultColor;
+    const values = state.selectedISO || state.pendingISO
+      ? state.partners
+      : state.totalTrade;
+
+    const value = values.get(iso);
+
+    if (state.pendingISO === iso) {
+      return globe.countrySelected;
     }
 
-    if (iso === state.pendingISO) {
-      return t.countrySelected;
+    if (value == null) {
+      return globe.countryDefault;
     }
 
-    return defaultColor;
+    const maxValue = Math.max(...values.values(), 1);
+    const intensity = Math.max(0.08, Math.min(1, Math.sqrt(value / maxValue)));
+    const gb = Math.floor(255 * (1 - intensity));
+
+    return `rgb(255, ${gb}, ${gb})`;
   }
 
   return getColor;

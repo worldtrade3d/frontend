@@ -42,11 +42,6 @@ export function setupZoom(ctx) {
     { passive: false }
   );
 
-  document
-    .getElementById("zoom-in")
-    ?.addEventListener("click", () => zoomBy(40));
-
-  document
-    .getElementById("zoom-out")
-    ?.addEventListener("click", () => zoomBy(-40));
+  document.getElementById("zoom-in")?.addEventListener("click", () => zoomBy(40));
+  document.getElementById("zoom-out")?.addEventListener("click", () => zoomBy(-40));
 }

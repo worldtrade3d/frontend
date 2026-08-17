@@ -6,17 +6,14 @@ export function getISO(f) {
     : f.properties.ADM0_A3;
 }
 
-
-// Used for country focus and arc endpoints
 const landmassCache = new WeakMap();
 
 export function getMainLandmass(feature) {
-  // return cached result
+  
   if (landmassCache.has(feature)) {
     return landmassCache.get(feature);
   }
-
-  // normal countries do not need processing
+  
   if (feature.geometry.type !== "MultiPolygon") {
     landmassCache.set(feature, feature);
     return feature;
@@ -42,7 +39,6 @@ export function getMainLandmass(feature) {
     }
   }
 
-  // fallback
   if (!largestPolygon) {
     landmassCache.set(feature, feature);
     return feature;

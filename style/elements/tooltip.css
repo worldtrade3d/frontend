@@ -1,22 +1,17 @@
 #tooltip {
   position: absolute;
-
-  transform: translate(15%, calc(-100% + 50px));
-
-  pointer-events: none;
+  z-index: 2000;
 
   padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
 
   background: var(--tooltip-bg);
-
   border: 1px solid var(--tooltip-border);
   border-radius: var(--radius-sm);
 
   color: var(--text-primary);
-
   font-size: var(--tooltip-font-size);
 
   opacity: 0;
-
-  z-index: 2000;
+  pointer-events: none;
+  transform: translate(15%, calc(-100% + 50px));
 }
