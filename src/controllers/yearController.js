@@ -1,4 +1,4 @@
-import { state } from "../state/state.js";
+import { state } from "../config/state.js";
 
 export function initYear() {
   const prevYear = document.getElementById("prev-year");

@@ -1,9 +1,6 @@
-import { getCountryName } from "../utils/country.js";
-import { state } from "../state/state.js";
-
 export function createSearchController({
   features,
-  controls
+  onCountrySelected
 }) {
   const search = document.getElementById("country-search");
   const results = document.getElementById("search-results");
@@ -52,10 +49,7 @@ export function createSearchController({
 
       item.addEventListener("click", () => {
         setSelectedCountry(feature);
-
-        controls.activateCountry(feature);
-
-        hideResults();
+        onCountrySelected?.(feature);
         search.blur();
       });
 
@@ -68,12 +62,18 @@ export function createSearchController({
 
   function updateSelection() {
     [...results.children].forEach((el, i) => {
-      el.classList.toggle("selected", i === selectedIndex);
+      el.classList.toggle(
+        "selected",
+        i === selectedIndex
+      );
     });
   }
 
   function setSelectedCountry(feature) {
-    search.value = feature ? feature.properties.ADMIN : "";
+    search.value = feature
+      ? feature.properties.ADMIN
+      : "";
+
     hideResults();
     updateClearButton();
   }
@@ -145,10 +145,7 @@ export function createSearchController({
   if (clearButton) {
     clearButton.addEventListener("click", () => {
       setSelectedCountry(null);
-
-      // Deactivating country will handle re-fetching world totals
-      controls.activateCountry(null);
-
+      onCountrySelected?.(null);
       search.focus();
     });
   }

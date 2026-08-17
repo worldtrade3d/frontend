@@ -1,6 +1,6 @@
-import { theme } from "../theme/theme.js";
+import { theme } from "../config/theme.js";
 
-export function createSphereRenderer({
+export function createOceanRenderer({
   context,
   path
 }) {

@@ -1,9 +1,5 @@
 let countryLookup = new Map();
 
-
-/*
-  Build ISO_A3 -> country name lookup
-*/
 export function buildCountryLookup(features) {
 
   countryLookup.clear();
@@ -32,10 +28,6 @@ export function buildCountryLookup(features) {
 
 }
 
-
-/*
-  Get country name from ISO_A3
-*/
 export function getCountryName(iso) {
 
   if (!iso) {

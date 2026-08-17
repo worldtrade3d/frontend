@@ -1,8 +1,7 @@
-import { createColorResolver } from "../renderers/colors.js";
-import { createStarsRenderer } from "../renderers/stars.js";
-import { createSphereRenderer } from "../renderers/sphere.js";
-import { createCountriesRenderer } from "../renderers/countries.js";
-import { createTradeArcsRenderer } from "../renderers/arcs.js";
+import { createStarsRenderer }   from "../renderers/starsRenderer.js";
+import { createOceanRenderer }   from "../renderers/oceanRenderer.js";
+import { createCountryRenderer } from "../renderers/countryRenderer.js";
+import { createArcsRenderer }    from "../renderers/arcsRenderer.js";
 
 export function createRenderer({
   context,
@@ -11,16 +10,11 @@ export function createRenderer({
   features,
   getISO
 }) {
-  const getColor = createColorResolver({
-    features,
-    getISO
-  });
-
   const drawStars = createStarsRenderer({
     context
   });
 
-  const drawSphere = createSphereRenderer({
+  const drawOcean = createOceanRenderer({
     context,
     path
   });
@@ -28,15 +22,14 @@ export function createRenderer({
   const {
     drawCountries,
     drawHovered
-  } = createCountriesRenderer({
+  } = createCountryRenderer({
     context,
     path,
     features,
-    getISO,
-    getColor
+    getISO
   });
 
-  const drawTradeArcs = createTradeArcsRenderer({
+  const drawArcs = createArcsRenderer({
     context,
     projection,
     features,
@@ -63,7 +56,7 @@ export function createRenderer({
       rotation
     );
 
-    drawSphere(
+    drawOcean(
       width,
       height,
       scale
@@ -71,7 +64,7 @@ export function createRenderer({
 
     drawCountries(hovered);
     drawHovered(hovered);
-    drawTradeArcs();
+    drawArcs();
   }
 
   return {

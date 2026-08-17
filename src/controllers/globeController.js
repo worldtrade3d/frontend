@@ -1,5 +1,5 @@
 import { createGlobe } from "../compositors/globeCompositor.js";
-import { state } from "../state/state.js";
+import { state } from "../config/state.js";
 import { fetchGeoJson } from "../services/api.js";
 import { updateSectorPanel } from "../presenters/sectorPresenter.js";
 import { updateCountryPanel } from "../presenters/countryPresenter.js";

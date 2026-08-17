@@ -2,7 +2,7 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import { getISO } from "../utils/geo.js";
 import { createRenderer } from "./renderCompositor.js";
 import { createControls } from "./controlCompositor.js";
-import { createSearchController } from "../controllers/searchController.js";
+import { createSearchCompositor } from "./searchCompositor.js";
 
 export function createGlobe(canvas, features, { onClick, onHover }) {
   const {
@@ -21,6 +21,8 @@ export function createGlobe(canvas, features, { onClick, onHover }) {
     getISO
   });
 
+  let searchCompositor;
+
   const controls = createControls({
     canvas,
     projection,
@@ -31,7 +33,7 @@ export function createGlobe(canvas, features, { onClick, onHover }) {
 
     onClick: country => {
       // Keep search input synchronized with globe selection
-      searchController.setSelectedCountry(country);
+      searchCompositor.syncCountry(country);
 
       onClick?.(country);
     },
@@ -39,7 +41,7 @@ export function createGlobe(canvas, features, { onClick, onHover }) {
     onHover
   });
 
-  const searchController = createSearchController({
+  searchCompositor = createSearchCompositor({
     features,
     controls
   });
@@ -56,7 +58,10 @@ function createGlobeEngine(canvas) {
   let rotation = [-6, -24];
   let velocity = [0, 0];
 
-  const stateRefs = { rotation, velocity };
+  const stateRefs = {
+    rotation,
+    velocity
+  };
 
   function resize() {
     const dpr = window.devicePixelRatio || 1;
@@ -88,7 +93,11 @@ function createGlobeEngine(canvas) {
 
       rotation[0] += velocity[0];
       rotation[1] += velocity[1];
-      rotation[1] = Math.max(-90, Math.min(90, rotation[1]));
+
+      rotation[1] = Math.max(
+        -90,
+        Math.min(90, rotation[1])
+      );
 
       projection.rotate(rotation);
 
@@ -104,6 +113,7 @@ function createGlobeEngine(canvas) {
     }
 
     window.addEventListener("resize", resize);
+
     resize();
     animate();
   }

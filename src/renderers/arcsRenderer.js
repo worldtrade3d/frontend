@@ -1,15 +1,15 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { state } from "../state/state.js";
-import { theme } from "../theme/theme.js";
+import { state } from "../config/state.js";
+import { theme } from "../config/theme.js";
 import { getMainLandmass } from "../utils/geo.js";
 
-export function createTradeArcsRenderer({
+export function createArcsRenderer({
   context,
   projection,
   features,
   getISO
 }) {
-  function drawTradeArcs() {
+  function drawArcs() {
     const t = theme.globe;
     const center = projection.translate();
 
@@ -179,5 +179,5 @@ export function createTradeArcsRenderer({
     context.stroke();
   }
 
-  return drawTradeArcs;
+  return drawArcs;
 }

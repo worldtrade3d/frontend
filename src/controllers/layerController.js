@@ -1,4 +1,4 @@
-import { state } from "../state/state.js";
+import { state } from "../config/state.js";
 import { fetchAllCountriesTotals } from "../services/api.js";
 
 export function initLayers() {

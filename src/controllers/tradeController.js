@@ -2,7 +2,7 @@ import { fetchAllCountriesTotals, fetchCountryTotal, fetchAllTradePartners, fetc
 import { updateCountryPanel } from "../presenters/countryPresenter.js";
 import { updateSectorPanel } from "../presenters/sectorPresenter.js";
 import { updateCountryOverview } from "../presenters/overviewPresenter.js";
-import { state } from "../state/state.js";
+import { state } from "../config/state.js";
 
 export function setPendingCountry(iso, name) {
   state.pendingISO = iso;

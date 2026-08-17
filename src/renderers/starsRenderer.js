@@ -1,4 +1,4 @@
-import { theme } from "../theme/theme.js";
+import { theme } from "../config/theme.js";
 
 export function createStarsRenderer({ context }) {
   const starImage = new Image();

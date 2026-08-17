@@ -4,7 +4,7 @@ import { setupZoom      } from "../controls/zoomControl.js";
 import { focusCountry   } from "../controls/focusControl.js";
 import { setupSelection, activateCountry, clearSelection } from "../controls/selectionControl.js";
 
-import { state } from "../state/state.js";
+import { state } from "../config/state.js";
 
 export function createControls({
   canvas,

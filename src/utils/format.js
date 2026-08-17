@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Percentage
-   ========================================================================== */
-
 export function formatPercent(value) {
   const number = Number(value) || 0;
 
@@ -16,11 +12,6 @@ export function formatPercent(value) {
   return number.toFixed(3) + "%";
 }
 
-
-/* ==========================================================================
-   Label
-   ========================================================================== */
-
 export function formatLabel(text) {
   if (!text) return "";
 
@@ -28,11 +19,6 @@ export function formatLabel(text) {
     .replace(/_/g, " ")
     .replace(/\b\w/g, c => c.toUpperCase());
 }
-
-
-/* ==========================================================================
-   Currency
-   ========================================================================== */
 
 export function formatCurrency(value) {
   const number = Number(value) || 0;

@@ -1,6 +1,6 @@
 import { formatPercent, formatCurrency } from "../utils/format.js";
 import { getCountryName } from "../utils/country.js";
-import { state } from "../state/state.js";
+import { state } from "../config/state.js";
 
 const countryRowTemplate = document.getElementById("trade-row-template");
 
