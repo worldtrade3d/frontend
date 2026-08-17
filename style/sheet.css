@@ -10,13 +10,13 @@
 @import "./components/globe.css";
 @import "./components/header.css";
 
+@import "./cards/apply.css";
 @import "./cards/country.css";
 @import "./cards/filter.css";
 @import "./cards/links.css";
 @import "./cards/overview.css";
 @import "./cards/sector.css";
 
-@import "./elements/apply.css";
 @import "./elements/brand.css";
 @import "./elements/info.css";
 @import "./elements/layer.css";

@@ -3,7 +3,7 @@ import { initGlobe } from "./controllers/globeController.js";
 import { initMode } from "./controllers/modeController.js";
 import { initYear } from "./controllers/yearController.js";
 import { initLayers } from "./controllers/layerController.js";
-
+import { initSettings } from "./controllers/settingsController.js";
 
 async function initApp() {
   if (!(await initStatus())) return;
@@ -11,6 +11,8 @@ async function initApp() {
   initMode();
   initYear();
   initGlobe();
+  
+  initSettings();
   initLayers();
 }
 

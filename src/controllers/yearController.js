@@ -42,8 +42,6 @@ export function initYear() {
 
     state.year = year;
     updateYearUI();
-
-    // Add visualization update triggers here
   }
 
   // Stepper buttons

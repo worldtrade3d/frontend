@@ -34,12 +34,6 @@
   color: var(--text-muted);
 }
 
-#filter-footer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 #trade-mode-toggle {
   display: flex;
   gap: var(--space-2);
