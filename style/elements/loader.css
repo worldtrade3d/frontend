@@ -2,11 +2,6 @@
   position: fixed;
   inset: 0;
 
-  background-image: url("/assets/backgrounds/star-sky.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,54 +9,28 @@
   z-index: 99999;
 
   opacity: 1;
-
   transition: opacity var(--transition-normal);
 
   pointer-events: none;
+  overflow: hidden;
+  
+  background-image: url("/assets/backgrounds/planet.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 #loading-scene.hidden {
   opacity: 0;
 }
 
-.loader-logo {
-  position: relative;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader-logo-background {
-  position: absolute;
-  inset: 0;
-
-  background: var(--loading-overlay-bg);
-
-  border-radius: 50%;
-}
-
-.loader-logo-image {
-  position: relative;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  opacity: var(--loading-logo-opacity);
-
-  z-index: 1;
-}
-
+/* Spinner */
 .loader-spinner {
   position: absolute;
-  inset: 0;
 
-  width: 100%;
-  height: 100%;
-
-  margin: 0;
+  width: 90px;
+  height: 90px;
 
   border: var(--loading-spinner-width) solid var(--loading-spinner-border);
   border-top-color: var(--accent-white);
@@ -77,42 +46,25 @@
 
 .loader-spinner.stopped {
   animation: none;
-
   border-top-color: var(--loading-spinner-border);
 }
 
-.loader-content {
-  position: absolute;
 
-  text-align: center;
-
-  color: var(--loading-text);
-
-  z-index: 3;
-}
-
-.loader-content h3 {
-  margin: 20px 0 8px;
-
-  font-size: 19px;
-  font-weight: var(--weight-semibold);
-}
-
-.loader-content p {
-  color: var(--loading-text-secondary);
-
-  font-size: 15px;
-}
-
+/* World Trade 3D */
 .loader-title {
   position: absolute;
 
-  bottom: var(--loading-title-bottom);
+  top: calc(50% + 65px);
   left: 50%;
 
   transform: translateX(-50%);
 
   color: var(--loading-text);
+
+  z-index: 3;
+
+  text-align: center;
+  white-space: nowrap;
 }
 
 .loader-title h2 {
@@ -122,6 +74,7 @@
   font-weight: var(--weight-semibold);
   letter-spacing: -0.03em;
 }
+
 
 @keyframes spin {
   to {
